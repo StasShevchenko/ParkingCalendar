@@ -69,7 +69,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16,),
                       TextField(
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
                         onTapOutside: (_) => FocusScope.of(context).unfocus(),
                         obscureText: true,
                         decoration: InputDecoration(
