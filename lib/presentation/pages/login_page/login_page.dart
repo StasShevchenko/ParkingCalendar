@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:parking_project/assets/res/insets.dart';
 
-import '../../theme/app_colors.dart';
+import '../../../assets/colors/app_colors.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -14,9 +15,7 @@ class LoginPage extends StatelessWidget {
       height: 35,
     );
 
-    final Widget carImage = SvgPicture.asset(
-      'assets/images/car_image.svg'
-    );
+    final Widget carImage = SvgPicture.asset('assets/images/car_image.svg');
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -26,7 +25,7 @@ class LoginPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-           Expanded(
+          Expanded(
             flex: 2,
             child: Center(
               child: Padding(
@@ -53,21 +52,30 @@ class LoginPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text('Добро пожаловать!', style: Theme.of(context).textTheme.titleLarge, textAlign: TextAlign.center,),
-                      const SizedBox(height: 30,),
+                      Text(
+                        'Добро пожаловать!',
+                        style: Theme.of(context).textTheme.titleLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
                       TextField(
                         textInputAction: TextInputAction.next,
                         onTapOutside: (_) => FocusScope.of(context).unfocus(),
                         decoration: InputDecoration(
-                          prefixIconColor: AppColors.primaryBlue,
-                          prefixIcon: const Padding(
-                            padding: EdgeInsets.only(left: 8.0,),
-                            child: Icon(Icons.mail),
-                          ),
-                          labelText: 'Введите почту'
-                        ),
+                            prefixIconColor: AppColors.primaryBlue,
+                            prefixIcon: const Padding(
+                              padding: EdgeInsets.only(
+                                left: 8.0,
+                              ),
+                              child: Icon(Icons.mail),
+                            ),
+                            labelText: 'Введите почту'),
                       ),
-                      const SizedBox(height: 16,),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       TextField(
                         textInputAction: TextInputAction.done,
                         onTapOutside: (_) => FocusScope.of(context).unfocus(),
@@ -75,16 +83,32 @@ class LoginPage extends StatelessWidget {
                         decoration: InputDecoration(
                             prefixIconColor: AppColors.primaryBlue,
                             prefixIcon: const Padding(
-                              padding: EdgeInsets.only(left: 8.0,),
+                              padding: EdgeInsets.only(
+                                left: 8.0,
+                              ),
                               child: Icon(Icons.lock),
                             ),
-                            labelText: 'Введите пароль'
+                            labelText: 'Введите пароль'),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      const Align(
+                        child: Text('Забыли пароль?'),
+                        alignment: Alignment.centerRight,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text('Войти'),
+                        style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
+                          padding: MaterialStateProperty.all(
+                            EdgeInsets.symmetric(vertical: context.mediumInset, horizontal: context.largeInset),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 16,),
-                      const Align(child: Text('Забыли пароль?'), alignment: Alignment.centerRight,),
-                      const SizedBox(height: 16,),
-                      ElevatedButton(onPressed: (){}, child: const Text('Войти')),
                     ],
                   ),
                 ),

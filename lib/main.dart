@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:parking_project/assets/themes/theme.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page.dart';
-import 'package:parking_project/presentation/theme/app_colors.dart';
-import 'package:parking_project/presentation/theme/theme.dart';
 
 void main() {
   runApp(const MyApp());

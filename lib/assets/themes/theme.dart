@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
+import '../colors/app_colors.dart';
 
 ThemeData appTheme() => ThemeData(
     textSelectionTheme: TextSelectionThemeData(
@@ -57,7 +57,7 @@ ButtonStyle elevatedButtonStyle() => ElevatedButton.styleFrom(
     backgroundColor: AppColors.primaryBlue,
     foregroundColor: AppColors.primaryWhite,
     elevation: 0,
-    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+    //padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
     textStyle:
         const TextStyle(fontFamily: 'Golos', fontWeight: FontWeight.w700),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)));
