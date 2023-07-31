@@ -172,35 +172,41 @@ Future _displayDialog(BuildContext context) => showDialog(
           height: 150,
           child: Column(
             children: [
-              TextField(
-                textInputAction: TextInputAction.next,
-                onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                decoration: InputDecoration(
-                    prefixIconColor: AppColors.primaryBlue,
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.only(
-                        left: 8.0,
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  textInputAction: TextInputAction.next,
+                  onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                  decoration: InputDecoration(
+                      prefixIconColor: AppColors.primaryBlue,
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.only(
+                          left: 8.0,
+                        ),
+                        child: Icon(Icons.location_city),
                       ),
-                      child: Icon(Icons.location_city),
-                    ),
-                    labelText: 'Введите город'),
+                      labelText: 'Введите город'),
+                ),
               ),
               const SizedBox(
                 height: 16,
               ),
-              TextField(
-                textInputAction: TextInputAction.next,
-                onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                obscureText: true,
-                decoration: InputDecoration(
-                    prefixIconColor: AppColors.primaryBlue,
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.only(
-                        left: 8.0,
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  textInputAction: TextInputAction.next,
+                  onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      prefixIconColor: AppColors.primaryBlue,
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.only(
+                          left: 8.0,
+                        ),
+                        child: Icon(Icons.map_rounded),
                       ),
-                      child: Icon(Icons.map_rounded),
-                    ),
-                    labelText: 'Введите адрес'),
+                      labelText: 'Введите адрес'),
+                ),
               ),
             ],
           ),
