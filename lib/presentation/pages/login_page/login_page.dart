@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:parking_project/assets/res/insets.dart';
+import 'package:parking_project/utils/device_info.dart';
 
 import '../../../assets/colors/app_colors.dart';
 
@@ -15,7 +16,24 @@ class LoginPage extends StatelessWidget {
       height: 35,
     );
 
-    final Widget carImage = SvgPicture.asset('assets/images/car_image.svg');
+    final Widget carImage = SvgPicture.asset(
+      'assets/images/car_image.svg',
+      height: 560,
+      width: 560,
+    );
+
+
+    var pageSectionFlex = switch(DeviceScreen.get(context)){
+      FormFactorType.Mobile => 2,
+      FormFactorType.Tablet => 2,
+      FormFactorType.Desktop => 3,
+    };
+
+    var loginSectionFlex = switch(DeviceScreen.get(context)){
+      FormFactorType.Mobile => 3,
+      FormFactorType.Tablet => 2,
+      FormFactorType.Desktop => 2,
+    };
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -23,90 +41,104 @@ class LoginPage extends StatelessWidget {
         leading: Center(child: companyIcon),
         title: const Text('Авторизация'),
       ),
-      body: Column(
+      body: Flex(
+        direction: DeviceScreen.get(context) == FormFactorType.Mobile ? Axis
+            .vertical : Axis.horizontal,
         children: [
           Expanded(
-            flex: 2,
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: carImage,
-              ),
-            ),
+            flex: pageSectionFlex,
+            child: Center(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: carImage,
+            )),
           ),
           Expanded(
-            flex: 3,
+            flex: loginSectionFlex,
             child: Container(
               height: double.maxFinite,
               width: double.maxFinite,
-              decoration: const BoxDecoration(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
+                borderRadius: DeviceScreen.get(context) == FormFactorType.Mobile
+                    ? const BorderRadius.only(
                   topLeft: Radius.circular(32),
                   topRight: Radius.circular(32),
+                )
+                    :
+                const BorderRadius.only(
+                  topLeft: Radius.circular(32),
+                  bottomLeft: Radius.circular(32),
                 ),
               ),
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(32.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Добро пожаловать!',
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleLarge,
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(
                         height: 30,
                       ),
-                      TextField(
-                        textInputAction: TextInputAction.next,
-                        onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                        decoration: InputDecoration(
-                            prefixIconColor: AppColors.primaryBlue,
-                            prefixIcon: const Padding(
-                              padding: EdgeInsets.only(
-                                left: 8.0,
+                      FractionallySizedBox(
+                        widthFactor: 0.9,
+                        child: TextField(
+                          textInputAction: TextInputAction.next,
+                          onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                          decoration: InputDecoration(
+                              prefixIconColor: AppColors.primaryBlue,
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.only(
+                                  left: 8.0,
+                                ),
+                                child: Icon(Icons.mail),
                               ),
-                              child: Icon(Icons.mail),
-                            ),
-                            labelText: 'Введите почту'),
+                              labelText: 'Введите почту'),
+                        ),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
-                      TextField(
-                        textInputAction: TextInputAction.done,
-                        onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            prefixIconColor: AppColors.primaryBlue,
-                            prefixIcon: const Padding(
-                              padding: EdgeInsets.only(
-                                left: 8.0,
+                      FractionallySizedBox(
+                        widthFactor: 0.9,
+                        child: TextField(
+                          textInputAction: TextInputAction.done,
+                          onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              prefixIconColor: AppColors.primaryBlue,
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.only(
+                                  left: 8.0,
+                                ),
+                                child: Icon(Icons.lock),
                               ),
-                              child: Icon(Icons.lock),
-                            ),
-                            labelText: 'Введите пароль'),
+                              labelText: 'Введите пароль'),
+                        ),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
-                      const Align(
-                        child: Text('Забыли пароль?'),
-                        alignment: Alignment.centerRight,
+                      const FractionallySizedBox(
+                        widthFactor: 0.9,
+                        child: Text('Забыли пароль?', textAlign: TextAlign.right,),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Войти'),
-                        style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-                          padding: MaterialStateProperty.all(
-                            EdgeInsets.symmetric(vertical: context.mediumInset, horizontal: context.largeInset),
-                          ),
+                      FractionallySizedBox(
+                        widthFactor: 0.9,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: const Text('Войти'),
                         ),
                       ),
                     ],

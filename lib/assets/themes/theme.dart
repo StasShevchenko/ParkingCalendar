@@ -10,7 +10,7 @@ ThemeData appTheme() => ThemeData(
     ),
     focusColor: AppColors.primaryBlue,
     useMaterial3: true,
-
+    visualDensity: const VisualDensity(horizontal: -1, vertical: -1),
     colorScheme: const ColorScheme.highContrastLight(),
     fontFamily: 'Golos',
     appBarTheme: AppBarTheme(
@@ -57,7 +57,7 @@ ButtonStyle elevatedButtonStyle() => ElevatedButton.styleFrom(
     backgroundColor: AppColors.primaryBlue,
     foregroundColor: AppColors.primaryWhite,
     elevation: 0,
-    //padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
     textStyle:
         const TextStyle(fontFamily: 'Golos', fontWeight: FontWeight.w700),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)));
