@@ -26,16 +26,16 @@ class LoginPage extends StatelessWidget {
             )
           : null,
       body: ResponsiveWidget.isLargeScreen(context) //проверка для адаптивности
-          ? LoginWidgetDesktop(carImage: carImage)
+          ? _LoginWidgetDesktop(carImage: carImage)
           : ResponsiveWidget.isMediumScreen(context)
-              ? LoginWidgetTab(carImage: carImage)
-              : LoginWidgetPhone(carImage: carImage),
+              ? _LoginWidgetTab(carImage: carImage)
+              : _LoginWidgetPhone(carImage: carImage),
     );
   }
 }
 
-class LoginWidgetPhone extends StatelessWidget {
-  const LoginWidgetPhone({
+class _LoginWidgetPhone extends StatelessWidget {
+  const _LoginWidgetPhone({
     super.key,
     required this.carImage,
   });
@@ -67,7 +67,7 @@ class LoginWidgetPhone extends StatelessWidget {
                 topRight: Radius.circular(32),
               ),
             ),
-            child: const LoginSectionWidget(),
+            child: const _LoginSectionWidget(),
           ),
         )
       ],
@@ -75,8 +75,8 @@ class LoginWidgetPhone extends StatelessWidget {
   }
 }
 
-class LoginWidgetTab extends StatelessWidget {
-  const LoginWidgetTab({
+class _LoginWidgetTab extends StatelessWidget {
+  const _LoginWidgetTab({
     super.key,
     required this.carImage,
   });
@@ -112,7 +112,7 @@ class LoginWidgetTab extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: LoginSectionWidget(),
+                  child: _LoginSectionWidget(),
                 ),
               ],
             ),
@@ -123,8 +123,8 @@ class LoginWidgetTab extends StatelessWidget {
   }
 }
 
-class LoginSectionWidget extends StatelessWidget {
-  const LoginSectionWidget({
+class _LoginSectionWidget extends StatelessWidget {
+  const _LoginSectionWidget({
     super.key,
   });
 
@@ -192,8 +192,8 @@ class LoginSectionWidget extends StatelessWidget {
   }
 }
 
-class LoginWidgetDesktop extends StatelessWidget {
-  const LoginWidgetDesktop({
+class _LoginWidgetDesktop extends StatelessWidget {
+  const _LoginWidgetDesktop({
     super.key,
     required this.carImage,
   });
@@ -229,7 +229,7 @@ class LoginWidgetDesktop extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: LoginSectionWidget(),
+                  child: _LoginSectionWidget(),
                 ),
               ],
             ),

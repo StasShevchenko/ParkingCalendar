@@ -14,7 +14,7 @@ class SAdminMainScreenWidget extends StatefulWidget {
 class _SAdminMainScreenWidgetState extends State<SAdminMainScreenWidget> {
   int _selectedTab = 0;
 
-  final List<Widget> _screens = [OfficeWidget(), AdminsWidget()];
+  final List<Widget> _screens = [const OfficeWidget(), const AdminsWidget()];
 
   // void onSelectTab(int index) {
   //   if (_selectedTab == index) return;
@@ -31,7 +31,11 @@ class _SAdminMainScreenWidgetState extends State<SAdminMainScreenWidget> {
             ResponsiveWidget.isSmallScreen(context)
                 ? const SizedBox()
                 : NavigationRail(
+                    useIndicator: true,
+                    indicatorColor: AppColors.primaryBlue,
                     backgroundColor: AppColors.background,
+                    selectedIconTheme:
+                        IconThemeData(color: AppColors.primaryWhite),
                     onDestinationSelected: (int index) {
                       setState(() {
                         _selectedTab = index;
@@ -46,6 +50,13 @@ class _SAdminMainScreenWidgetState extends State<SAdminMainScreenWidget> {
                           icon: Icon(Icons.admin_panel_settings_rounded),
                           label: Text("Админы")),
                     ],
+                    labelType: NavigationRailLabelType.all,
+                  ),
+            ResponsiveWidget.isSmallScreen(context)
+                ? const SizedBox()
+                : const VerticalDivider(
+                    thickness: 1,
+                    width: 1,
                   ),
             Expanded(child: _screens[_selectedTab]),
             // IndexedStack(
@@ -73,6 +84,6 @@ class _SAdminMainScreenWidgetState extends State<SAdminMainScreenWidget> {
                       label: "Админы"),
                 ],
               )
-            : SizedBox());
+            : const SizedBox());
   }
 }

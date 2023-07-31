@@ -29,17 +29,37 @@ class _OfficeWidgetState extends State<OfficeWidget> {
           : null,
       body: Container(
         width: double.infinity,
+        height: double.infinity,
         child: ListView(
           children: [
-            SizedBox(
-              height: 15,
-            ),
-            _CardBlockWidget(of: ofisi)
+            ResponsiveWidget.isLargeScreen(context) //проверка для адаптивности
+                ? const _GridItemWidget(
+                    aR: 2.0,
+                    cAC: 4,
+                  )
+                : ResponsiveWidget.isMediumScreen(context)
+                    ? const _GridItemWidget(
+                        aR: 1.0,
+                        cAC: 2,
+                      )
+                    : const _GridItemWidget(
+                        aR: 0.5,
+                        cAC: 1,
+                      ),
+
+            // SizedBox(
+            //   height: 15,
+            // ),
+            // _CardBlockWidget(of: ofisi)
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () => {
+          ResponsiveWidget.isSmallScreen(context)
+              ? _displayBottomSheet(context)
+              : _displayDialog(context)
+        },
         child: const Icon(Icons.add),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(32.0))),
@@ -48,7 +68,28 @@ class _OfficeWidgetState extends State<OfficeWidget> {
   }
 }
 
+class _GridItemWidget extends StatelessWidget {
+  final double aR;
+  final int cAC;
+  const _GridItemWidget({super.key, required this.aR, required this.cAC});
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: aR,
+      child: GridView.builder(
+          itemCount: ofisi.length,
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: cAC),
+          itemBuilder: (context, index) {
+            return _CardWidgetRow(data: ofisi[index]);
+          }),
+    );
+  }
+}
+
 class _CardBlockWidget extends StatelessWidget {
+  //deprecated
   final List<Office> of;
   const _CardBlockWidget({super.key, required this.of});
 
@@ -82,13 +123,150 @@ class _CardWidgetRow extends StatelessWidget {
             children: [
               Container(
                 height: 100,
-                width: 300,
-                child: Placeholder(),
+                width: 296,
+                child: const Placeholder(),
               ),
               Text(data.name.toString()),
               Text(data.adress.toString()),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+Future _displayBottomSheet(BuildContext context) {
+  return showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.primaryWhite,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(32))),
+      builder: (context) => Column(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  height: double.maxFinite,
+                  width: double.maxFinite,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32),
+                    ),
+                  ),
+                  child: const _CreateSectionWidget(),
+                ),
+              )
+            ],
+          ));
+}
+
+Future _displayDialog(BuildContext context) => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.primaryWhite,
+        title: Text("Добавить отдел"),
+        content: Container(
+          height: 150,
+          child: Column(
+            children: [
+              TextField(
+                textInputAction: TextInputAction.next,
+                onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                decoration: InputDecoration(
+                    prefixIconColor: AppColors.primaryBlue,
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(
+                        left: 8.0,
+                      ),
+                      child: Icon(Icons.location_city),
+                    ),
+                    labelText: 'Введите город'),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              TextField(
+                textInputAction: TextInputAction.next,
+                onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                obscureText: true,
+                decoration: InputDecoration(
+                    prefixIconColor: AppColors.primaryBlue,
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(
+                        left: 8.0,
+                      ),
+                      child: Icon(Icons.map_rounded),
+                    ),
+                    labelText: 'Введите адрес'),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          ElevatedButton(onPressed: () {}, child: const Text('Добавить'))
+        ],
+      ),
+    );
+
+class _CreateSectionWidget extends StatelessWidget {
+  const _CreateSectionWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Добавить отдел',
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            TextField(
+              textInputAction: TextInputAction.next,
+              onTapOutside: (_) => FocusScope.of(context).unfocus(),
+              decoration: InputDecoration(
+                  prefixIconColor: AppColors.primaryBlue,
+                  prefixIcon: const Padding(
+                    padding: EdgeInsets.only(
+                      left: 8.0,
+                    ),
+                    child: Icon(Icons.location_city),
+                  ),
+                  labelText: 'Введите город'),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextField(
+              textInputAction: TextInputAction.next,
+              onTapOutside: (_) => FocusScope.of(context).unfocus(),
+              obscureText: true,
+              decoration: InputDecoration(
+                  prefixIconColor: AppColors.primaryBlue,
+                  prefixIcon: const Padding(
+                    padding: EdgeInsets.only(
+                      left: 8.0,
+                    ),
+                    child: Icon(Icons.map_rounded),
+                  ),
+                  labelText: 'Введите адрес'),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            ElevatedButton(onPressed: () {}, child: const Text('Добавить')),
+          ],
         ),
       ),
     );
