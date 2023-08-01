@@ -10,7 +10,7 @@ ThemeData appTheme() => ThemeData(
     ),
     focusColor: AppColors.primaryBlue,
     useMaterial3: true,
-
+    visualDensity: const VisualDensity(horizontal: -1, vertical: -1),
     colorScheme: const ColorScheme.highContrastLight(),
     fontFamily: 'Golos',
     appBarTheme: AppBarTheme(
@@ -25,7 +25,7 @@ ThemeData appTheme() => ThemeData(
     elevatedButtonTheme: ElevatedButtonThemeData(style: elevatedButtonStyle()));
 
 InputDecorationTheme appInputDecorationTheme() => InputDecorationTheme(
-    contentPadding: EdgeInsets.all(20),
+    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
     enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.secondaryBlue),
         borderRadius: BorderRadius.circular(32)),
@@ -34,10 +34,10 @@ InputDecorationTheme appInputDecorationTheme() => InputDecorationTheme(
         borderSide: BorderSide(color: AppColors.primaryWhite)),
     errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(32),
-        borderSide: BorderSide(color: Colors.red)),
+        borderSide: const BorderSide(color: Colors.red)),
     focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(32),
-        borderSide: BorderSide(color: Colors.red)),
+        borderSide: const BorderSide(color: Colors.red)),
     focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.secondaryBlue),
         borderRadius: BorderRadius.circular(32)),
@@ -51,13 +51,13 @@ TextTheme appTextTheme() => TextTheme(
       fontSize: 16,
     ),
     bodyMedium: TextStyle(color: AppColors.secondaryBlue),
-    titleLarge: TextStyle(color: AppColors.secondaryBlue, fontSize: 24));
+    titleLarge: TextStyle(color: AppColors.secondaryBlue, fontSize: 28));
 
 ButtonStyle elevatedButtonStyle() => ElevatedButton.styleFrom(
     backgroundColor: AppColors.primaryBlue,
     foregroundColor: AppColors.primaryWhite,
     elevation: 0,
-    //padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
     textStyle:
         const TextStyle(fontFamily: 'Golos', fontWeight: FontWeight.w700),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)));

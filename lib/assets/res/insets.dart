@@ -6,8 +6,8 @@ extension ResponsiveInsets on BuildContext {
   double get _scaleFactor {
     return switch(DeviceScreen.get(this)){
       FormFactorType.Mobile => 1.0,
-       FormFactorType.Tablet => 1.2,
-       FormFactorType.Desktop => 1.7,
+       FormFactorType.Tablet => 1.0,
+       FormFactorType.Desktop => 1.0,
     };
   }
 
