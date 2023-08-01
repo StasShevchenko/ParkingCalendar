@@ -15,8 +15,8 @@ class DeviceOS {
 
 class DeviceScreen {
   static FormFactorType get(BuildContext context) {
-    double shortestSide = MediaQuery.of(context).size.width;
-    if (shortestSide <= 600) return FormFactorType.Mobile;
+    final shortestSide = MediaQuery.of(context).size.width;
+    if (shortestSide <= 640) return FormFactorType.Mobile;
     if (shortestSide <= 1200) return FormFactorType.Tablet;
     return FormFactorType.Desktop;
   }
