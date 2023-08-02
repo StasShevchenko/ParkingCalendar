@@ -33,7 +33,7 @@ class _SAdminMainScreenWidgetState extends State<SAdminMainScreenWidget> {
                 : NavigationRail(
                     useIndicator: true,
                     indicatorColor: AppColors.primaryBlue,
-                    backgroundColor: AppColors.background,
+                    backgroundColor: AppColors.primaryWhite,
                     selectedIconTheme:
                         IconThemeData(color: AppColors.primaryWhite),
                     onDestinationSelected: (int index) {
@@ -51,13 +51,14 @@ class _SAdminMainScreenWidgetState extends State<SAdminMainScreenWidget> {
                           label: Text("Админы")),
                     ],
                     labelType: NavigationRailLabelType.all,
+                    elevation: 10,
                   ),
-            ResponsiveWidget.isSmallScreen(context)
-                ? const SizedBox()
-                : const VerticalDivider(
-                    thickness: 1,
-                    width: 1,
-                  ),
+            // ResponsiveWidget.isSmallScreen(context)
+            //     ? const SizedBox()
+            //     : const VerticalDivider(
+            //         thickness: 1,
+            //         width: 1,
+            //       ),
             Expanded(child: _screens[_selectedTab]),
             // IndexedStack(
             //   index: _selectedTab,
@@ -70,6 +71,7 @@ class _SAdminMainScreenWidgetState extends State<SAdminMainScreenWidget> {
         ),
         bottomNavigationBar: ResponsiveWidget.isSmallScreen(context)
             ? BottomNavigationBar(
+                selectedItemColor: AppColors.primaryBlue,
                 currentIndex: _selectedTab,
                 onTap: (int index) {
                   setState(() {
