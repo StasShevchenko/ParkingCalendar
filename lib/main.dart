@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:parking_project/assets/themes/theme.dart';
-import 'package:parking_project/presentation/pages/login_page/login_page.dart';
+import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
 
 void main() {
+  initializeDateFormatting('ru').then((_) => runApp( const MyApp()
+  ));
   runApp(const MyApp());
 }
 
@@ -25,6 +28,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LoginPage();
+    return const UserHomePage();
   }
 }
