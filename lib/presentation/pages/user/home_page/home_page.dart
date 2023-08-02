@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:parking_project/data/models/user_info.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_item/queue_item.dart';
+import 'package:parking_project/presentation/pages/user/home_page/calendar_section.dart';
+import 'package:parking_project/presentation/pages/user/home_page/queue_section.dart';
 
 import '../../../../assets/colors/app_colors.dart';
-import 'components/calendar/calendar.dart';
 
 class UserHomePage extends StatefulWidget {
   const UserHomePage({super.key});
@@ -15,6 +14,9 @@ class UserHomePage extends StatefulWidget {
 }
 
 class _UserHomePageState extends State<UserHomePage> {
+  var currentIndex = 0;
+
+
   @override
   Widget build(BuildContext context) {
     final Widget companyIcon = SvgPicture.asset(
@@ -22,7 +24,6 @@ class _UserHomePageState extends State<UserHomePage> {
       width: 35,
       height: 35,
     );
-
     final testUsersList = [
       UserInfo(name: 'Полежаев Дмитрий', month: 'Январь'),
       UserInfo(name: 'Иришка Чикипики', month: 'Январь'),
@@ -50,83 +51,66 @@ class _UserHomePageState extends State<UserHomePage> {
       UserInfo(name: 'Ковшев Виталий', month: 'Март'),
     ];
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryBlue,
-        leading: Center(child: companyIcon),
-        title: const Text('Личный кабинет'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                'Здравствуйте, Михаил!',
-                style: Theme.of(context).textTheme.titleMedium,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          backgroundColor: AppColors.primaryBlue,
+          leading: Center(child: companyIcon),
+          title: const Text('Личный кабинет'),
+          bottom: TabBar(
+            indicatorColor: AppColors.primaryWhite,
+            labelColor: AppColors.primaryWhite,
+            unselectedLabelColor: Colors.grey,
+            tabs: const [
+              Tab(
+                text: 'Календарь',
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 25,
-                    width: 25,
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryAccentRed,
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  const Text(' дни доступа к парковке')
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Card(
-                color: AppColors.primaryWhite,
-                surfaceTintColor: AppColors.primaryWhite,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Calendar(
-                    startTime: '08/01/2023',
-                    endTime: '08/10/2023',
-                    isActive: true,
-                  ),
-                ),
-              ),
+              Tab(text: 'Очередь')
             ],
           ),
         ),
+        body: TabBarView(children: [
+          const CalendarSection(),
+          QueueSection(users: testUsersList)
+        ]),
+        bottomNavigationBar: AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
+            child: NavigationBar(
+              shadowColor: Colors.black,
+              elevation: 10,
+              surfaceTintColor: Colors.white,
+              indicatorColor: AppColors.secondaryBlue,
+              destinations: [
+                NavigationDestination(
+                    icon: Icon(
+                      Icons.home,
+                      color: AppColors.primaryBlue,
+                    ),
+                    selectedIcon:
+                        Icon(Icons.home, color: AppColors.primaryWhite),
+                    label: 'Очередь'),
+                NavigationDestination(
+                  icon: Icon(Icons.message, color: AppColors.primaryBlue),
+                  selectedIcon:
+                      Icon(Icons.message, color: AppColors.primaryWhite),
+                  label: 'Запросы',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.person, color: AppColors.primaryBlue),
+                  selectedIcon: Icon(Icons.person, color: AppColors.primaryWhite),
+                  label: 'Профиль',
+                )
+              ],
+              onDestinationSelected: (int index) {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
+              selectedIndex: currentIndex,
+            )),
       ),
-      bottomNavigationBar: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          child: NavigationBar(
-            shadowColor: Colors.black,
-            elevation: 10,
-            surfaceTintColor: Colors.white,
-            indicatorColor: AppColors.secondaryBlue,
-            destinations: const [
-              NavigationDestination(
-                  icon: FittedBox(
-                      child: Icon(
-                    Icons.home,
-                    color: Colors.white,
-                  )),
-                  label: 'Home'),
-              NavigationDestination(
-                  icon: Icon(Icons.free_breakfast), label: 'Breakfast'),
-              NavigationDestination(icon: Icon(Icons.ac_unit), label: 'Ice')
-            ],
-            selectedIndex: 0,
-          )),
     );
   }
 }
