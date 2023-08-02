@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../assets/colors/app_colors.dart';
@@ -130,7 +131,7 @@ class LoginPage extends StatelessWidget {
                         child: SizedBox(
                           width: double.maxFinite,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {context.go('/home');},
                             child: const Text('Войти'),
                           ),
                         ),

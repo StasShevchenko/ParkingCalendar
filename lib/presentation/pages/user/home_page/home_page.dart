@@ -13,9 +13,7 @@ class UserHomePage extends StatefulWidget {
   State<UserHomePage> createState() => _UserHomePageState();
 }
 
-class _UserHomePageState extends State<UserHomePage> {
-  var currentIndex = 0;
-
+class _UserHomePageState extends State<UserHomePage> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
@@ -75,41 +73,6 @@ class _UserHomePageState extends State<UserHomePage> {
           const CalendarSection(),
           QueueSection(users: testUsersList)
         ]),
-        bottomNavigationBar: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
-            child: NavigationBar(
-              shadowColor: Colors.black,
-              elevation: 10,
-              surfaceTintColor: Colors.white,
-              indicatorColor: AppColors.secondaryBlue,
-              destinations: [
-                NavigationDestination(
-                    icon: Icon(
-                      Icons.home,
-                      color: AppColors.primaryBlue,
-                    ),
-                    selectedIcon:
-                        Icon(Icons.home, color: AppColors.primaryWhite),
-                    label: 'Очередь'),
-                NavigationDestination(
-                  icon: Icon(Icons.message, color: AppColors.primaryBlue),
-                  selectedIcon:
-                      Icon(Icons.message, color: AppColors.primaryWhite),
-                  label: 'Запросы',
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.person, color: AppColors.primaryBlue),
-                  selectedIcon: Icon(Icons.person, color: AppColors.primaryWhite),
-                  label: 'Профиль',
-                )
-              ],
-              onDestinationSelected: (int index) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-              selectedIndex: currentIndex,
-            )),
       ),
     );
   }
