@@ -51,7 +51,10 @@ TextTheme appTextTheme() => TextTheme(
       fontSize: 16,
     ),
     bodyMedium: TextStyle(color: AppColors.secondaryBlue),
-    titleLarge: TextStyle(color: AppColors.secondaryBlue, fontSize: 28));
+    titleLarge: TextStyle(color: AppColors.secondaryBlue, fontSize: 28),
+    titleMedium: TextStyle(color: AppColors.secondaryBlue, fontSize: 24, fontWeight: FontWeight.w700)
+);
+
 
 ButtonStyle elevatedButtonStyle() => ElevatedButton.styleFrom(
     backgroundColor: AppColors.primaryBlue,
