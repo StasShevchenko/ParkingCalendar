@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:parking_project/models/offices.dart';
 import 'package:parking_project/models/text_fields.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/create_bottom_widget.dart';
-import 'package:parking_project/presentation/theme/app_colors.dart';
 
+import '../../../../assets/colors/app_colors.dart';
 Future displayBottomSheet(
     BuildContext context, String nameOfBottom, List<TextFieldsData> list,
     [List<Office>? of]) {

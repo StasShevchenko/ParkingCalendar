@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:parking_project/presentation/pages/super_admin/admins_screen_widget.dart';
 import 'package:parking_project/presentation/pages/super_admin/office_screen_widget.dart';
 import 'package:parking_project/presentation/responsive/responsive_widget.dart';
-import 'package:parking_project/presentation/theme/app_colors.dart';
 
-class SuperAdminMainScreenWidget extends StatefulWidget {
-  const SuperAdminMainScreenWidget({super.key});
+import '../../../assets/colors/app_colors.dart';
+
+class SuperAdminHomePage extends StatefulWidget {
+  const SuperAdminHomePage({super.key});
 
   @override
-  State<SuperAdminMainScreenWidget> createState() =>
-      _SuperAdminMainScreenWidgetState();
+  State<SuperAdminHomePage> createState() =>
+      _SuperAdminHomePageState();
 }
 
-class _SuperAdminMainScreenWidgetState
-    extends State<SuperAdminMainScreenWidget> {
+class _SuperAdminHomePageState
+    extends State<SuperAdminHomePage> {
   int _selectedTab = 0;
 
   final List<Widget> _screens = [const OfficeWidget(), const AdminsWidget()];

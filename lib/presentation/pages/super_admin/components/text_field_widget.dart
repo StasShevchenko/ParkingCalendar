@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_project/presentation/theme/app_colors.dart';
+
+import '../../../../assets/colors/app_colors.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final IconData? icon;

@@ -8,7 +8,8 @@ import 'package:parking_project/presentation/pages/super_admin/components/show_m
 import 'package:parking_project/presentation/pages/super_admin/components/show_modal_bottomsheet.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
 import 'package:parking_project/presentation/responsive/responsive_widget.dart';
-import 'package:parking_project/presentation/theme/app_colors.dart';
+
+import '../../../assets/colors/app_colors.dart';
 
 class AdminsWidget extends StatefulWidget {
   const AdminsWidget({super.key});
@@ -18,21 +19,10 @@ class AdminsWidget extends StatefulWidget {
 }
 
 class _AdminsWidgetState extends State<AdminsWidget> {
-  final Widget companyIcon = SvgPicture.asset(
-    'assets/icons/company_icon.svg',
-    width: 35,
-    height: 35,
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: ResponsiveWidget.isSmallScreen(context)
-          ? AppBar(
-              leading: Center(child: companyIcon),
-              title: const Text('Админы'),
-            )
-          : null,
       body: Center(
           child: Column(
         children: [
@@ -79,6 +69,7 @@ class _AdminsWidgetState extends State<AdminsWidget> {
 class _GridItemWidget extends StatelessWidget {
   final int cAC;
   final double aspectRatioSize;
+
   const _GridItemWidget(
       {super.key, required this.cAC, required this.aspectRatioSize});
 

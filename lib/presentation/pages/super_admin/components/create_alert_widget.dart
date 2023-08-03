@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:parking_project/models/offices.dart';
 import 'package:parking_project/models/text_fields.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
-import 'package:parking_project/presentation/theme/app_colors.dart';
+
+import '../../../../assets/colors/app_colors.dart';
 
 class CreateAlertWidget extends StatefulWidget {
   List<TextFieldsData> listAdd;
