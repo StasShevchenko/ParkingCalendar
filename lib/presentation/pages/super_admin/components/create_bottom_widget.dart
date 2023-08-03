@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_project/models/offices.dart';
-import 'package:parking_project/models/text_fields.dart';
+import 'package:parking_project/data/models/offices.dart';
+import 'package:parking_project/data/models/text_fields.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
 
 class CreateBottomWidget extends StatefulWidget {

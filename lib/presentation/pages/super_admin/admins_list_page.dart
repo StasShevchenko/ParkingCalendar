@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:parking_project/models/admins.dart';
-import 'package:parking_project/models/offices.dart';
-import 'package:parking_project/models/text_fields.dart';
+import 'package:parking_project/data/models/admins.dart';
+import 'package:parking_project/data/models/offices.dart';
+import 'package:parking_project/data/models/text_fields.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/office_card_component.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/show_modal_alert.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/show_modal_bottomsheet.dart';
@@ -11,14 +10,14 @@ import 'package:parking_project/presentation/ui_kit/responsive_widget.dart';
 
 import '../../../assets/colors/app_colors.dart';
 
-class AdminsWidget extends StatefulWidget {
-  const AdminsWidget({super.key});
+class AdminsListPage extends StatefulWidget {
+  const AdminsListPage({super.key});
 
   @override
-  State<AdminsWidget> createState() => _AdminsWidgetState();
+  State<AdminsListPage> createState() => _AdminsListPageState();
 }
 
-class _AdminsWidgetState extends State<AdminsWidget> {
+class _AdminsListPageState extends State<AdminsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

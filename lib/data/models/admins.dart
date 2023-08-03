@@ -1,4 +1,4 @@
-import 'package:parking_project/models/offices.dart';
+import 'package:parking_project/data/models/offices.dart';
 
 class Admin {
   final String? name;

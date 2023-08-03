@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:parking_project/models/offices.dart';
-import 'package:parking_project/models/text_fields.dart';
+import 'package:parking_project/data/models/offices.dart';
+import 'package:parking_project/data/models/text_fields.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/office_card_component.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/show_modal_alert.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/show_modal_bottomsheet.dart';
@@ -9,29 +9,18 @@ import 'package:parking_project/presentation/ui_kit/responsive_widget.dart';
 
 import '../../../assets/colors/app_colors.dart';
 
-class OfficeWidget extends StatefulWidget {
-  const OfficeWidget({super.key});
+class OfficesListPage extends StatefulWidget {
+  const OfficesListPage({super.key});
 
   @override
-  State<OfficeWidget> createState() => _OfficeWidgetState();
+  State<OfficesListPage> createState() => _OfficesListPageState();
 }
 
-class _OfficeWidgetState extends State<OfficeWidget> {
-  final Widget companyIcon = SvgPicture.asset(
-    'assets/icons/company_icon.svg',
-    width: 35,
-    height: 35,
-  );
+class _OfficesListPageState extends State<OfficesListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: ResponsiveWidget.isSmallScreen(context)
-          ? AppBar(
-              leading: Center(child: companyIcon),
-              title: const Text('Отделы'),
-            )
-          : null,
       body: Center(
           child: Container(
               width: double.infinity,
