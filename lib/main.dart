@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:parking_project/assets/themes/theme.dart';
+import 'package:parking_project/presentation/navigation/router.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
 
 void main() {
@@ -14,11 +15,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: appTheme(),
-      home: const MyHomePage(),
+      routerConfig: goRouter(),
     );
   }
 }
