@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:parking_project/presentation/pages/super_admin/admins_screen_widget.dart';
 import 'package:parking_project/presentation/pages/super_admin/office_screen_widget.dart';
-import 'package:parking_project/presentation/responsive/responsive_determ.dart';
+import 'package:parking_project/presentation/responsive/responsive_widget.dart';
 import 'package:parking_project/presentation/theme/app_colors.dart';
 
-class SAdminMainScreenWidget extends StatefulWidget {
-  const SAdminMainScreenWidget({super.key});
+class SuperAdminMainScreenWidget extends StatefulWidget {
+  const SuperAdminMainScreenWidget({super.key});
 
   @override
-  State<SAdminMainScreenWidget> createState() => _SAdminMainScreenWidgetState();
+  State<SuperAdminMainScreenWidget> createState() =>
+      _SuperAdminMainScreenWidgetState();
 }
 
-class _SAdminMainScreenWidgetState extends State<SAdminMainScreenWidget> {
+class _SuperAdminMainScreenWidgetState
+    extends State<SuperAdminMainScreenWidget> {
   int _selectedTab = 0;
 
   final List<Widget> _screens = [const OfficeWidget(), const AdminsWidget()];
-
-  // void onSelectTab(int index) {
-  //   if (_selectedTab == index) return;
-  //   setState(() {
-  //     _selectedTab = index;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +37,26 @@ class _SAdminMainScreenWidgetState extends State<SAdminMainScreenWidget> {
                       });
                     },
                     selectedIndex: _selectedTab,
-                    destinations: const [
+                    destinations: [
                       NavigationRailDestination(
-                          icon: Icon(Icons.business_rounded),
+                          icon: Icon(
+                            Icons.business_rounded,
+                            color: AppColors.primaryBlue,
+                          ),
+                          selectedIcon: Icon(
+                            Icons.business_rounded,
+                            color: AppColors.primaryWhite,
+                          ),
                           label: Text("Отделы")),
                       NavigationRailDestination(
-                          icon: Icon(Icons.admin_panel_settings_rounded),
+                          icon: Icon(
+                            Icons.admin_panel_settings_rounded,
+                            color: AppColors.primaryBlue,
+                          ),
+                          selectedIcon: Icon(
+                            Icons.admin_panel_settings_rounded,
+                            color: AppColors.primaryWhite,
+                          ),
                           label: Text("Админы")),
                     ],
                     labelType: NavigationRailLabelType.all,

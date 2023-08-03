@@ -7,7 +7,7 @@ import 'package:parking_project/presentation/pages/super_admin/components/office
 import 'package:parking_project/presentation/pages/super_admin/components/show_modal_alert.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/show_modal_bottomsheet.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
-import 'package:parking_project/presentation/responsive/responsive_determ.dart';
+import 'package:parking_project/presentation/responsive/responsive_widget.dart';
 import 'package:parking_project/presentation/theme/app_colors.dart';
 
 class AdminsWidget extends StatefulWidget {
