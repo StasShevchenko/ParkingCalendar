@@ -4,9 +4,18 @@ import 'package:go_router/go_router.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../assets/colors/app_colors.dart';
+import '../../navigation/app_routes.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController _loginController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +85,7 @@ class LoginPage extends StatelessWidget {
                         child: TextField(
                           textInputAction: TextInputAction.next,
                           onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                          controller: _loginController,
                           decoration: InputDecoration(
                               prefixIconColor: AppColors.primaryBlue,
                               prefixIcon: const Padding(
@@ -131,7 +141,14 @@ class LoginPage extends StatelessWidget {
                         child: SizedBox(
                           width: double.maxFinite,
                           child: ElevatedButton(
-                            onPressed: () {context.go('/home');},
+                            onPressed: () {
+                              if(_loginController.text == 'User') {
+                                context.go(AppRoutes.userHome);
+                              }
+                              if(_loginController.text == 'Admin') {
+                                context.go(AppRoutes.superAdminOffices);
+                              }
+                              },
                             child: const Text('Войти'),
                           ),
                         ),
