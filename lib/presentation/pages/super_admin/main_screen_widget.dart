@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parking_project/presentation/pages/super_admin/admins_screen_widget.dart';
 import 'package:parking_project/presentation/pages/super_admin/office_screen_widget.dart';
-import 'package:parking_project/presentation/responsive/responsive_widget.dart';
+import 'package:parking_project/presentation/ui_kit/responsive_widget.dart';
 
 import '../../../assets/colors/app_colors.dart';
 

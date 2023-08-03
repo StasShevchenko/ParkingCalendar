@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../assets/colors/app_colors.dart';
+import '../../../assets/colors/app_colors.dart';
 
 class ScaffoldWithNavigationRail extends StatelessWidget {
   const ScaffoldWithNavigationRail({

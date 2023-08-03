@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:parking_project/presentation/navigation/scaffold_with_navigation_bar.dart';
-import 'package:parking_project/presentation/navigation/scaffold_with_navigation_rail.dart';
+import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_navigation_bar.dart';
+import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_navigation_rail.dart';
 import 'package:parking_project/utils/device_info.dart';
 
-import '../../assets/colors/app_colors.dart';
+import '../../../assets/colors/app_colors.dart';
 
 class ScaffoldWithNestedNavigation extends StatelessWidget {
   const ScaffoldWithNestedNavigation({

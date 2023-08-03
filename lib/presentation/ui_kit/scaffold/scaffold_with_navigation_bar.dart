@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../assets/colors/app_colors.dart';
+import '../../../assets/colors/app_colors.dart';
 
 class ScaffoldWithNavigationBar extends StatelessWidget {
   const ScaffoldWithNavigationBar({

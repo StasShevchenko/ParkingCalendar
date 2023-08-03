@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_project/presentation/navigation/destinations.dart';
-import 'package:parking_project/presentation/navigation/scaffold_with_nested_navigation.dart';
+import 'package:parking_project/presentation/navigation/routes.dart';
+import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
 
@@ -10,7 +11,7 @@ import '../../assets/colors/app_colors.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 goRouter() => GoRouter(
-      initialLocation: '/',
+      initialLocation: AppRoutes.initial,
       navigatorKey: _rootNavigatorKey,
       routes: [
         StatefulShellRoute.indexedStack(
@@ -26,7 +27,7 @@ goRouter() => GoRouter(
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: '/home',
+                  path: AppRoutes.userHome,
                   pageBuilder: (context, state) => const NoTransitionPage(
                     child: UserHomePage(),
                   ),
@@ -36,7 +37,7 @@ goRouter() => GoRouter(
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: '/requests',
+                  path: AppRoutes.userRequests,
                   pageBuilder: (context, state) => const NoTransitionPage(
                     child: SafeArea(
                       child: Center(
@@ -50,7 +51,7 @@ goRouter() => GoRouter(
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: '/profile',
+                  path: AppRoutes.userProfile,
                   pageBuilder: (context, state) => const NoTransitionPage(
                     child: SafeArea(
                       child: Center(
@@ -63,6 +64,6 @@ goRouter() => GoRouter(
             ),
           ],
         ),
-        GoRoute(path: '/', builder: (context, state) => const LoginPage())
+        GoRoute(path: AppRoutes.initial, builder: (context, state) => const LoginPage())
       ],
     );

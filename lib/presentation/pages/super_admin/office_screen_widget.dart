@@ -5,7 +5,7 @@ import 'package:parking_project/models/text_fields.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/office_card_component.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/show_modal_alert.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/show_modal_bottomsheet.dart';
-import 'package:parking_project/presentation/responsive/responsive_widget.dart';
+import 'package:parking_project/presentation/ui_kit/responsive_widget.dart';
 
 import '../../../assets/colors/app_colors.dart';
 
