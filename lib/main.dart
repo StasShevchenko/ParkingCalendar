@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:parking_project/presentation/pages/super_admin/main_screen_widget.dart';
-import 'package:parking_project/presentation/theme/theme.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:parking_project/assets/themes/theme.dart';
+import 'package:parking_project/presentation/navigation/router.dart';
+import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting('ru').then((_) => runApp( const MyApp()
+  ));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,11 +19,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: appTheme(),
-      home: const MyHomePage(),
+      routerConfig: goRouter(),
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          child: child!,
+        );
+      },
     );
   }
 }
@@ -25,6 +39,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SuperAdminMainScreenWidget();
+    return const UserHomePage();
   }
 }
