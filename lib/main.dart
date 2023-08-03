@@ -3,7 +3,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:parking_project/assets/themes/theme.dart';
 import 'package:parking_project/presentation/navigation/router.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
-import 'package:parking_project/presentation/pages/user/tab_bar.dart';
 
 void main() {
   initializeDateFormatting('ru').then((_) => runApp( const MyApp()
