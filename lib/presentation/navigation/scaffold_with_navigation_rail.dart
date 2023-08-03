@@ -21,9 +21,7 @@ class ScaffoldWithNavigationRail extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          // Fixed navigation rail on the left (start)
           NavigationRail(
-            elevation: 10,
             backgroundColor: AppColors.primaryWhite,
             indicatorColor: AppColors.secondaryBlue,
             selectedIndex: selectedIndex,
@@ -31,8 +29,6 @@ class ScaffoldWithNavigationRail extends StatelessWidget {
             labelType: NavigationRailLabelType.all,
             destinations: destinations,
           ),
-          const VerticalDivider(thickness: 1, width: 1),
-          // Main content on the right (end)
           Expanded(
             child: body,
           ),
