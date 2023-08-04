@@ -12,7 +12,7 @@ import '../../assets/colors/app_colors.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-goRouter() =>
+final goRouter =
     GoRouter(
       initialLocation: AppRoutes.initial,
       navigatorKey: _rootNavigatorKey,
