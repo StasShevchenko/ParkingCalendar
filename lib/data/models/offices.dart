@@ -1,10 +1,10 @@
 class Office {
-  final String? name, adress;
+  final String? name, address;
 
-  Office(this.name, this.adress);
+  Office(this.name, this.address);
 }
 
-List<Office> ofisi = [
+List<Office> offices = [
   Office("Воронеж", "Ул. Пушкина д. 4"),
   Office("Магадан", "Ул. Пушкина д. 4"),
   Office("Пенза", "Ул. Пушкина д. 4"),

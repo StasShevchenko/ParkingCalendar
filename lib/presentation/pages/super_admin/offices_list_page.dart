@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:parking_project/data/models/offices.dart';
-import 'package:parking_project/data/models/text_fields.dart';
+import 'package:parking_project/presentation/pages/super_admin/components/text_fields.dart';
+import 'package:parking_project/presentation/pages/super_admin/components/bottom_sheet_content.dart';
+import 'package:parking_project/presentation/pages/super_admin/components/offices_alert_dialog.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/office_card_component.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/show_modal_alert.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/show_modal_bottomsheet.dart';
+import 'package:parking_project/presentation/ui_kit/bottom_sheet/show_app_bottom_sheet.dart';
 import 'package:parking_project/presentation/ui_kit/responsive_widget.dart';
+import 'package:parking_project/utils/device_info.dart';
 
 import '../../../assets/colors/app_colors.dart';
 
@@ -19,69 +20,64 @@ class OfficesListPage extends StatefulWidget {
 class _OfficesListPageState extends State<OfficesListPage> {
   @override
   Widget build(BuildContext context) {
+    final columnCount = switch (DeviceScreen.get(context)) {
+      FormFactorType.Mobile => 2,
+      FormFactorType.Tablet => 4,
+      FormFactorType.Desktop => 6
+    };
+
+    final gridChildAspectRatio = switch (DeviceScreen.get(context)) {
+      FormFactorType.Mobile => 1.75,
+      FormFactorType.Tablet => 1.0,
+      FormFactorType.Desktop => 1.0
+    };
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Center(
-          child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Column(children: [
-                Expanded(
-                  child: ResponsiveWidget.isLargeScreen(
-                          context) //проверка для адаптивности
-                      ? const _GridItemWidget(
-                          cAC: 6,
-                          aspectRatioSize: 0.5,
-                        )
-                      : ResponsiveWidget.isMediumScreen(context)
-                          ? const _GridItemWidget(
-                              cAC: 4,
-                              aspectRatioSize: 1,
-                            )
-                          : const _GridItemWidget(
-                              cAC: 2,
-                              aspectRatioSize: 2,
-                            ),
-                ),
-              ]))),
+        child: Column(
+          children: [
+            Expanded(
+              child: GridView.builder(
+                itemCount: offices.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: columnCount,
+                    childAspectRatio: gridChildAspectRatio),
+                itemBuilder: (context, index) {
+                  return OfficesGridItem(
+                    name: offices[index].name,
+                    address: offices[index].address,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primaryBlue,
         onPressed: () => {
           ResponsiveWidget.isSmallScreen(context)
-              ? displayBottomSheet(context, "Добавить отдел", addOffice)
-              : displayDialog(context, "Добавить отдел", addOffice)
+              ? showAppBottomSheet(
+                  context,
+                  BottomSheetContent(
+                      title: "Добавить отдел",
+                      textFieldsData: officeFieldsData),
+                )
+              : showDialog(
+                  context: context,
+                  builder: (context) => OfficesAlertDialog(
+                      title: 'Добавить отдел',
+                      textFieldsData: officeFieldsData),
+                )
         },
-        child: const Icon(Icons.add),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(32.0))),
-      ),
-    );
-  }
-}
-
-//РЕФАКТОР
-class _GridItemWidget extends StatelessWidget {
-  final int cAC; //сколько будет колонок
-  final double aspectRatioSize;
-  const _GridItemWidget(
-      {super.key, required this.cAC, required this.aspectRatioSize});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
-      child: GridView.builder(
-          itemCount: ofisi.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: cAC,
-            childAspectRatio: MediaQuery.of(context).size.width /
-                (MediaQuery.of(context).size.height / aspectRatioSize),
+          borderRadius: BorderRadius.all(
+            Radius.circular(32.0),
           ),
-          itemBuilder: (context, index) {
-            return OfficeCardComponent(
-              name: ofisi[index].name,
-              adress: ofisi[index].adress,
-            );
-          }),
+        ),
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

@@ -7,16 +7,16 @@ class TextFieldsData {
   TextFieldsData(this.icon, this.text);
 }
 
-List<TextFieldsData> addOffice = [
+List<TextFieldsData> officeFieldsData = [
   TextFieldsData(Icons.location_city, "Введите город"),
   TextFieldsData(Icons.map_rounded, "Введите адрес"),
 ];
-List<TextFieldsData> addAdmin = [
+List<TextFieldsData> adminFieldsData = [
   TextFieldsData(Icons.mail, "Введите почту"),
   TextFieldsData(Icons.lock, "Введите пароль"),
   TextFieldsData(Icons.people, "Введите имя"),
 ];
-List<TextFieldsData> addEmpl = [
+List<TextFieldsData> employeeFieldsData = [
   TextFieldsData(Icons.mail, "Введите почту"),
   TextFieldsData(Icons.lock, "Введите пароль"),
   TextFieldsData(Icons.people, "Введите имя"),

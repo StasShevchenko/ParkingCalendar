@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:parking_project/data/models/admins.dart';
 import 'package:parking_project/data/models/offices.dart';
-import 'package:parking_project/data/models/text_fields.dart';
+import 'package:parking_project/presentation/pages/super_admin/components/text_fields.dart';
+import 'package:parking_project/presentation/pages/super_admin/components/offices_alert_dialog.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/office_card_component.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/show_modal_alert.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/show_modal_bottomsheet.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
+import 'package:parking_project/presentation/ui_kit/bottom_sheet/show_app_bottom_sheet.dart';
 import 'package:parking_project/presentation/ui_kit/responsive_widget.dart';
 
 import '../../../assets/colors/app_colors.dart';
+import 'components/bottom_sheet_content.dart';
 
 class AdminsListPage extends StatefulWidget {
   const AdminsListPage({super.key});
@@ -53,12 +54,24 @@ class _AdminsListPageState extends State<AdminsListPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
           ResponsiveWidget.isSmallScreen(context)
-              ? displayBottomSheet(context, "Добавить админа", addAdmin, ofisi)
-              : displayDialog(context, "Добавить админа", addAdmin, ofisi)
+              ? showAppBottomSheet(
+                  context,
+                  BottomSheetContent(
+                      title: "Добавить админа",
+                      textFieldsData: adminFieldsData,
+                      offices: offices),
+                )
+              : showDialog(
+                  context: context,
+                  builder: (context) => OfficesAlertDialog(
+                        title: 'Добавить админа',
+                        textFieldsData: adminFieldsData,
+                        offices: offices,
+                      ))
         },
-        child: const Icon(Icons.add),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(32.0))),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -84,9 +97,9 @@ class _GridItemWidget extends StatelessWidget {
                 (MediaQuery.of(context).size.height / aspectRatioSize),
           ),
           itemBuilder: (context, index) {
-            return OfficeCardComponent(
+            return OfficesGridItem(
               name: admins[index].name,
-              adress: admins[index].office.name,
+              address: admins[index].office.name,
             );
           }),
     );

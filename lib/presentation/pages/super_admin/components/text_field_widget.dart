@@ -15,7 +15,7 @@ class TextFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
           prefixIconColor: AppColors.primaryBlue,
           prefixIcon: Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               left: 8.0,
             ),
             child: Icon(icon),
