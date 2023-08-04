@@ -5,7 +5,6 @@ import 'package:parking_project/presentation/pages/super_admin/components/bottom
 import 'package:parking_project/presentation/pages/super_admin/components/offices_alert_dialog.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/office_card_component.dart';
 import 'package:parking_project/presentation/ui_kit/bottom_sheet/show_app_bottom_sheet.dart';
-import 'package:parking_project/presentation/ui_kit/responsive_widget.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../assets/colors/app_colors.dart';
@@ -57,7 +56,7 @@ class _OfficesListPageState extends State<OfficesListPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primaryBlue,
         onPressed: () => {
-          ResponsiveWidget.isSmallScreen(context)
+          DeviceScreen.get(context) == FormFactorType.Mobile
               ? showAppBottomSheet(
                   context,
                   BottomSheetContent(
@@ -71,11 +70,6 @@ class _OfficesListPageState extends State<OfficesListPage> {
                       textFieldsData: officeFieldsData),
                 )
         },
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(32.0),
-          ),
-        ),
         child: const Icon(Icons.add),
       ),
     );
