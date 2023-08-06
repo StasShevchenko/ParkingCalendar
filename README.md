@@ -8,7 +8,16 @@
 
 Основной проблемой ручного управления такой очередью является постоянная необходимость обращения к человеку ответственному за ведение очереди, например, для того, чтобы поменяться местами в очереди, в случае ухода одного из сотрудников в отпуск.
 
+## Пакеты
+
+Информация о пакетах используемых в приложении:
+
+* [flutter_svg](https://pub.dev/packages/flutter_svg) - пакет для работы с изображениями в формате svg
+* [table_calendar](https://pub.dev/packages/table_calendar) - пакет для отрисовки календаря
+* [intl](https://pub-web.flutter-io.cn/packages/intl) - пакет для интернационализации 
+* [go_router](https://pub.dev/packages/go_router) - навигация приложения
+
 
 ## Полезные ссылки
-[Вики для разработчиков](https://github.com/StasShevchenko/ParkingCalendar/wiki)<br>
+[Вики проекта](https://github.com/StasShevchenko/ParkingCalendar/wiki)<br>
 [Макет приложения](https://www.figma.com/file/ijPJ1nfKozy8iIRukgWHVV/ParkingProject?type=design&node-id=0%3A1&mode=design&t=Eywi82qxHT1XshkK-1)
