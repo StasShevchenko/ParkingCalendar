@@ -1,0 +1,33 @@
+import 'package:dio/dio.dart';
+
+import '../app_secure_storage.dart';
+
+class DioAuthWrapper{
+  final Dio dio;
+  String? accessToken;
+
+  final _storage = AppSecureStorage.get();
+
+  DioAuthWrapper({required this.dio}){
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          options.headers['Authorization'] = 'Bearer $accessToken';
+          return handler.next(options);
+        },
+        onError: (exception, handler) async {
+          if (exception.response?.statusCode == 401) {
+            String refreshToken = (await _storage.readRefreshToken())!;
+            final response = await dio
+                .post('/token/refresh', data: {'refresh': refreshToken});
+            accessToken = (response.data as Map<String, dynamic>)['refresh'];
+            exception.requestOptions.headers['Authorization'] =
+            'Bearer $accessToken';
+            return handler.resolve(await dio.fetch(exception.requestOptions));
+          }
+        },
+      ),
+    );
+  }
+
+}
