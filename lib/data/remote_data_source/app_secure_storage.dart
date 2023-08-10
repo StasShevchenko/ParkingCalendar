@@ -2,7 +2,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AppSecureStorage{
   final _storage = const FlutterSecureStorage();
-
   static AppSecureStorage? instance;
 
   static AppSecureStorage get(){
@@ -18,7 +17,11 @@ class AppSecureStorage{
     return await _storage.read(key: 'refreshToken');
   }
 
-  void writeRefreshToken(String refreshToken) async{
-    _storage.write(key: 'refreshToken', value: refreshToken);
+  Future<void> writeRefreshToken(String refreshToken) async{
+    await _storage.write(key: 'refreshToken', value: refreshToken);
+  }
+
+  void deleteRefreshToken() {
+    _storage.delete(key: 'refreshToken');
   }
 }
