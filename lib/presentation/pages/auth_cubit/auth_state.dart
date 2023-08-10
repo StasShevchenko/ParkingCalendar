@@ -6,7 +6,7 @@ enum AuthStatus {
 }
 
 
-final class AuthState {
+class AuthState {
   final AuthStatus authStatus;
   final User? userData;
   AuthState({this.authStatus = AuthStatus.unauthenticated, this.userData});
