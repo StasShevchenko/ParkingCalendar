@@ -20,6 +20,7 @@ class ScaffoldWithNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: body,
+      backgroundColor: AppColors.background,
       bottomNavigationBar: NavigationBar(
         shadowColor: Colors.black,
         elevation: 10,

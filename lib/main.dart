@@ -5,7 +5,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:parking_project/assets/themes/theme.dart';
 import 'package:parking_project/presentation/navigation/router.dart';
 import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
-import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,14 +37,5 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const UserHomePage();
   }
 }
