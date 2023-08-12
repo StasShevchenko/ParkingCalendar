@@ -23,11 +23,24 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
                   loginError: state.loginValue.isEmpty ? true : null,
                   passwordError: state.passwordValue.isEmpty ? true : null));
             } else {
-              try{
-                final refreshToken = await authRemoteDataSource.login(state.loginValue, state.passwordValue);
+              try {
+                emit(state.copyWith(isLoading: true, wrongCredentials: false));
+                final refreshToken = await authRemoteDataSource.login(
+                    state.loginValue, state.passwordValue);
                 authCubit.login(refreshToken);
-              } on DioException {
-                emit(state.copyWith(wrongCredentials: true));
+              } on DioException catch (exception) {
+                if (exception.type == DioExceptionType.connectionTimeout) {
+                  emit(state.copyWith(
+                      wrongCredentials: true,
+                      isLoading: false,
+                      errorMessage:
+                          'Время запроса истекло! Проверьте ваше подключение к интернету!'));
+                } else {
+                  emit(state.copyWith(
+                      wrongCredentials: true,
+                      isLoading: false,
+                      errorMessage: 'Неверный логин или пароль!'));
+                }
               }
             }
           }

@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if(state.authStatus == AuthStatus.authenticated){
+        if (state.authStatus == AuthStatus.authenticated) {
           context.go(AppRoutes.userHome);
         }
       },
@@ -158,9 +158,9 @@ class _LoginPageState extends State<LoginPage> {
                                 ConstrainedBox(
                                   constraints:
                                       const BoxConstraints(maxWidth: 350),
-                                  child: const Text(
-                                    'Неверный логин или пароль!',
-                                    style: TextStyle(color: Colors.red),
+                                  child: Text(
+                                    state.errorMessage,
+                                    style: const TextStyle(color: Colors.red),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -180,15 +180,21 @@ class _LoginPageState extends State<LoginPage> {
                                 height: 16,
                               ),
                               ConstrainedBox(
-                                constraints:
-                                    const BoxConstraints(maxWidth: 350),
+                                constraints: const BoxConstraints(
+                                    maxWidth: 350, maxHeight: 44),
                                 child: SizedBox(
                                   width: double.maxFinite,
                                   child: ElevatedButton(
                                     onPressed: () {
                                       bloc.add(LoginButtonPressed());
                                     },
-                                    child: const Text('Войти'),
+                                    child: !state.isLoading
+                                        ? const Text('Войти')
+                                        : const FittedBox(
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                   ),
                                 ),
                               ),
