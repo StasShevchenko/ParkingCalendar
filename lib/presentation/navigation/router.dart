@@ -7,6 +7,7 @@ import 'package:parking_project/presentation/pages/super_admin/offices_list_page
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
+import 'package:parking_project/presentation/pages/user/user_profile_page/user_profile_page.dart';
 
 import '../../assets/colors/app_colors.dart';
 
@@ -63,11 +64,7 @@ final goRouter =
                   path: AppRoutes.userProfile,
                   pageBuilder: (context, state) =>
                   const NoTransitionPage(
-                    child: SafeArea(
-                      child: Center(
-                        child: Text('Profile page'),
-                      ),
-                    ),
+                      child: UserProfilePage(),
                   ),
                 ),
               ],
