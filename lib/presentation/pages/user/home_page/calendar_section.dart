@@ -47,8 +47,8 @@ class CalendarSection extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Calendar(
-                  startTime: '08/01/2023',
-                  endTime: '08/10/2023',
+                  startTime: '14.08.2023',
+                  endTime: '17.08.2023',
                   isActive: true,
                 ),
               ),

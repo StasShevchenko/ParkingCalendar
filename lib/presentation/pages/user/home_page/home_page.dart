@@ -19,33 +19,6 @@ class _UserHomePageState extends State<UserHomePage> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
 
-    final testUsersList = [
-      UserInfo(name: 'Полежаев Дмитрий', month: 'Январь'),
-      UserInfo(name: 'Иришка Чикипики', month: 'Январь'),
-      UserInfo(name: 'Валерий Альбертович', month: 'Февраль'),
-      UserInfo(name: 'Михаил Чеченко', month: 'Февраль'),
-      UserInfo(name: 'Антон Палыч', month: 'Март'),
-      UserInfo(name: 'Ковшев Виталий', month: 'Март'),
-      UserInfo(name: 'Полежаев Дмитрий', month: 'Январь'),
-      UserInfo(name: 'Иришка Чикипики', month: 'Январь'),
-      UserInfo(name: 'Валерий Альбертович', month: 'Февраль'),
-      UserInfo(name: 'Михаил Чеченко', month: 'Февраль'),
-      UserInfo(name: 'Антон Палыч', month: 'Март'),
-      UserInfo(name: 'Ковшев Виталий', month: 'Март'),
-      UserInfo(name: 'Полежаев Дмитрий', month: 'Январь'),
-      UserInfo(name: 'Иришка Чикипики', month: 'Январь'),
-      UserInfo(name: 'Валерий Альбертович', month: 'Февраль'),
-      UserInfo(name: 'Михаил Чеченко', month: 'Февраль'),
-      UserInfo(name: 'Антон Палыч', month: 'Март'),
-      UserInfo(name: 'Ковшев Виталий', month: 'Март'),
-      UserInfo(name: 'Полежаев Дмитрий', month: 'Январь'),
-      UserInfo(name: 'Иришка Чикипики', month: 'Январь'),
-      UserInfo(name: 'Валерий Альбертович', month: 'Февраль'),
-      UserInfo(name: 'Михаил Чеченко', month: 'Февраль'),
-      UserInfo(name: 'Антон Палыч', month: 'Март'),
-      UserInfo(name: 'Ковшев Виталий', month: 'Март'),
-    ];
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -67,7 +40,7 @@ class _UserHomePageState extends State<UserHomePage> with SingleTickerProviderSt
         ),
         body: TabBarView(children: [
           const CalendarSection(),
-          QueueSection(users: testUsersList)
+          QueueSection(users: [])
         ]),
       ),
     );

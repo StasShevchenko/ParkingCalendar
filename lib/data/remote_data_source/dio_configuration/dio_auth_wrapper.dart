@@ -8,6 +8,9 @@ class DioAuthWrapper{
 
   final _storage = AppSecureStorage.get();
 
+  Dio get(){
+    return dio;
+  }
   DioAuthWrapper({required this.dio}){
     dio.interceptors.add(
       InterceptorsWrapper(

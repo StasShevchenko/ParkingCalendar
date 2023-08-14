@@ -18,7 +18,7 @@ class Calendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dateFormat = DateFormat('MM/dd/yyyy');
+    var dateFormat = DateFormat('dd.MM.yyyy');
     DateTime startDate = dateFormat.parse(startTime);
     DateTime endDate = dateFormat.parse(endTime);
 
