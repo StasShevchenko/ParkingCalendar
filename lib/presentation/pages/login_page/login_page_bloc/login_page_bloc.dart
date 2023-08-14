@@ -1,12 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
 import 'package:parking_project/data/remote_data_source/auth_data_source.dart';
 
 import '../../auth_cubit/auth_cubit.dart';
 
 part 'login_page_event.dart';
-
 part 'login_page_state.dart';
 
 class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
@@ -29,7 +29,7 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
                     state.loginValue, state.passwordValue);
                 authCubit.login(refreshToken);
               } on DioException catch (exception) {
-                if (exception.type == DioExceptionType.connectionTimeout) {
+                if (exception.type == DioExceptionType.connectionTimeout || exception.error is SocketException) {
                   emit(state.copyWith(
                       wrongCredentials: true,
                       isLoading: false,
