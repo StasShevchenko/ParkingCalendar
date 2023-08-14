@@ -27,6 +27,8 @@ class DioAuthWrapper{
             exception.requestOptions.headers['Authorization'] =
             'Bearer $accessToken';
             return handler.resolve(await dio.fetch(exception.requestOptions));
+          } else{
+            return handler.next(exception);
           }
         },
       ),

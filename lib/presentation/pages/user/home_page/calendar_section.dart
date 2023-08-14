@@ -4,7 +4,9 @@ import '../../../../assets/colors/app_colors.dart';
 import 'components/calendar/calendar.dart';
 
 class CalendarSection extends StatelessWidget {
-  const CalendarSection({super.key});
+  final String startDate;
+  final String endDate;
+  const CalendarSection({super.key, required this.startDate, required this.endDate});
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +46,11 @@ class CalendarSection extends StatelessWidget {
               surfaceTintColor: AppColors.primaryWhite,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
-              child: const Padding(
-                padding: EdgeInsets.all(16.0),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Calendar(
-                  startTime: '14.08.2023',
-                  endTime: '17.08.2023',
+                  startTime: startDate,
+                  endTime: endDate,
                   isActive: true,
                 ),
               ),
