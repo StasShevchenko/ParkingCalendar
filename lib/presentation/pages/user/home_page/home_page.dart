@@ -9,6 +9,7 @@ import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc
 import 'package:parking_project/presentation/pages/user/home_page/queue_section.dart';
 
 import '../../../../assets/colors/app_colors.dart';
+import '../../../../data/models/user.dart';
 
 class UserHomePage extends StatefulWidget {
   const UserHomePage({super.key});

@@ -26,7 +26,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
   void init() async {
     try {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true, isConnectionError: false));
       final userInfo = await userDataSource.getUserById(user.id);
       final usersList = await userDataSource.getAllUsers();
       emit(
