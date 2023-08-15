@@ -2,24 +2,24 @@ part of 'home_page_bloc.dart';
 
 class HomePageState {
   final UserInfo? userInfo;
-  final List<UserInfo>? usersList;
+  final List<QueueDataHolder>? queueItems;
   final bool isLoading;
   final bool isConnectionError;
 
   HomePageState(
       {this.userInfo,
-      this.usersList,
+      this.queueItems,
       this.isLoading = true,
       this.isConnectionError = false});
 
   HomePageState copyWith(
       {UserInfo? userInfo,
-      List<UserInfo>? usersList,
+      List<QueueDataHolder>? queueItems,
       bool? isLoading,
       bool? isConnectionError}) {
     return HomePageState(
         userInfo: userInfo ?? this.userInfo,
-        usersList: usersList ?? this.usersList,
+        queueItems: queueItems ?? this.queueItems,
         isLoading: isLoading ?? this.isLoading,
         isConnectionError: isConnectionError ?? this.isConnectionError);
   }

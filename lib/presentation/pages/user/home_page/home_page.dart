@@ -77,7 +77,7 @@ class _UserHomePageState extends State<UserHomePage>
                       startDate: state.userInfo!.startDate,
                       endDate: state.userInfo!.endDate,
                     ),
-                    QueueSection(users: state.usersList!),
+                    QueueSection(queueItems: state.queueItems!),
                   ],
                 ),
               ),
