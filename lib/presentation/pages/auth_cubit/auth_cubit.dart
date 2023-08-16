@@ -13,11 +13,20 @@ class AuthCubit extends Cubit<AuthState> {
     _storage.readRefreshToken().then(
       (value) {
         if (value != null) {
-          final json = JwtDecoder.decode(value);
-          final userData = User.fromJson(json['user']);
+          if (JwtDecoder.isExpired(value)) {
+            emit(AuthState(
+                authStatus: AuthStatus.unauthenticated, userData: null));
+          } else {
+            final json = JwtDecoder.decode(value);
+            final userData = User.fromJson(json['user']);
+            emit(
+              AuthState(
+                  authStatus: AuthStatus.authenticated, userData: userData),
+            );
+          }
+        } else {
           emit(AuthState(
-              authStatus: AuthStatus.authenticated, userData: userData),
-          );
+              authStatus: AuthStatus.unauthenticated, userData: null));
         }
       },
     );

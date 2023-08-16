@@ -8,6 +8,9 @@ class DioAuthWrapper{
 
   final _storage = AppSecureStorage.get();
 
+  Dio get(){
+    return dio;
+  }
   DioAuthWrapper({required this.dio}){
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -24,6 +27,8 @@ class DioAuthWrapper{
             exception.requestOptions.headers['Authorization'] =
             'Bearer $accessToken';
             return handler.resolve(await dio.fetch(exception.requestOptions));
+          } else{
+            return handler.next(exception);
           }
         },
       ),
