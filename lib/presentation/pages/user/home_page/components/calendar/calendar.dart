@@ -8,13 +8,12 @@ import 'active_calendar_day.dart';
 class Calendar extends StatelessWidget {
   final String startTime;
   final String endTime;
-  final bool isActive;
 
   const Calendar(
       {super.key,
       required this.startTime,
       required this.endTime,
-      required this.isActive});
+     });
 
   @override
   Widget build(BuildContext context) {

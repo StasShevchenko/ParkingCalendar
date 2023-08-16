@@ -11,8 +11,8 @@ class UserDataSource {
 
   Future<UserInfo> getUserById(int userId) async {
     final responseData = (await dio.get('/user/$userId')).data;
-    responseData['startDate'] = '14.08.2023';
-    responseData['endDate'] = '18.08.2023';
+    responseData['startDate'] = '18.08.2023';
+    responseData['endDate'] = '25.08.2023';
     final userInfo = UserInfo.fromJson(responseData);
     return userInfo;
   }
