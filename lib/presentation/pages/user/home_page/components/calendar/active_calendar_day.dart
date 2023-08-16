@@ -14,14 +14,17 @@ class ActiveCalendarDay extends StatelessWidget {
   Widget build(BuildContext context) {
       return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            color: AppColors.primaryAccentRed,
-            borderRadius: BorderRadius.all(Radius.circular(12.0))),
-        child: Center(
-          child: Text(
-            dayNumber,
-            style: const TextStyle(color: Colors.white),
+      child: AspectRatio(
+        aspectRatio: 1.0,
+        child: Container(
+          decoration: BoxDecoration(
+              color: AppColors.primaryAccentRed,
+              borderRadius: const BorderRadius.all(Radius.circular(12.0))),
+          child: Center(
+            child: Text(
+              dayNumber,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ),
