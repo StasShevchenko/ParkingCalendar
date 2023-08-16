@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:parking_project/data/models/user_info.dart';
-import 'package:parking_project/presentation/navigation/app_routes.dart';
 import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/pages/user/home_page/calendar_section.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
 import 'package:parking_project/presentation/pages/user/home_page/queue_section.dart';
 
 import '../../../../assets/colors/app_colors.dart';
-import '../../../../data/models/user.dart';
 
 class UserHomePage extends StatefulWidget {
   const UserHomePage({super.key});
@@ -33,7 +29,10 @@ class _UserHomePageState extends State<UserHomePage>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Ошибка!\n Проверьте ваше подключение к интернету!', textAlign: TextAlign.center,),
+                  const Text(
+                    'Ошибка!\n Проверьте ваше подключение к интернету!',
+                    textAlign: TextAlign.center,
+                  ),
                   const SizedBox(
                     height: 8,
                   ),
@@ -56,31 +55,53 @@ class _UserHomePageState extends State<UserHomePage>
               length: 2,
               child: Scaffold(
                 backgroundColor: AppColors.background,
-                appBar: AppBar(
-                  backgroundColor: AppColors.primaryBlue,
-                  toolbarHeight: 0,
-                  bottom: TabBar(
-                    indicatorColor: AppColors.primaryWhite,
-                    labelColor: AppColors.primaryWhite,
-                    unselectedLabelColor: Colors.grey,
-                    tabs: const [
-                      Tab(
-                        text: 'Календарь',
+                appBar: MediaQuery.of(context).size.width < 880
+                    ? AppBar(
+                        backgroundColor: AppColors.primaryBlue,
+                        toolbarHeight: 0,
+                        bottom: TabBar(
+                          indicatorColor: AppColors.primaryWhite,
+                          labelColor: AppColors.primaryWhite,
+                          unselectedLabelColor: Colors.grey,
+                          tabs: const [
+                            Tab(
+                              text: 'Календарь',
+                            ),
+                            Tab(text: 'Очередь')
+                          ],
+                        ),
+                      )
+                    : null,
+                body: MediaQuery.of(context).size.width < 880
+                    ? TabBarView(
+                        children: [
+                          CalendarSection(
+                            isActive: state.userInfo!.isActive,
+                            startDate: state.userInfo!.startDate,
+                            endDate: state.userInfo!.endDate,
+                          ),
+                          QueueSection(queueItems: state.queueItems!),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: CalendarSection(
+                              isActive: state.userInfo!.isActive,
+                              startDate: state.userInfo!.startDate,
+                              endDate: state.userInfo!.endDate,
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 32.0, top: 16.0),
+                              child: QueueSection(
+                                queueItems: state.queueItems!,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                      Tab(text: 'Очередь')
-                    ],
-                  ),
-                ),
-                body: TabBarView(
-                  children: [
-                    CalendarSection(
-                      isActive: state.userInfo!.isActive,
-                      startDate: state.userInfo!.startDate,
-                      endDate: state.userInfo!.endDate,
-                    ),
-                    QueueSection(queueItems: state.queueItems!),
-                  ],
-                ),
               ),
             );
           }
