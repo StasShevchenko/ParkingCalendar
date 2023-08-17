@@ -27,30 +27,50 @@ class _UserProfilePageState extends State<UserProfilePage>  {
           ),
         body: Column (
           children: [
+
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: Text(
                   'Добро пожаловать, Михаил!',
                   selectionColor: AppColors.primaryBlue,
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
             ),
             Text(
-              'Ваш пароль: СложноеСлово15',
-              style: Theme.of(context).textTheme.headlineLarge,
+              'Ваш пароль:',
+              style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
+            ),
+            TextField(
+              decoration: InputDecoration(
+
+                prefixIcon: Icon(Icons.lock),
+                prefixIconColor: AppColors.primaryBlue,
+
+                labelText: 'Ваш пароль',
+                labelStyle: TextStyle(color: AppColors.primaryBlue),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.primaryBlue,
+                    width: 2.0
+                  ),
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                 color: AppColors.primaryBlue,
+                width: 2.0
+                ),
+                borderRadius: BorderRadius.circular(32),
+                ),
+              ),
             ),
           ],
         ),
-      floatingActionButton: FloatingActionButton (
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        backgroundColor: AppColors.primaryBlue,
-        child: const Icon(Icons.create),
-      ),
+
+
         );
   }
   }
