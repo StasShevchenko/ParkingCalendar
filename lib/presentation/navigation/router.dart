@@ -9,8 +9,9 @@ import 'package:parking_project/presentation/pages/login_page/login_page.dart';
 import 'package:parking_project/presentation/pages/super_admin/admins_list_page.dart';
 import 'package:parking_project/presentation/pages/super_admin/offices_list_page.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
-import 'package:parking_project/presentation/pages/user/profile_page/profile_page.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
+
+import '../pages/user/user_profile_page/user_profile_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
