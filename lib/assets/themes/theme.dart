@@ -42,6 +42,7 @@ InputDecorationTheme appInputDecorationTheme() => InputDecorationTheme(
         borderSide: BorderSide(color: AppColors.secondaryBlue),
         borderRadius: BorderRadius.circular(32)),
     labelStyle: TextStyle(color: AppColors.secondaryBlue),
+    errorStyle: const TextStyle(color: Colors.red),
     fillColor: AppColors.primaryWhite,
     filled: true);
 
