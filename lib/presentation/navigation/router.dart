@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_project/presentation/navigation/app_destinations.dart';
 import 'package:parking_project/presentation/navigation/app_routes.dart';
 import 'package:parking_project/presentation/navigation/auth_redirector.dart';
+import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page.dart';
 import 'package:parking_project/presentation/pages/super_admin/admins_list_page.dart';
 import 'package:parking_project/presentation/pages/super_admin/offices_list_page.dart';
@@ -12,7 +14,8 @@ import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_neste
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
- final goRouter = GoRouter(
+
+goRouter(AuthCubit authCubit) => GoRouter(
   initialLocation: AppRoutes.initial,
   navigatorKey: _rootNavigatorKey,
   routes: [
@@ -20,8 +23,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
       builder: (context, state, navigationShell) {
         return ScaffoldWithNestedNavigation(
           navigationShell: navigationShell,
-          navigationDestinations: AppDestinations.getUserDestinations().$1,
-          navigationRailDestinations: AppDestinations.getUserDestinations().$2,
+          navigationDestinations: AppDestinations.getDestinations(context.watch<AuthCubit>().state.userData!).$1,
+          navigationRailDestinations: AppDestinations.getDestinations(context.watch<AuthCubit>().state.userData!).$2,
         );
       },
       branches: [
@@ -49,6 +52,32 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
             ),
           ],
         ),
+
+        //Нужно только если супер админ
+        if(authCubit.state.userData?.isStaff ?? false)
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.superAdminOffices,
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: OfficesListPage(),
+              ),
+            )
+          ],
+        ),
+
+        if(authCubit.state.userData?.isStaff ?? false)
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.superAdminAdminsList,
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: AdminsListPage(),
+              ),
+            )
+          ],
+        ),
+
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -61,39 +90,6 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
                 ),
               ),
             ),
-          ],
-        ),
-      ],
-    ),
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) {
-        return ScaffoldWithNestedNavigation(
-          navigationShell: navigationShell,
-          navigationDestinations:
-              AppDestinations.getSuperAdminDestinations().$1,
-          navigationRailDestinations:
-              AppDestinations.getSuperAdminDestinations().$2,
-        );
-      },
-      branches: [
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: AppRoutes.superAdminOffices,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: OfficesListPage(),
-              ),
-            )
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: AppRoutes.superAdminAdminsList,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: AdminsListPage(),
-              ),
-            )
           ],
         ),
       ],
