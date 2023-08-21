@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:parking_project/presentation/navigation/app_destinations.dart';
 import 'package:parking_project/presentation/navigation/app_routes.dart';
 import 'package:parking_project/presentation/navigation/auth_redirector.dart';
+import 'package:parking_project/presentation/pages/admin/admin_home_page.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page.dart';
 import 'package:parking_project/presentation/pages/super_admin/admins_list_page.dart';
 import 'package:parking_project/presentation/pages/super_admin/offices_list_page.dart';
@@ -12,7 +13,7 @@ import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_neste
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
- final goRouter = GoRouter(
+final goRouter = GoRouter(
   initialLocation: AppRoutes.initial,
   navigatorKey: _rootNavigatorKey,
   routes: [
@@ -103,6 +104,9 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
       pageBuilder: (context, state) => const NoTransitionPage(
         child: LoginPage(),
       ),
-    )
+    ),
+    GoRoute(
+        path: AppRoutes.adminHome,
+        builder: (context, state) => const AdminHomePage()),
   ],
 );
