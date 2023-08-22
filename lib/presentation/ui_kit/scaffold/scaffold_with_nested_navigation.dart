@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_navigation_bar.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_navigation_rail.dart';
 import 'package:parking_project/utils/device_info.dart';
 
+import '../../navigation/navigation_icons_data.dart';
+
 class ScaffoldWithNestedNavigation extends StatelessWidget {
-  const ScaffoldWithNestedNavigation(
-      {super.key,
-      required this.navigationShell,
-      required this.navigationDestinations,
-      required this.navigationRailDestinations});
+  const ScaffoldWithNestedNavigation({
+    super.key,
+    required this.navigationShell,
+    required this.navigationDestinations,
+  });
 
   final StatefulNavigationShell navigationShell;
-  final List<NavigationDestination> navigationDestinations;
-  final List<NavigationRailDestination> navigationRailDestinations;
+  final List<NavigationDestinationDataHolder> navigationDestinations;
 
   void _goBranch(int index) {
     navigationShell.goBranch(index);
@@ -23,24 +22,26 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state){
-        if (DeviceScreen.get(context) == FormFactorType.Mobile) {
-          return ScaffoldWithNavigationBar(
-            body: navigationShell,
-            selectedIndex: navigationShell.currentIndex,
-            onDestinationSelected: _goBranch,
-            destinations: navigationDestinations,
-          );
-        } else {
-          return ScaffoldWithNavigationRail(
-            body: navigationShell,
-            selectedIndex: navigationShell.currentIndex,
-            onDestinationSelected: _goBranch,
-            destinations: navigationRailDestinations,
-          );
-        }
-      },
-    );
+    if (DeviceScreen.get(context) == FormFactorType.Mobile) {
+      return ScaffoldWithNavigationBar(
+        body: navigationShell,
+        selectedIndex: navigationDestinations.indexOf(
+            navigationDestinations.firstWhere(
+                (element) => element.index == navigationShell.currentIndex,
+                orElse: () => navigationDestinations[0])),
+        onDestinationSelected: _goBranch,
+        destinations: navigationDestinations,
+      );
+    } else {
+      return ScaffoldWithNavigationRail(
+        body: navigationShell,
+        selectedIndex: navigationDestinations.indexOf(
+            navigationDestinations.firstWhere(
+                (element) => element.index == navigationShell.currentIndex,
+                orElse: () => navigationDestinations[0])),
+        onDestinationSelected: _goBranch,
+        destinations: navigationDestinations,
+      );
+    }
   }
 }

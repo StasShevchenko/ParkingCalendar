@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parking_project/presentation/navigation/navigation_icons_data.dart';
 
 import '../../../assets/colors/app_colors.dart';
 
@@ -14,7 +15,7 @@ class ScaffoldWithNavigationRail extends StatelessWidget {
   final Widget body;
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
-  final List<NavigationRailDestination> destinations;
+  final List<NavigationDestinationDataHolder> destinations;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,11 @@ class ScaffoldWithNavigationRail extends StatelessWidget {
             backgroundColor: AppColors.primaryWhite,
             indicatorColor: AppColors.secondaryBlue,
             selectedIndex: selectedIndex,
-            onDestinationSelected: onDestinationSelected,
+            onDestinationSelected: (index){
+              onDestinationSelected(destinations[index].index);
+            },
             labelType: NavigationRailLabelType.all,
-            destinations: destinations,
+            destinations: mapToNavigationRailDestinations(destinations),
           ),
           Expanded(
             child: body,
