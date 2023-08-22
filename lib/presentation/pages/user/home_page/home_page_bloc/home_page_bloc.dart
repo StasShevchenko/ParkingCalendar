@@ -14,6 +14,7 @@ part 'home_page_state.dart';
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   User user;
   UserDataSource userDataSource = UserDataSource();
+  List<UserInfo> usersList = [];
 
   HomePageBloc({required this.user}) : super(HomePageState()) {
     //init bloc
@@ -22,6 +23,11 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       switch (event) {
         case PageRefreshed _:
           init();
+        case SearchEntered searchEvent:
+          final sortedList = usersList
+              .where((user) => user.firstName.contains(searchEvent.searchQueue))
+              .toList();
+          emit(state.copyWith(queueItems: mapUsersToQueueData(sortedList)));
       }
     });
   }
@@ -30,7 +36,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     try {
       emit(state.copyWith(isLoading: true, isConnectionError: false));
       final userInfo = await userDataSource.getUserById(user.id);
-      final usersList = await userDataSource.getAllUsers();
+      usersList = await userDataSource.getAllUsers();
       emit(
         state.copyWith(
             userInfo: userInfo,
@@ -43,19 +49,20 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
-  List<QueueDataHolder> mapUsersToQueueData(List<UserInfo> users){
+  List<QueueDataHolder> mapUsersToQueueData(List<UserInfo> users) {
     var currentMonth = 0;
     List<QueueDataHolder> queueItems = [];
     users.sort((a, b) => a.startDate.compareTo(b.startDate));
     for (var user in users) {
       var dateFormat = DateFormat('dd.MM.yyyy');
       DateTime dateObject = dateFormat.parse(user.startDate);
-      if(currentMonth != dateObject.month) {
+      if (currentMonth != dateObject.month) {
         currentMonth = dateObject.month;
-        final queueItem = QueueDataHolder(monthName: numberToMonth(currentMonth));
+        final queueItem =
+            QueueDataHolder(monthName: numberToMonth(currentMonth));
         queueItem.users.add(user);
         queueItems.add(queueItem);
-      } else{
+      } else {
         final queueItem = queueItems.last;
         queueItem.users.add(user);
       }
@@ -63,9 +70,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     return queueItems;
   }
 
-
-  String numberToMonth(int number){
-    return switch(number){
+  String numberToMonth(int number) {
+    return switch (number) {
       1 => 'Январь',
       2 => 'Февраль',
       3 => 'Март',
@@ -81,5 +87,4 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       _ => 'Январь'
     };
   }
-
 }

@@ -80,7 +80,10 @@ class _UserHomePageState extends State<UserHomePage>
                             startDate: state.userInfo!.startDate,
                             endDate: state.userInfo!.endDate,
                           ),
-                          QueueSection(queueItems: state.queueItems!),
+                          QueueSection(
+                              onSearchEntered: (value) =>
+                                  bloc.add(SearchEntered(searchQueue: value)),
+                              queueItems: state.queueItems!),
                         ],
                       )
                     : Row(
@@ -94,8 +97,11 @@ class _UserHomePageState extends State<UserHomePage>
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 32.0, top: 16.0),
+                              padding:
+                                  const EdgeInsets.only(right: 32.0, top: 16.0),
                               child: QueueSection(
+                                onSearchEntered: (value) =>
+                                    bloc.add(SearchEntered(searchQueue: value)),
                                 queueItems: state.queueItems!,
                               ),
                             ),
