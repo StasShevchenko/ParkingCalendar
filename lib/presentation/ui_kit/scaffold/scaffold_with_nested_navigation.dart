@@ -4,17 +4,17 @@ import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_navig
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_navigation_rail.dart';
 import 'package:parking_project/utils/device_info.dart';
 
+import '../../navigation/navigation_icons_data.dart';
+
 class ScaffoldWithNestedNavigation extends StatelessWidget {
   const ScaffoldWithNestedNavigation({
-    Key? key,
+    super.key,
     required this.navigationShell,
     required this.navigationDestinations,
-    required this.navigationRailDestinations
-  }) : super(
-            key: key ?? const ValueKey<String>('ScaffoldWithNestedNavigation'));
+  });
+
   final StatefulNavigationShell navigationShell;
-  final List<NavigationDestination> navigationDestinations;
-  final List<NavigationRailDestination> navigationRailDestinations;
+  final List<NavigationDestinationDataHolder> navigationDestinations;
 
   void _goBranch(int index) {
     navigationShell.goBranch(index);
@@ -25,16 +25,22 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
     if (DeviceScreen.get(context) == FormFactorType.Mobile) {
       return ScaffoldWithNavigationBar(
         body: navigationShell,
-        selectedIndex: navigationShell.currentIndex,
+        selectedIndex: navigationDestinations.indexOf(
+            navigationDestinations.firstWhere(
+                (element) => element.index == navigationShell.currentIndex,
+                orElse: () => navigationDestinations[0])),
         onDestinationSelected: _goBranch,
         destinations: navigationDestinations,
       );
     } else {
       return ScaffoldWithNavigationRail(
         body: navigationShell,
-        selectedIndex: navigationShell.currentIndex,
+        selectedIndex: navigationDestinations.indexOf(
+            navigationDestinations.firstWhere(
+                (element) => element.index == navigationShell.currentIndex,
+                orElse: () => navigationDestinations[0])),
         onDestinationSelected: _goBranch,
-        destinations: navigationRailDestinations,
+        destinations: navigationDestinations,
       );
     }
   }

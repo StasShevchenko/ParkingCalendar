@@ -18,7 +18,7 @@ class UserInfo {
       required this.startDate,
       required this.endDate,
       required this.isSuperUser,
-      this.isActive = false});
+      this.isActive = true});
 
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     return UserInfo(
