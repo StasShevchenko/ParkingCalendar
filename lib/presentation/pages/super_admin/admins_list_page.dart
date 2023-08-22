@@ -38,7 +38,7 @@ class _AdminsListPageState extends State<AdminsListPage> {
       body: Center(
         child: Column(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(20.0),
               child: SizedBox(
                 width: 350,

@@ -5,11 +5,13 @@ import '../../../../assets/colors/app_colors.dart';
 class TextFieldWidget extends StatelessWidget {
   final IconData? icon;
   final String? label;
-  const TextFieldWidget({super.key, this.icon, this.label});
+  void Function(String)? onChanged;
+  TextFieldWidget({super.key, this.icon, this.label, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: onChanged,
       textInputAction: TextInputAction.next,
       onTapOutside: (_) => FocusScope.of(context).unfocus(),
       decoration: InputDecoration(
