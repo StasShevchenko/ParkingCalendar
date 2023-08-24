@@ -95,7 +95,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     onPressed: () {
                       context.read<AuthCubit>().logout();
                     },
-                    child: Text('Выйти'),
+                    child: const Text('Выйти'),
                   )
                 ],
               ),
