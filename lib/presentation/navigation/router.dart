@@ -8,6 +8,7 @@ import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page.dart';
 import 'package:parking_project/presentation/pages/super_admin/admins_list_page.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
+import 'package:parking_project/presentation/pages/user/request_page/request_page.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
 
 import '../pages/user/user_profile_page/user_profile_page.dart';
@@ -42,11 +43,7 @@ final goRouter = GoRouter(
               GoRoute(
                 path: AppRoutes.userRequests,
                 pageBuilder: (context, state) => const NoTransitionPage(
-                  child: SafeArea(
-                    child: Center(
-                      child: Text('Requests page'),
-                    ),
-                  ),
+                  child: AuthRedirector(child: RequestPage()),
                 ),
               ),
             ],
