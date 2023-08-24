@@ -14,16 +14,12 @@ class DioAuthWrapper{
   DioAuthWrapper({required this.dio}){
     dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) {
-          options.headers['Authorization'] = 'Bearer $accessToken';
-          return handler.next(options);
-        },
         onError: (exception, handler) async {
           if (exception.response?.statusCode == 401) {
             String refreshToken = (await _storage.readRefreshToken())!;
             final response = await dio
                 .post('/token/refresh', data: {'refresh': refreshToken});
-            accessToken = (response.data as Map<String, dynamic>)['refresh'];
+            accessToken = (response.data as Map<String, dynamic>)['access'];
             exception.requestOptions.headers['Authorization'] =
             'Bearer $accessToken';
             return handler.resolve(await dio.fetch(exception.requestOptions));
