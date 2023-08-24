@@ -5,7 +5,7 @@ class AuthRemoteDataSource {
 
   Future<String> login(String email, String password) async{
     final response = await dio.post('/auth/login', data: {'email' : email, 'password' : password});
-    final refreshToken = response.data['jwtAccess'];
+    final refreshToken = response.data['jwtRefresh'];
     return refreshToken;
   }
 }
