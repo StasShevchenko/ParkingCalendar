@@ -12,9 +12,9 @@ class User {
       email: json['email'],
       id: json['id'],
       roles: [
-        if (json['is_user'] ?? false) Role.User,
-        if (json['is_staff'] ?? false) Role.SuperAdmin,
-        if (json['is_staff'] ?? false) Role.SuperAdmin
+        if (json['in_queue'] ?? false) Role.User,
+        if (json['is_staff'] ?? false) Role.Admin,
+        if (json['is_superuser'] ?? false) Role.SuperAdmin
       ],
     );
   }

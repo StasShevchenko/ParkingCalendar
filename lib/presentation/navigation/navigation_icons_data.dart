@@ -63,19 +63,19 @@ final superAdminIcons = [
   //   label: 'Отделы',
   //   index: 2
   // ),
-  NavigationDestinationDataHolder(
-    icon: Icon(
-      Icons.admin_panel_settings_rounded,
-      color: AppColors.primaryBlue,
-    ),
-    selectedIcon:
-        Icon(Icons.admin_panel_settings_rounded, color: AppColors.primaryWhite),
-    label: 'Админы',
-    index: 2
-  ),
 ];
 
 final commonIcons = [
+  NavigationDestinationDataHolder(
+      icon: Icon(
+        Icons.admin_panel_settings_rounded,
+        color: AppColors.primaryBlue,
+      ),
+      selectedIcon:
+      Icon(Icons.admin_panel_settings_rounded, color: AppColors.primaryWhite),
+      label: 'Админы',
+      index: 2
+  ),
   NavigationDestinationDataHolder(
       icon: Icon(Icons.person, color: AppColors.primaryBlue),
       selectedIcon: Icon(Icons.person, color: AppColors.primaryWhite),
