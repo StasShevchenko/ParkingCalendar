@@ -26,8 +26,6 @@ class UserDataSource {
           isStaff: true,
           firstName: 'Полина',
           secondName: 'Гагарина',
-          startDate: '01.01.2023',
-          endDate: '31.01.2023',
           isSuperUser: false
       ),
       UserInfo(
@@ -36,8 +34,6 @@ class UserDataSource {
           isStaff: false,
           firstName: 'Герман',
           secondName: 'Цветков',
-          startDate: '01.01.2023',
-          endDate: '31.01.2023',
           isSuperUser: false
       ),
       UserInfo(
@@ -46,8 +42,6 @@ class UserDataSource {
           isStaff: false,
           firstName: 'Егор',
           secondName: 'Еремкин',
-          startDate: '01.02.2023',
-          endDate: '28.02.2023',
           isSuperUser: false
       ),
       UserInfo(
@@ -56,8 +50,6 @@ class UserDataSource {
           isStaff: false,
           firstName: 'Михаил',
           secondName: 'Горшков',
-          startDate: '01.02.2023',
-          endDate: '28.02.2023',
           isSuperUser: false
       ),
       UserInfo(
@@ -66,8 +58,6 @@ class UserDataSource {
           isStaff: false,
           firstName: 'Елена',
           secondName: 'Кравченко',
-          startDate: '01.03.2023',
-          endDate: '31.03.2023',
           isSuperUser: false
       ),
       UserInfo(
@@ -76,8 +66,6 @@ class UserDataSource {
           isStaff: true,
           firstName: 'Максим',
           secondName: 'Сендецкий',
-          startDate: '01.03.2023',
-          endDate: '31.03.2023',
           isSuperUser: false
       ),
     ];

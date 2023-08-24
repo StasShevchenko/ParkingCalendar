@@ -77,8 +77,8 @@ class _UserHomePageState extends State<UserHomePage>
                         children: [
                           CalendarSection(
                             isActive: state.userInfo!.isActive,
-                            startDate: state.userInfo!.startDate,
-                            endDate: state.userInfo!.endDate,
+                            startDate: state.userInfo!.startDate!,
+                            endDate: state.userInfo!.endDate!,
                           ),
                           QueueSection(
                               onSearchEntered: (value) =>
@@ -91,8 +91,8 @@ class _UserHomePageState extends State<UserHomePage>
                           Expanded(
                             child: CalendarSection(
                               isActive: state.userInfo!.isActive,
-                              startDate: state.userInfo!.startDate,
-                              endDate: state.userInfo!.endDate,
+                              startDate: state.userInfo!.startDate!,
+                              endDate: state.userInfo!.endDate!,
                             ),
                           ),
                           Expanded(
