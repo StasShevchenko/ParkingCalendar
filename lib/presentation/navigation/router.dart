@@ -10,7 +10,6 @@ import 'package:parking_project/presentation/pages/super_admin/admins_list_page.
 import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
 
-import '../../utils/roles.dart';
 import '../pages/user/user_profile_page/user_profile_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -58,7 +57,7 @@ final goRouter = GoRouter(
                 GoRoute(
                   path: AppRoutes.superAdminAdminsList,
                   pageBuilder: (context, state) => const NoTransitionPage(
-                    child: AuthRedirector(role: Role.SuperAdmin, child: AdminsListPage(),),
+                    child: AuthRedirector(child: AdminsListPage(),),
                   ),
                 )
               ],
@@ -71,7 +70,7 @@ final goRouter = GoRouter(
                 pageBuilder: (context, state) => const NoTransitionPage(
                   child: SafeArea(
                     child: Center(
-                      child: UserProfilePage(),
+                      child: AuthRedirector(child: UserProfilePage()),
                     ),
                   ),
                 ),

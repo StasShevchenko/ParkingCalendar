@@ -10,9 +10,6 @@ class AppDestinations {
       ) {
     List<NavigationDestinationDataHolder> iconsDataList = [];
     iconsDataList.addAll(userIcons);
-    if(userInfo?.roles.contains(Role.SuperAdmin) ?? false) {
-      iconsDataList.addAll(superAdminIcons);
-    }
     iconsDataList.addAll(commonIcons);
     return iconsDataList;
   }
