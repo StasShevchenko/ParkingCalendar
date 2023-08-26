@@ -10,8 +10,8 @@ class QueueDataSource{
       .get()
       .dio).get();
 
-  Future<List<QueueDataHolder>> getQueueItems() async{
-    final responseData = (await dio.get('/queue/allNextPeriod')).data as List<dynamic>;
+  Future<List<QueueDataHolder>> getQueueItems([String fullName = '']) async{
+    final responseData = (await dio.get('/queue/allNextPeriod?fullName=$fullName')).data as List<dynamic>;
     List<QueueDataHolder> dataHoldersList = [];
     for(Map<String, dynamic> queueItem in responseData) {
       var date = DateTime.parse(queueItem['start_time']);

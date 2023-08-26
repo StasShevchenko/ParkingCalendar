@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
@@ -16,6 +18,8 @@ class UserHomePage extends StatefulWidget {
 
 class _UserHomePageState extends State<UserHomePage>
     with SingleTickerProviderStateMixin {
+  Timer searchTimer = Timer(const Duration(milliseconds: 500), () {});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -79,8 +83,13 @@ class _UserHomePageState extends State<UserHomePage>
                             userInfo: state.userInfo!,
                           ),
                           QueueSection(
-                              onSearchEntered: (value) =>
-                                  bloc.add(SearchEntered(searchQueue: value)),
+                              onSearchEntered: (value) {
+                                searchTimer.cancel();
+                                searchTimer = Timer(
+                                    const Duration(milliseconds: 500),
+                                    () => bloc.add(
+                                        SearchEntered(searchQueue: value)));
+                              },
                               queueItems: state.queueItems!),
                         ],
                       )
@@ -96,8 +105,15 @@ class _UserHomePageState extends State<UserHomePage>
                               padding:
                                   const EdgeInsets.only(right: 32.0, top: 16.0),
                               child: QueueSection(
-                                onSearchEntered: (value) =>
-                                    bloc.add(SearchEntered(searchQueue: value)),
+                                onSearchEntered: (value) {
+                                  searchTimer.cancel();
+                                  searchTimer = Timer(
+                                    const Duration(milliseconds: 500),
+                                    () => bloc.add(
+                                      SearchEntered(searchQueue: value),
+                                    ),
+                                  );
+                                },
                                 queueItems: state.queueItems!,
                               ),
                             ),

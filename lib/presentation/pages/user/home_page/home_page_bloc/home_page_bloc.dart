@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
@@ -16,18 +18,21 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   QueueDataSource queueDataSource = QueueDataSource();
   List<QueueDataHolder> queueItems = [];
 
+
   HomePageBloc({required this.user}) : super(HomePageState()) {
     //init bloc
     init();
-    on<HomePageEvent>((event, emit) {
+    on<HomePageEvent>((event, emit) async {
       switch (event) {
         case PageRefreshed _:
           init();
         case SearchEntered searchEvent:
-          // final sortedList = usersList
-          //     .where((user) => user.firstName.contains(searchEvent.searchQueue))
-          //     .toList();
-      //    emit(state.copyWith(queueItems: mapUsersToQueueData(sortedList)));
+          queueItems = await queueDataSource.getQueueItems(searchEvent.searchQueue);
+          emit(
+              state.copyWith(
+                  queueItems: queueItems
+              )
+          );
       }
     });
   }
