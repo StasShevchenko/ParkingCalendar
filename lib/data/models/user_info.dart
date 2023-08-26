@@ -3,8 +3,9 @@ class UserInfo {
   final String firstName;
   final String secondName;
   final int id;
-  final String? startDate;
-  final String? endDate;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final DateTime? lastActiveDate;
   final bool isSuperUser;
   final bool isStaff;
   final bool isActive;
@@ -17,15 +18,24 @@ class UserInfo {
       required this.secondName,
       this.startDate,
       this.endDate,
+      this.lastActiveDate,
       this.isSuperUser = false,
-      this.isActive = true});
+      required this.isActive});
 
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     return UserInfo(
       firstName: json['firstName'],
       secondName: json['secondName'],
-      startDate: json['startDate'] ?? '24.08.2023',
-      endDate: json['endDate'] ?? '25.08.2023',
+      startDate: json['start_active_time'] != null
+          ? DateTime.parse(json['start_active_time'])
+          : null,
+      endDate: json['end_active_time'] != null
+          ? DateTime.parse(json['end_active_time'])
+          : null,
+      lastActiveDate: json['last_active_period'] != null
+          ? DateTime.parse(json['last_active_period'])
+          : null,
+      isActive: json['active'] ?? false,
       isSuperUser: json['is_superuser'] ?? false,
       email: json['email'],
       id: json['id'],

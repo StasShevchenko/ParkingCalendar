@@ -19,55 +19,6 @@ class UserDataSource {
 
 
   Future<List<UserInfo>> getAllUsers() async {
-    return [
-      UserInfo(
-          email: 'polya@gmail.com',
-          id: 1,
-          isStaff: true,
-          firstName: 'Полина',
-          secondName: 'Гагарина',
-          isSuperUser: false
-      ),
-      UserInfo(
-          email: 'german@gmail.com',
-          id: 2,
-          isStaff: false,
-          firstName: 'Герман',
-          secondName: 'Цветков',
-          isSuperUser: false
-      ),
-      UserInfo(
-          email: 'egor@gmail.com',
-          id: 3,
-          isStaff: false,
-          firstName: 'Егор',
-          secondName: 'Еремкин',
-          isSuperUser: false
-      ),
-      UserInfo(
-          email: 'misha12@gmail.com',
-          id: 4,
-          isStaff: false,
-          firstName: 'Михаил',
-          secondName: 'Горшков',
-          isSuperUser: false
-      ),
-      UserInfo(
-          email: 'elena12@gmail.com',
-          id: 5,
-          isStaff: false,
-          firstName: 'Елена',
-          secondName: 'Кравченко',
-          isSuperUser: false
-      ),
-      UserInfo(
-          email: 'maxim12@gmail.com',
-          id: 6,
-          isStaff: true,
-          firstName: 'Максим',
-          secondName: 'Сендецкий',
-          isSuperUser: false
-      ),
-    ];
+    return [];
   }
 }
