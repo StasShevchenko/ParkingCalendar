@@ -62,13 +62,15 @@ class _QueueSectionState extends State<QueueSection> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.background,
+        appBar: AppBar(
+          toolbarHeight: 0,
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+        ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
           child: Column(
             children: [
-              const SizedBox(
-                height: 16,
-              ),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 400),
                 child: TextField(
