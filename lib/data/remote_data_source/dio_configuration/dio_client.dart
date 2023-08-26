@@ -1,20 +1,56 @@
 import 'package:dio/dio.dart';
 
-class DioClient {
+import '../app_secure_storage.dart';
 
-  final dio = Dio(BaseOptions(
+class DioClient {
+  final dio = Dio(
+    BaseOptions(
       baseUrl: 'http://188.120.235.27:3000',
       connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 5)));
+      receiveTimeout: const Duration(seconds: 5),
+    ),
+  );
+  String? accessToken;
+
+  final _storage = AppSecureStorage.get();
 
   static DioClient? instance;
 
-  static DioClient get() {
+  DioClient() {
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          if (accessToken != null) {
+            options.headers['Authorization'] = 'Bearer $accessToken';
+            return handler.next(options);
+          } else {
+            return handler.next(options);
+          }
+        },
+        onError: (exception, handler) async {
+          if (exception.response?.statusCode == 401 ||
+              exception.response?.statusCode == 403) {
+            String refreshToken = (await _storage.readRefreshToken())!;
+            final response = await dio
+                .post('/token/refresh', data: {'refresh': refreshToken});
+            accessToken = (response.data as Map<String, dynamic>)['access'];
+            exception.requestOptions.headers['Authorization'] =
+                'Bearer $accessToken';
+            return handler.resolve(await dio.fetch(exception.requestOptions));
+          } else {
+            return handler.next(exception);
+          }
+        },
+      ),
+    );
+  }
+
+  static Dio get() {
     if (instance == null) {
       instance = DioClient();
-      return instance!;
+      return instance!.dio;
     } else {
-      return instance!;
+      return instance!.dio;
     }
   }
 }
