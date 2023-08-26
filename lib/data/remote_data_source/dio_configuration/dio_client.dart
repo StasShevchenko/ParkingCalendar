@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../app_secure_storage.dart';
+import '../../app_secure_storage.dart';
 
 class DioClient {
   final dio = Dio(
