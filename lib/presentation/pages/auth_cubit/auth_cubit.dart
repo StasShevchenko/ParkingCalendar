@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:parking_project/data/remote_data_source/app_secure_storage.dart';
+import 'package:parking_project/data/app_secure_storage.dart';
 
 import '../../../data/models/user.dart';
 

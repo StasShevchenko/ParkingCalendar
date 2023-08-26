@@ -2,13 +2,10 @@ import 'package:parking_project/data/models/queue_data_holder.dart';
 import 'package:parking_project/data/models/user_info.dart';
 
 import '../../utils/number_to_month.dart';
-import 'dio_configuration/dio_auth_wrapper.dart';
 import 'dio_configuration/dio_client.dart';
 
 class QueueDataSource{
-  final dio = DioAuthWrapper(dio: DioClient
-      .get()
-      .dio).get();
+  final dio = DioClient.get();
 
   Future<List<QueueDataHolder>> getQueueItems([String fullName = '']) async{
     final responseData = (await dio.get('/queue/allNextPeriod?fullName=$fullName')).data as List<dynamic>;
