@@ -6,20 +6,17 @@ import 'active_calendar_day.dart';
 
 
 class Calendar extends StatelessWidget {
-  final String startTime;
-  final String endTime;
+  final DateTime startDate;
+  final DateTime endDate;
 
   const Calendar(
       {super.key,
-      required this.startTime,
-      required this.endTime,
+      required this.startDate,
+      required this.endDate,
      });
 
   @override
   Widget build(BuildContext context) {
-    var dateFormat = DateFormat('dd.MM.yyyy');
-    DateTime startDate = dateFormat.parse(startTime);
-    DateTime endDate = dateFormat.parse(endTime);
 
     return TableCalendar(
       daysOfWeekHeight: 32,
@@ -30,7 +27,7 @@ class Calendar extends StatelessWidget {
           titleTextStyle: TextStyle(color: Colors.black, fontSize: 22)),
       calendarStyle:
           const CalendarStyle(defaultTextStyle: TextStyle(color: Colors.black)),
-      focusedDay: DateTime.now(),
+      focusedDay: startDate,
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
       calendarBuilders: CalendarBuilders(todayBuilder: (context, day, _) {
@@ -38,7 +35,8 @@ class Calendar extends StatelessWidget {
             day.isLowerOrEquals(endDate)) {
           return ActiveCalendarDay(dayNumber: day.day.toString());
         }
-      }, defaultBuilder: (context, day, focusedDay) {
+      },
+          defaultBuilder: (context, day, focusedDay) {
         if (day.isGreaterOrEquals(startDate) &&
             day.isLowerOrEquals(endDate)) {
           return ActiveCalendarDay(dayNumber: day.day.toString());
@@ -50,11 +48,13 @@ class Calendar extends StatelessWidget {
 
 extension DateOnly on DateTime {
   bool isGreaterOrEquals(DateTime other) {
-    return year >= other.year && month >= other.month
-        && day >= other.day;
+    final currentDate = DateTime(year, month, day);
+    final otherDate = DateTime(other.year, other.month, other.day);
+    return currentDate.difference(otherDate).inDays >= 0 ? true : false;
   }
   bool isLowerOrEquals(DateTime other) {
-    return year <= other.year && month <= other.month
-        && day <= other.day;
+    final currentDate = DateTime(year, month, day);
+    final otherDate = DateTime(other.year, other.month, other.day);
+    return currentDate.difference(otherDate).inDays > 0 ? false : true;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:parking_project/presentation/pages/user/home_page/components/queue_item/queue_item.dart';
-import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/queue_data_holder.dart';
+import 'package:parking_project/data/models/queue_data_holder.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 import '../../../../assets/colors/app_colors.dart';
@@ -50,7 +50,7 @@ class _QueueSectionState extends State<QueueSection> {
             _isFabVisible = false;
           });
         }
-      } else {
+      } else if(!_isFabVisible) {
         setState(() {
           _isFabVisible = true;
         });
@@ -72,7 +72,10 @@ class _QueueSectionState extends State<QueueSection> {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 400),
                 child: TextField(
-                  onChanged: widget.onSearchEntered,
+                  onChanged: (value){
+                    _controller.jumpTo(0);
+                    widget.onSearchEntered(value);
+                  },
                   decoration: InputDecoration(
                       prefixIconColor: AppColors.primaryBlue,
                       prefixIcon: const Icon(Icons.search),
@@ -121,4 +124,3 @@ class _QueueSectionState extends State<QueueSection> {
             : null);
   }
 }
-//QueueItem(userInfo: queueItems[index]

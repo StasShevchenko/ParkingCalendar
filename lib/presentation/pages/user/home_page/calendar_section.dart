@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:parking_project/data/models/user_info.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 import 'components/calendar/calendar.dart';
 
 class CalendarSection extends StatelessWidget {
-  final bool isActive;
-  final String startDate;
-  final String endDate;
+  final UserInfo userInfo;
 
-  const CalendarSection(
-      {super.key,
-      required this.startDate,
-      required this.endDate,
-      required this.isActive});
+  const CalendarSection({super.key, required this.userInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +32,9 @@ class CalendarSection extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            if (isActive) ...{
+            if (userInfo.isActive) ...{
               ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: 450
-                ),
+                constraints: const BoxConstraints(maxWidth: 450),
                 child: Column(
                   children: [
                     Row(
@@ -58,7 +51,9 @@ class CalendarSection extends StatelessWidget {
                         const Text(' дни доступа к парковке')
                       ],
                     ),
-                    const SizedBox(height: 16,),
+                    const SizedBox(
+                      height: 16,
+                    ),
                     Card(
                       color: AppColors.primaryWhite,
                       surfaceTintColor: AppColors.primaryWhite,
@@ -67,36 +62,44 @@ class CalendarSection extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Calendar(
-                          startTime: startDate,
-                          endTime: endDate,
+                          startDate: userInfo.startDate!,
+                          endDate: userInfo.endDate!,
                         ),
                       ),
                     ),
                   ],
                 ),
               )
-
             } else ...{
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  const Text(
-                    'До вашей очереди\n осталось 18 дней!',
+                  Text(
+                    'До вашей очереди\n осталось ${userInfo.startDate!.difference(DateTime.now()).inDays} дней!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   ConstrainedBox(
                     constraints: BoxConstraints(
-                      maxHeight:  MediaQuery.of(context).size.width < 880 ? 400 : double.infinity,
-                      maxWidth:  MediaQuery.of(context).size.width < 880 ? 400 : double.infinity
-                    ),
+                        maxHeight: MediaQuery.of(context).size.width < 880
+                            ? 400
+                            : double.infinity,
+                        maxWidth: MediaQuery.of(context).size.width < 880
+                            ? 400
+                            : double.infinity),
                     child: FractionallySizedBox(
                       widthFactor: indicatorWidthFactor,
                       child: AspectRatio(
                         aspectRatio: 1.0,
                         child: CircularProgressIndicator(
                           strokeWidth: 10,
-                          value: 0.4,
+                          value: (userInfo.startDate!
+                                  .difference(DateTime.now())
+                                  .inDays /
+                              userInfo.startDate!
+                                  .difference(userInfo.lastActiveDate!)
+                                  .inDays).roundToDouble(),
                           color: AppColors.primaryAccentRed,
                           backgroundColor: Colors.white,
                         ),

@@ -1,4 +1,4 @@
-import '../../../../../data/models/user_info.dart';
+import 'user_info.dart';
 
 class QueueDataHolder{
   final String monthName;
