@@ -29,6 +29,7 @@ class _UserHomePageState extends State<UserHomePage>
       child: BlocBuilder<HomePageBloc, HomePageState>(
         builder: (context, state) {
           final bloc = context.read<HomePageBloc>();
+          final userRoles = context.read<AuthCubit>().state.userData!.roles;
           if (state.isConnectionError) {
             return Center(
               child: Column(
@@ -61,12 +62,7 @@ class _UserHomePageState extends State<UserHomePage>
               child: Scaffold(
                 backgroundColor: AppColors.background,
                 appBar: MediaQuery.of(context).size.width < 880 &&
-                        context
-                            .read<AuthCubit>()
-                            .state
-                            .userData!
-                            .roles
-                            .contains(Role.User)
+                        userRoles.contains(Role.User)
                     ? AppBar(
                         backgroundColor: AppColors.primaryBlue,
                         toolbarHeight: 0,
@@ -86,12 +82,7 @@ class _UserHomePageState extends State<UserHomePage>
                 body: MediaQuery.of(context).size.width < 880
                     ? TabBarView(
                         children: [
-                          if (context
-                              .read<AuthCubit>()
-                              .state
-                              .userData!
-                              .roles
-                              .contains(Role.User))
+                          if (userRoles.contains(Role.User))
                             CalendarSection(
                               userInfo: state.userInfo!,
                             ),
@@ -107,38 +98,35 @@ class _UserHomePageState extends State<UserHomePage>
                         ],
                       )
                     : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if (context
-                              .read<AuthCubit>()
-                              .state
-                              .userData!
-                              .roles
-                              .contains(Role.User))
+                          if (userRoles.contains(Role.User))
                             Expanded(
                               child: CalendarSection(
                                 userInfo: state.userInfo!,
                               ),
                             ),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(
-                              maxWidth: 800
-                            ),
-                            child: Expanded(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 32.0, top: 16.0),
-                                child: QueueSection(
-                                  onSearchEntered: (value) {
-                                    searchTimer.cancel();
-                                    searchTimer = Timer(
-                                      const Duration(milliseconds: 500),
-                                      () => bloc.add(
-                                        SearchEntered(searchQueue: value),
-                                      ),
-                                    );
-                                  },
-                                  queueItems: state.queueItems!,
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 32.0, top: 16.0),
+                              child: Center(
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 800
+                                  ),
+                                  child: QueueSection(
+                                    onSearchEntered: (value) {
+                                      searchTimer.cancel();
+                                      searchTimer = Timer(
+                                        const Duration(milliseconds: 500),
+                                        () => bloc.add(
+                                          SearchEntered(searchQueue: value),
+                                        ),
+                                      );
+                                    },
+                                    queueItems: state.queueItems!,
+                                  ),
                                 ),
                               ),
                             ),
