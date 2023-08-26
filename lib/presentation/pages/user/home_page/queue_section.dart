@@ -50,7 +50,7 @@ class _QueueSectionState extends State<QueueSection> {
             _isFabVisible = false;
           });
         }
-      } else {
+      } else if(!_isFabVisible) {
         setState(() {
           _isFabVisible = true;
         });
@@ -72,7 +72,10 @@ class _QueueSectionState extends State<QueueSection> {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 400),
                 child: TextField(
-                  onChanged: widget.onSearchEntered,
+                  onChanged: (value){
+                    _controller.jumpTo(0);
+                    widget.onSearchEntered(value);
+                  },
                   decoration: InputDecoration(
                       prefixIconColor: AppColors.primaryBlue,
                       prefixIcon: const Icon(Icons.search),
