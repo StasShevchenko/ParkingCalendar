@@ -95,7 +95,7 @@ class CalendarSection extends StatelessWidget {
                       child: AspectRatio(
                         aspectRatio: 1.0,
                         child: CircularProgressIndicator(
-                          strokeWidth: 10,
+                          strokeWidth: DeviceScreen.get(context) == FormFactorType.Desktop ? 14 : 10,
                           value: (userInfo.startDate!
                                   .difference(DateTime.now())
                                   .inDays /
