@@ -106,7 +106,7 @@ class _QueueSectionState extends State<QueueSection> {
                       )
                     : widget.queueItems.isEmpty
                         ? const Expanded(
-                            child: Text('Пользователей не найдено :('))
+                            child: Text('Пользователи не найдены :('))
                         : Expanded(
                             child: ListView.builder(
                                 controller: _controller,
