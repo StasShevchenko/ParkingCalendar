@@ -99,7 +99,7 @@ class CalendarSection extends StatelessWidget {
                                   .inDays /
                               userInfo.startDate!
                                   .difference(userInfo.lastActiveDate!)
-                                  .inDays).roundToDouble(),
+                                  .inDays),
                           color: AppColors.primaryAccentRed,
                           backgroundColor: Colors.white,
                         ),

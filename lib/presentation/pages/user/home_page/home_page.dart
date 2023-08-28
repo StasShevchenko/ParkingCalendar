@@ -58,7 +58,7 @@ class _UserHomePageState extends State<UserHomePage>
             );
           } else {
             return DefaultTabController(
-              length: 2,
+              length: userRoles.contains(Role.User) ? 2 : 1,
               child: Scaffold(
                 backgroundColor: AppColors.background,
                 appBar: MediaQuery.of(context).size.width < 880 &&
