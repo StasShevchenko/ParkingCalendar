@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:parking_project/presentation/pages/user/home_page/components/queue_item/queue_item.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
+import 'package:parking_project/utils/number_to_month.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 import '../../../../assets/colors/app_colors.dart';
@@ -50,7 +51,7 @@ class _QueueSectionState extends State<QueueSection> {
             _isFabVisible = false;
           });
         }
-      } else if(!_isFabVisible) {
+      } else if (!_isFabVisible) {
         setState(() {
           _isFabVisible = true;
         });
@@ -74,7 +75,7 @@ class _QueueSectionState extends State<QueueSection> {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 400),
                 child: TextField(
-                  onChanged: (value){
+                  onChanged: (value) {
                     _controller.jumpTo(0);
                     widget.onSearchEntered(value);
                   },
@@ -98,16 +99,38 @@ class _QueueSectionState extends State<QueueSection> {
                           header: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
-                                child: Text(
-                              widget.queueItems[index].monthName,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            )),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: widget.queueItems[index].monthName ==
+                                            numberToMonth(DateTime.now().month)
+                                        ? AppColors.primaryBlue
+                                        : AppColors.background,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 4.0),
+                                  child: Text(
+                                    widget.queueItems[index].monthName,
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                          color: widget.queueItems[index].monthName ==
+                                              numberToMonth(DateTime.now().month)
+                                              ? AppColors.primaryWhite
+                                              : AppColors.secondaryBlue
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           content: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               ...widget.queueItems[index].users
-                                  .map((user) => QueueItem(userInfo: user))
+                                  .map((user) => Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: QueueItem(userInfo: user),
+                                      ))
                             ],
                           ),
                         ),
