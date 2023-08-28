@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
-import 'package:parking_project/presentation/pages/user/home_page/calendar_section.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/calendar_section.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
-import 'package:parking_project/presentation/pages/user/home_page/queue_section.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_section.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 import '../../../../utils/roles.dart';
@@ -19,8 +19,6 @@ class UserHomePage extends StatefulWidget {
 
 class _UserHomePageState extends State<UserHomePage>
     with SingleTickerProviderStateMixin {
-  Timer searchTimer = Timer(const Duration(milliseconds: 500), () {});
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -114,12 +112,8 @@ class _UserHomePageState extends State<UserHomePage>
                                   child: QueueSection(
                                     isLoading: state.isQueueLoading,
                                     onSearchEntered: (value) {
-                                      searchTimer.cancel();
-                                      searchTimer = Timer(
-                                        const Duration(milliseconds: 500),
-                                        () => bloc.add(
-                                          SearchEntered(searchQueue: value),
-                                        ),
+                                      bloc.add(
+                                        SearchEntered(searchQueue: value),
                                       );
                                     },
                                     queueItems: state.queueItems!,

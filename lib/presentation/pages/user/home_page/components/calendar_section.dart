@@ -4,8 +4,8 @@ import 'package:parking_project/data/models/user_info.dart';
 import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/utils/device_info.dart';
 
-import '../../../../assets/colors/app_colors.dart';
-import 'components/calendar/calendar.dart';
+import '../../../../../assets/colors/app_colors.dart';
+import 'calendar/calendar.dart';
 
 class CalendarSection extends StatelessWidget {
   final UserInfo userInfo;

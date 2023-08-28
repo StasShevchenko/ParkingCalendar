@@ -6,7 +6,7 @@ import 'package:parking_project/presentation/pages/user/home_page/components/que
 import 'package:parking_project/presentation/ui_kit/text_field/debounced_text_field.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
-import '../../../../assets/colors/app_colors.dart';
+import '../../../../../assets/colors/app_colors.dart';
 
 class QueueSection extends StatefulWidget {
   final bool isLoading;
