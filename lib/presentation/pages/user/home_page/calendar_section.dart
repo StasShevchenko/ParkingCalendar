@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/data/models/user_info.dart';
+import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../../assets/colors/app_colors.dart';
@@ -26,7 +28,7 @@ class CalendarSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Здравствуйте, Михаил!',
+              'Здравствуйте, ${context.read<AuthCubit>().state.userData!.firstName}!',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(
