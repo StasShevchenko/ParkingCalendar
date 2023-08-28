@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
@@ -18,7 +16,6 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   QueueDataSource queueDataSource = QueueDataSource();
   List<QueueDataHolder> queueItems = [];
 
-
   HomePageBloc({required this.user}) : super(HomePageState()) {
     //init bloc
     init();
@@ -27,12 +24,10 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         case PageRefreshed _:
           init();
         case SearchEntered searchEvent:
-          queueItems = await queueDataSource.getQueueItems(searchEvent.searchQueue);
-          emit(
-              state.copyWith(
-                  queueItems: queueItems
-              )
-          );
+          emit(state.copyWith(isQueueLoading: true));
+          queueItems =
+              await queueDataSource.getQueueItems(searchEvent.searchQueue);
+          emit(state.copyWith(queueItems: queueItems, isQueueLoading: false));
       }
     });
   }
@@ -54,5 +49,4 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       emit(state.copyWith(isLoading: false, isConnectionError: true));
     }
   }
-
 }

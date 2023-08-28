@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/data/models/user_info.dart';
+import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/utils/device_info.dart';
 
-import '../../../../assets/colors/app_colors.dart';
-import 'components/calendar/calendar.dart';
+import '../../../../../assets/colors/app_colors.dart';
+import 'calendar/calendar.dart';
 
 class CalendarSection extends StatelessWidget {
   final UserInfo userInfo;
@@ -26,7 +28,7 @@ class CalendarSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Здравствуйте, Михаил!',
+              'Здравствуйте, ${context.read<AuthCubit>().state.userData!.firstName}!',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(
@@ -93,13 +95,13 @@ class CalendarSection extends StatelessWidget {
                       child: AspectRatio(
                         aspectRatio: 1.0,
                         child: CircularProgressIndicator(
-                          strokeWidth: 10,
+                          strokeWidth: DeviceScreen.get(context) == FormFactorType.Desktop ? 14 : 10,
                           value: (userInfo.startDate!
                                   .difference(DateTime.now())
                                   .inDays /
                               userInfo.startDate!
                                   .difference(userInfo.lastActiveDate!)
-                                  .inDays).roundToDouble(),
+                                  .inDays),
                           color: AppColors.primaryAccentRed,
                           backgroundColor: Colors.white,
                         ),

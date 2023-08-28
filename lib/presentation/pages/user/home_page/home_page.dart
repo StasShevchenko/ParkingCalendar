@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
-import 'package:parking_project/presentation/pages/user/home_page/calendar_section.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/calendar_section.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
-import 'package:parking_project/presentation/pages/user/home_page/queue_section.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_section.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 import '../../../../utils/roles.dart';
@@ -19,8 +19,6 @@ class UserHomePage extends StatefulWidget {
 
 class _UserHomePageState extends State<UserHomePage>
     with SingleTickerProviderStateMixin {
-  Timer searchTimer = Timer(const Duration(milliseconds: 500), () {});
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -58,7 +56,7 @@ class _UserHomePageState extends State<UserHomePage>
             );
           } else {
             return DefaultTabController(
-              length: 2,
+              length: userRoles.contains(Role.User) ? 2 : 1,
               child: Scaffold(
                 backgroundColor: AppColors.background,
                 appBar: MediaQuery.of(context).size.width < 880 &&
@@ -87,12 +85,9 @@ class _UserHomePageState extends State<UserHomePage>
                               userInfo: state.userInfo!,
                             ),
                           QueueSection(
+                              isLoading: state.isQueueLoading,
                               onSearchEntered: (value) {
-                                searchTimer.cancel();
-                                searchTimer = Timer(
-                                    const Duration(milliseconds: 500),
-                                    () => bloc.add(
-                                        SearchEntered(searchQueue: value)));
+                                bloc.add(SearchEntered(searchQueue: value));
                               },
                               queueItems: state.queueItems!),
                         ],
@@ -112,17 +107,13 @@ class _UserHomePageState extends State<UserHomePage>
                                   const EdgeInsets.only(right: 32.0, top: 16.0),
                               child: Center(
                                 child: ConstrainedBox(
-                                  constraints: const BoxConstraints(
-                                    maxWidth: 800
-                                  ),
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 800),
                                   child: QueueSection(
+                                    isLoading: state.isQueueLoading,
                                     onSearchEntered: (value) {
-                                      searchTimer.cancel();
-                                      searchTimer = Timer(
-                                        const Duration(milliseconds: 500),
-                                        () => bloc.add(
-                                          SearchEntered(searchQueue: value),
-                                        ),
+                                      bloc.add(
+                                        SearchEntered(searchQueue: value),
                                       );
                                     },
                                     queueItems: state.queueItems!,
