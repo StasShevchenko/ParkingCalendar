@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_item/queue_item.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
-import 'package:parking_project/utils/number_to_month.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_header.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_header_content.dart';
+import 'package:parking_project/presentation/ui_kit/text_field/debounced_text_field.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 
 class QueueSection extends StatefulWidget {
+  final bool isLoading;
   final List<QueueDataHolder> queueItems;
   final Function(String searchQueue) onSearchEntered;
 
   const QueueSection({
     super.key,
     required this.queueItems,
+    required this.isLoading,
     required this.onSearchEntered,
   });
 
@@ -70,74 +73,62 @@ class _QueueSectionState extends State<QueueSection> {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-          child: Column(
-            children: [
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: TextField(
-                  onChanged: (value) {
-                    _controller.jumpTo(0);
-                    widget.onSearchEntered(value);
-                  },
-                  decoration: InputDecoration(
-                      prefixIconColor: AppColors.primaryBlue,
-                      prefixIcon: const Icon(Icons.search),
-                      labelText: 'Поиск'),
+          child: Center(
+            child: Column(
+              children: [
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  child: DebouncedTextField(
+                    debounceTime: const Duration(milliseconds: 500),
+                    onChanged: (value) {
+                      widget.onSearchEntered(value.trim());
+                    },
+                    decoration: InputDecoration(
+                        prefixIconColor: AppColors.primaryBlue,
+                        prefixIcon: const Icon(Icons.search),
+                        labelText: 'Поиск'),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Expanded(
-                child: ListView.builder(
-                    controller: _controller,
-                    itemCount: widget.queueItems.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: StickyHeader(
-                          header: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: widget.queueItems[index].monthName ==
-                                            numberToMonth(DateTime.now().month)
-                                        ? AppColors.primaryBlue
-                                        : AppColors.background,
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0, vertical: 4.0),
-                                  child: Text(
-                                    widget.queueItems[index].monthName,
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                          color: widget.queueItems[index].monthName ==
-                                              numberToMonth(DateTime.now().month)
-                                              ? AppColors.primaryWhite
-                                              : AppColors.secondaryBlue
-                                        ),
-                                  ),
-                                ),
-                              ),
+                const SizedBox(
+                  height: 16,
+                ),
+                widget.isLoading
+                    ? Expanded(
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: CircularProgressIndicator(
+                              color: AppColors.primaryBlue,
                             ),
                           ),
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              ...widget.queueItems[index].users
-                                  .map((user) => Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: QueueItem(userInfo: user),
-                                      ))
-                            ],
-                          ),
                         ),
-                      );
-                    }),
-              ),
-            ],
+                      )
+                    : widget.queueItems.isEmpty
+                        ? const Expanded(
+                            child: Text('Пользователей не найдено :('))
+                        : Expanded(
+                            child: ListView.builder(
+                                controller: _controller,
+                                itemCount: widget.queueItems.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0),
+                                    child: StickyHeader(
+                                      header: QueueHeader(
+                                        monthName:
+                                            widget.queueItems[index].monthName,
+                                      ),
+                                      content: QueueHeaderContent(
+                                          usersList:
+                                              widget.queueItems[index].users),
+                                    ),
+                                  );
+                                }),
+                          ),
+              ],
+            ),
           ),
         ),
         floatingActionButton: _isFabVisible

@@ -87,12 +87,9 @@ class _UserHomePageState extends State<UserHomePage>
                               userInfo: state.userInfo!,
                             ),
                           QueueSection(
+                              isLoading: state.isQueueLoading,
                               onSearchEntered: (value) {
-                                searchTimer.cancel();
-                                searchTimer = Timer(
-                                    const Duration(milliseconds: 500),
-                                    () => bloc.add(
-                                        SearchEntered(searchQueue: value)));
+                                bloc.add(SearchEntered(searchQueue: value));
                               },
                               queueItems: state.queueItems!),
                         ],
@@ -112,10 +109,10 @@ class _UserHomePageState extends State<UserHomePage>
                                   const EdgeInsets.only(right: 32.0, top: 16.0),
                               child: Center(
                                 child: ConstrainedBox(
-                                  constraints: const BoxConstraints(
-                                    maxWidth: 800
-                                  ),
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 800),
                                   child: QueueSection(
+                                    isLoading: state.isQueueLoading,
                                     onSearchEntered: (value) {
                                       searchTimer.cancel();
                                       searchTimer = Timer(
