@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/pages/user/home_page/components/calendar_section.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/connection_error_section.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
 import 'package:parking_project/presentation/pages/user/home_page/components/queue_section.dart';
 
@@ -28,26 +29,11 @@ class _UserHomePageState extends State<UserHomePage>
         builder: (context, state) {
           final bloc = context.read<HomePageBloc>();
           final userRoles = context.read<AuthCubit>().state.userData!.roles;
+
           if (state.isConnectionError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Ошибка!\n Проверьте ваше подключение к интернету!',
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        bloc.add(PageRefreshed());
-                      },
-                      child: const Text('Обновить'))
-                ],
-              ),
-            );
+            return ConnectionErrorSection(onButtonClicked: (){
+              bloc.add(PageRefreshed());
+            });
           } else if (state.isLoading) {
             return Center(
               child: CircularProgressIndicator(
