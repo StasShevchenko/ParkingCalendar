@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_header.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_header_content.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/list_grid_view_toggle.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_list.dart';
 import 'package:parking_project/presentation/ui_kit/text_field/debounced_text_field.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 
 import '../../../../../assets/colors/app_colors.dart';
 
@@ -26,6 +25,14 @@ class QueueSection extends StatefulWidget {
 
 class _QueueSectionState extends State<QueueSection> {
   final _controller = ScrollController();
+  var toggleSelectedValue = {1};
+
+  void onToggleSelected(Set<int> selectedValue) {
+    setState(() {
+      toggleSelectedValue = selectedValue;
+    });
+  }
+
   bool _isFabVisible = false;
 
   void _scrollUp() {
@@ -90,6 +97,18 @@ class _QueueSectionState extends State<QueueSection> {
                   ),
                 ),
                 const SizedBox(
+                  height: 32,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: ListGridViewToggle(
+                        onSelected: onToggleSelected,
+                        selectedValue: toggleSelectedValue),
+                  ),
+                ),
+                const SizedBox(
                   height: 16,
                 ),
                 widget.isLoading
@@ -108,25 +127,10 @@ class _QueueSectionState extends State<QueueSection> {
                         ? const Expanded(
                             child: Text('Пользователи не найдены :('))
                         : Expanded(
-                            child: ListView.builder(
-                                controller: _controller,
-                                itemCount: widget.queueItems.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0),
-                                    child: StickyHeader(
-                                      header: QueueHeader(
-                                        monthName:
-                                            widget.queueItems[index].monthName,
-                                      ),
-                                      content: QueueHeaderContent(
-                                          usersList:
-                                              widget.queueItems[index].users),
-                                    ),
-                                  );
-                                }),
-                          ),
+                            child: QueueList(
+                            controller: _controller,
+                            queueItems: widget.queueItems,
+                          )),
               ],
             ),
           ),
