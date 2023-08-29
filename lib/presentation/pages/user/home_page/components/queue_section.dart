@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
 import 'package:parking_project/presentation/pages/user/home_page/components/list_grid_view_toggle.dart';
 import 'package:parking_project/presentation/pages/user/home_page/components/queue_list.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_table.dart';
 import 'package:parking_project/presentation/ui_kit/text_field/debounced_text_field.dart';
 
 import '../../../../../assets/colors/app_colors.dart';
@@ -10,14 +11,17 @@ import '../../../../../assets/colors/app_colors.dart';
 class QueueSection extends StatefulWidget {
   final bool isLoading;
   final List<QueueDataHolder> queueItems;
+  final Set<int> toggleSelectedValue;
+  final Function onToggleSelected;
   final Function(String searchQueue) onSearchEntered;
 
-  const QueueSection({
-    super.key,
-    required this.queueItems,
-    required this.isLoading,
-    required this.onSearchEntered,
-  });
+  const QueueSection(
+      {super.key,
+      required this.queueItems,
+      required this.isLoading,
+      required this.onSearchEntered,
+      required this.toggleSelectedValue,
+      required this.onToggleSelected});
 
   @override
   State<QueueSection> createState() => _QueueSectionState();
@@ -25,14 +29,6 @@ class QueueSection extends StatefulWidget {
 
 class _QueueSectionState extends State<QueueSection> {
   final _controller = ScrollController();
-  var toggleSelectedValue = {1};
-
-  void onToggleSelected(Set<int> selectedValue) {
-    setState(() {
-      toggleSelectedValue = selectedValue;
-    });
-  }
-
   bool _isFabVisible = false;
 
   void _scrollUp() {
@@ -104,8 +100,8 @@ class _QueueSectionState extends State<QueueSection> {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: ListGridViewToggle(
-                        onSelected: onToggleSelected,
-                        selectedValue: toggleSelectedValue),
+                        onSelected: widget.onToggleSelected,
+                        selectedValue: widget.toggleSelectedValue),
                   ),
                 ),
                 const SizedBox(
@@ -126,11 +122,18 @@ class _QueueSectionState extends State<QueueSection> {
                     : widget.queueItems.isEmpty
                         ? const Expanded(
                             child: Text('Пользователи не найдены :('))
-                        : Expanded(
-                            child: QueueList(
-                            controller: _controller,
-                            queueItems: widget.queueItems,
-                          )),
+                        : widget.toggleSelectedValue.contains(1)
+                            ? Expanded(
+                                child: QueueList(
+                                controller: _controller,
+                                queueItems: widget.queueItems,
+                              ))
+                            : Expanded(
+                                child: QueueTable(
+                                  controller: _controller,
+                                  queueItems: widget.queueItems,
+                                ),
+                              ),
               ],
             ),
           ),

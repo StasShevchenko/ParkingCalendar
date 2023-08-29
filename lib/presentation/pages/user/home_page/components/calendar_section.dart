@@ -32,7 +32,7 @@ class CalendarSection extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(
-              height: 20,
+              height: 32,
             ),
             if (userInfo.isActive) ...{
               ConstrainedBox(

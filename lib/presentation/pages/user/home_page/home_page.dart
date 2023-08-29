@@ -20,6 +20,14 @@ class UserHomePage extends StatefulWidget {
 
 class _UserHomePageState extends State<UserHomePage>
     with SingleTickerProviderStateMixin {
+  var toggleSelectedValue = {1};
+
+  void onToggleSelected(Set<int> selectedValue) {
+    setState(() {
+      toggleSelectedValue = selectedValue;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -31,7 +39,7 @@ class _UserHomePageState extends State<UserHomePage>
           final userRoles = context.read<AuthCubit>().state.userData!.roles;
 
           if (state.isConnectionError) {
-            return ConnectionErrorSection(onButtonClicked: (){
+            return ConnectionErrorSection(onButtonClicked: () {
               bloc.add(PageRefreshed());
             });
           } else if (state.isLoading) {
@@ -71,6 +79,8 @@ class _UserHomePageState extends State<UserHomePage>
                               userInfo: state.userInfo!,
                             ),
                           QueueSection(
+                              toggleSelectedValue: toggleSelectedValue,
+                              onToggleSelected: onToggleSelected,
                               isLoading: state.isQueueLoading,
                               onSearchEntered: (value) {
                                 bloc.add(SearchEntered(searchQueue: value));
@@ -83,11 +93,13 @@ class _UserHomePageState extends State<UserHomePage>
                         children: [
                           if (userRoles.contains(Role.User))
                             Expanded(
+                              flex: 2,
                               child: CalendarSection(
                                 userInfo: state.userInfo!,
                               ),
                             ),
                           Expanded(
+                            flex: 3,
                             child: Padding(
                               padding:
                                   const EdgeInsets.only(right: 32.0, top: 16.0),
@@ -96,6 +108,8 @@ class _UserHomePageState extends State<UserHomePage>
                                   constraints:
                                       const BoxConstraints(maxWidth: 800),
                                   child: QueueSection(
+                                    toggleSelectedValue: toggleSelectedValue,
+                                    onToggleSelected: onToggleSelected,
                                     isLoading: state.isQueueLoading,
                                     onSearchEntered: (value) {
                                       bloc.add(

@@ -15,6 +15,8 @@ class QueueDataSource{
       final dataHolder = QueueDataHolder(monthName: numberToMonth(date.month));
       final users = queueItem['nextUsers'] as List<dynamic>;
       for(Map<String, dynamic> user in users) {
+          user['start_active_time'] = queueItem['start_time'];
+          user['end_active_time'] = queueItem['end_time'];
           final userInfo = UserInfo.fromJson(user);
           dataHolder.users.add(userInfo);
       }
