@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_view_type.dart';
+import 'package:parking_project/presentation/pages/user/home_page/utils/queue_view_type.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
 
 import '../../../../../assets/colors/app_colors.dart';

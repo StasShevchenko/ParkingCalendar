@@ -17,7 +17,7 @@ class ToggleClicked extends HomePageEvent{
 }
 
 class SortSelected extends HomePageEvent{
-  final String sortField;
+  final int sortField;
   final bool isAscending;
   SortSelected({required this.sortField, required this.isAscending});
 }
