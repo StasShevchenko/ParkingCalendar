@@ -6,6 +6,7 @@ import 'package:parking_project/data/remote_data_source/user_data_source.dart';
 
 import '../../../../../data/models/user.dart';
 import '../../../../../data/models/user_info.dart';
+import '../components/queue_view_type.dart';
 
 part 'home_page_event.dart';
 part 'home_page_state.dart';
@@ -28,6 +29,9 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           queueItems =
               await queueDataSource.getQueueItems(searchEvent.searchQueue);
           emit(state.copyWith(queueItems: queueItems, isQueueLoading: false));
+        case ToggleClicked toggleEvent:
+          emit(state.copyWith(toggleSelection: toggleEvent.chosenView));
+        case SortSelected sortEvent:
       }
     });
   }

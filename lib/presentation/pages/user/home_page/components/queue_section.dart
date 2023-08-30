@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
 import 'package:parking_project/presentation/pages/user/home_page/components/list_grid_view_toggle.dart';
 import 'package:parking_project/presentation/pages/user/home_page/components/queue_list.dart';
 import 'package:parking_project/presentation/pages/user/home_page/components/queue_table.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_view_type.dart';
+import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
 import 'package:parking_project/presentation/ui_kit/text_field/debounced_text_field.dart';
 
 import '../../../../../assets/colors/app_colors.dart';
@@ -11,17 +14,13 @@ import '../../../../../assets/colors/app_colors.dart';
 class QueueSection extends StatefulWidget {
   final bool isLoading;
   final List<QueueDataHolder> queueItems;
-  final Set<int> toggleSelectedValue;
-  final Function onToggleSelected;
   final Function(String searchQueue) onSearchEntered;
 
   const QueueSection(
       {super.key,
       required this.queueItems,
       required this.isLoading,
-      required this.onSearchEntered,
-      required this.toggleSelectedValue,
-      required this.onToggleSelected});
+      required this.onSearchEntered,});
 
   @override
   State<QueueSection> createState() => _QueueSectionState();
@@ -67,6 +66,7 @@ class _QueueSectionState extends State<QueueSection> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<HomePageBloc>();
     return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
@@ -95,13 +95,11 @@ class _QueueSectionState extends State<QueueSection> {
                 const SizedBox(
                   height: 32,
                 ),
-                Align(
+                const Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: ListGridViewToggle(
-                        onSelected: widget.onToggleSelected,
-                        selectedValue: widget.toggleSelectedValue),
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: ListGridViewToggle(),
                   ),
                 ),
                 const SizedBox(
@@ -122,7 +120,7 @@ class _QueueSectionState extends State<QueueSection> {
                     : widget.queueItems.isEmpty
                         ? const Expanded(
                             child: Text('Пользователи не найдены :('))
-                        : widget.toggleSelectedValue.contains(1)
+                        : bloc.state.toggleSelection.contains(QueueViewType.ListView)
                             ? Expanded(
                                 child: QueueList(
                                 controller: _controller,

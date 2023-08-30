@@ -20,13 +20,6 @@ class UserHomePage extends StatefulWidget {
 
 class _UserHomePageState extends State<UserHomePage>
     with SingleTickerProviderStateMixin {
-  var toggleSelectedValue = {1};
-
-  void onToggleSelected(Set<int> selectedValue) {
-    setState(() {
-      toggleSelectedValue = selectedValue;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +72,6 @@ class _UserHomePageState extends State<UserHomePage>
                               userInfo: state.userInfo!,
                             ),
                           QueueSection(
-                              toggleSelectedValue: toggleSelectedValue,
-                              onToggleSelected: onToggleSelected,
                               isLoading: state.isQueueLoading,
                               onSearchEntered: (value) {
                                 bloc.add(SearchEntered(searchQueue: value));
@@ -108,8 +99,6 @@ class _UserHomePageState extends State<UserHomePage>
                                   constraints:
                                       const BoxConstraints(maxWidth: 800),
                                   child: QueueSection(
-                                    toggleSelectedValue: toggleSelectedValue,
-                                    onToggleSelected: onToggleSelected,
                                     isLoading: state.isQueueLoading,
                                     onSearchEntered: (value) {
                                       bloc.add(

@@ -7,6 +7,7 @@ class HomePageState {
   final bool isQueueLoading;
   final bool isConnectionError;
   final String? searchValue;
+  final Set<QueueViewType> toggleSelection;
 
   HomePageState(
       {this.userInfo,
@@ -14,21 +15,24 @@ class HomePageState {
       this.isQueueLoading = false,
       this.isLoading = true,
       this.isConnectionError = false,
-      this.searchValue});
+      this.searchValue,
+      this.toggleSelection = const {QueueViewType.ListView}});
 
   HomePageState copyWith(
       {UserInfo? userInfo,
       List<QueueDataHolder>? queueItems,
       bool? isLoading,
-        bool? isQueueLoading,
+      bool? isQueueLoading,
       bool? isConnectionError,
-      String? searchValue}) {
+      String? searchValue,
+      Set<QueueViewType>? toggleSelection}) {
     return HomePageState(
         userInfo: userInfo ?? this.userInfo,
         queueItems: queueItems ?? this.queueItems,
         isLoading: isLoading ?? this.isLoading,
         isQueueLoading: isQueueLoading ?? this.isQueueLoading,
         isConnectionError: isConnectionError ?? this.isConnectionError,
-        searchValue: searchValue ?? this.searchValue);
+        searchValue: searchValue ?? this.searchValue,
+        toggleSelection: toggleSelection ?? this.toggleSelection);
   }
 }

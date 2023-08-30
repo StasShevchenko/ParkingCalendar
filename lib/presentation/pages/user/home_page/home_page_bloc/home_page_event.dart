@@ -10,3 +10,14 @@ class SearchEntered extends HomePageEvent{
   final String searchQueue;
   SearchEntered({required this.searchQueue});
 }
+
+class ToggleClicked extends HomePageEvent{
+  final Set<QueueViewType> chosenView;
+  ToggleClicked({required this.chosenView});
+}
+
+class SortSelected extends HomePageEvent{
+  final String sortField;
+  final bool isAscending;
+  SortSelected({required this.sortField, required this.isAscending});
+}
