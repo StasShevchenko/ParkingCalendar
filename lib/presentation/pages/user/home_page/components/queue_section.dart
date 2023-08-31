@@ -129,7 +129,10 @@ class _QueueSectionState extends State<QueueSection> {
                                   ? QueueList(
                                       controller: _controller,
                                       queueItems: widget.queueItems)
-                                  : QueueTable(controller: _controller),
+                                  : Align(
+                                      alignment: Alignment.topCenter,
+                                      child:
+                                          QueueTable(controller: _controller)),
                             ),
                           ),
               ],
