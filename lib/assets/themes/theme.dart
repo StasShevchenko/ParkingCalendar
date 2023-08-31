@@ -15,6 +15,7 @@ ThemeData appTheme() => ThemeData(
     fontFamily: 'Golos',
     appBarTheme: AppBarTheme(
         elevation: 0,
+        scrolledUnderElevation: 0.0,
         color: AppColors.primaryBlue,
         titleTextStyle: TextStyle(
           color: AppColors.primaryWhite,

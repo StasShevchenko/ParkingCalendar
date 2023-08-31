@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_header.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_header_content.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/list_grid_view_toggle.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_list.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_table.dart';
+import 'package:parking_project/presentation/pages/user/home_page/utils/queue_view_type.dart';
+import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
 import 'package:parking_project/presentation/ui_kit/text_field/debounced_text_field.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 
 import '../../../../../assets/colors/app_colors.dart';
 
@@ -64,6 +67,7 @@ class _QueueSectionState extends State<QueueSection> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<HomePageBloc>();
     return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
@@ -90,6 +94,16 @@ class _QueueSectionState extends State<QueueSection> {
                   ),
                 ),
                 const SizedBox(
+                  height: 32,
+                ),
+                const Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: ListGridViewToggle(),
+                  ),
+                ),
+                const SizedBox(
                   height: 16,
                 ),
                 widget.isLoading
@@ -108,24 +122,18 @@ class _QueueSectionState extends State<QueueSection> {
                         ? const Expanded(
                             child: Text('Пользователи не найдены :('))
                         : Expanded(
-                            child: ListView.builder(
-                                controller: _controller,
-                                itemCount: widget.queueItems.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0),
-                                    child: StickyHeader(
-                                      header: QueueHeader(
-                                        monthName:
-                                            widget.queueItems[index].monthName,
-                                      ),
-                                      content: QueueHeaderContent(
-                                          usersList:
-                                              widget.queueItems[index].users),
-                                    ),
-                                  );
-                                }),
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 500),
+                              child: bloc.state.toggleSelection
+                                      .contains(QueueViewType.ListView)
+                                  ? QueueList(
+                                      controller: _controller,
+                                      queueItems: widget.queueItems)
+                                  : Align(
+                                      alignment: Alignment.topCenter,
+                                      child:
+                                          QueueTable(controller: _controller)),
+                            ),
                           ),
               ],
             ),

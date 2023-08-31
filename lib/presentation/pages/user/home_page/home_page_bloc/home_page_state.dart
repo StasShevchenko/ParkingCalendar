@@ -7,6 +7,10 @@ class HomePageState {
   final bool isQueueLoading;
   final bool isConnectionError;
   final String? searchValue;
+  final Set<QueueViewType> toggleSelection;
+  final int sortColumn;
+  final bool isAscendingSort;
+  final List<UserInfo> plainUsersList;
 
   HomePageState(
       {this.userInfo,
@@ -14,21 +18,34 @@ class HomePageState {
       this.isQueueLoading = false,
       this.isLoading = true,
       this.isConnectionError = false,
-      this.searchValue});
+      this.searchValue,
+      this.toggleSelection = const {QueueViewType.ListView},
+      this.sortColumn = 3,
+      this.isAscendingSort = false,
+      this.plainUsersList = const []});
 
   HomePageState copyWith(
       {UserInfo? userInfo,
       List<QueueDataHolder>? queueItems,
       bool? isLoading,
-        bool? isQueueLoading,
+      bool? isQueueLoading,
       bool? isConnectionError,
-      String? searchValue}) {
+      String? searchValue,
+      Set<QueueViewType>? toggleSelection,
+      bool? isAscendingSort,
+      int? sortColumn,
+      List<UserInfo>? plainUsersList}) {
     return HomePageState(
         userInfo: userInfo ?? this.userInfo,
         queueItems: queueItems ?? this.queueItems,
         isLoading: isLoading ?? this.isLoading,
         isQueueLoading: isQueueLoading ?? this.isQueueLoading,
         isConnectionError: isConnectionError ?? this.isConnectionError,
-        searchValue: searchValue ?? this.searchValue);
+        searchValue: searchValue ?? this.searchValue,
+        toggleSelection: toggleSelection ?? this.toggleSelection,
+        isAscendingSort: isAscendingSort ?? this.isAscendingSort,
+        plainUsersList: plainUsersList ?? this.plainUsersList,
+        sortColumn: sortColumn ?? this.sortColumn
+    );
   }
 }

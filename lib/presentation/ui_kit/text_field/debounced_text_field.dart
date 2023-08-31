@@ -5,15 +5,19 @@ import 'package:flutter/material.dart';
 //Text field that provides debounce functionality
 class DebouncedTextField extends TextField {
   final Duration debounceTime;
-  late Timer timer;
 
-  DebouncedTextField(
+  const DebouncedTextField(
       {super.key,
       super.onChanged,
       super.decoration,
-      required this.debounceTime}) {
-    timer = Timer(debounceTime, () {});
-  }
+      required this.debounceTime});
+
+  @override
+  State<DebouncedTextField> createState() => _DebouncedTextFieldState();
+}
+
+class _DebouncedTextFieldState extends State<DebouncedTextField> {
+  late Timer timer = Timer(widget.debounceTime, () {});
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +25,13 @@ class DebouncedTextField extends TextField {
       onTapOutside: (_) => FocusScope.of(context).unfocus(),
       onChanged: (value) {
         timer.cancel();
-        timer = Timer(debounceTime, () {
-          if (onChanged != null) {
-            onChanged!(value);
+        timer = Timer(widget.debounceTime, () {
+          if (widget.onChanged != null) {
+            widget.onChanged!(value);
           }
         });
       },
-      decoration: decoration,
+      decoration: widget.decoration,
     );
   }
 }
