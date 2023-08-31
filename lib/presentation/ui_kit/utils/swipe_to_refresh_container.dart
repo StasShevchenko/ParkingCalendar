@@ -10,7 +10,7 @@ class SwipeToRefreshContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async => onRefresh,
+      onRefresh: () async => onRefresh(),
       child: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         slivers: [
