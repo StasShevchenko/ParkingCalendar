@@ -29,39 +29,50 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           emit(state.copyWith(isQueueLoading: true));
           final queueItems =
               await queueDataSource.getQueueItems(searchEvent.searchQueue);
-          emit(state.copyWith(queueItems: queueItems, isQueueLoading: false));
+          plainUsersList = mapToPlainUsers(queueItems);
+          sortPlainUsers(state.sortColumn, !state.isAscendingSort);
+          emit(
+            state.copyWith(
+                queueItems: queueItems,
+                isQueueLoading: false,
+                plainUsersList: plainUsersList),
+          );
         case ToggleClicked toggleEvent:
           emit(state.copyWith(toggleSelection: toggleEvent.chosenView));
         case SortSelected sortEvent:
           final isAscending = !sortEvent.isAscending;
-          switch (sortEvent.sortField) {
-            case 0:
-              plainUsersList.sort((o1, o2) => isAscending
-                  ? o1.firstName.compareTo(o2.firstName)
-                  : -o1.firstName.compareTo(o2.firstName));
-            case 1:
-              plainUsersList.sort((o1, o2) => isAscending
-                  ? o1.secondName.compareTo(o2.secondName)
-                  : -o1.secondName.compareTo(o2.secondName));
-            case 2:
-              plainUsersList.sort((o1, o2) => isAscending
-                  ? o1.email.compareTo(o2.email)
-                  : -o1.email.compareTo(o2.email));
-            case 3:
-              plainUsersList.sort((o1, o2) => isAscending
-                  ? o1.startDate!.compareTo(o2.startDate!)
-                  : -o1.startDate!.compareTo(o2.startDate!));
-            case 4:
-              plainUsersList.sort((o1, o2) => isAscending
-                  ? o1.endDate!.compareTo(o2.endDate!)
-                  : -o1.endDate!.compareTo(o2.endDate!));
-          }
+          sortPlainUsers(sortEvent.sortField, isAscending);
           emit(state.copyWith(
               sortColumn: sortEvent.sortField,
               plainUsersList: plainUsersList,
               isAscendingSort: sortEvent.isAscending));
       }
     });
+  }
+
+  void sortPlainUsers(int sortField, bool isAscending) {
+    switch (sortField) {
+      case 0:
+        plainUsersList.sort((o1, o2) => isAscending
+            ? o1.firstName.compareTo(o2.firstName)
+            : -o1.firstName.compareTo(o2.firstName));
+      case 1:
+        plainUsersList.sort((o1, o2) => isAscending
+            ? o1.secondName.compareTo(o2.secondName)
+            : -o1.secondName.compareTo(o2.secondName));
+      case 2:
+        plainUsersList.sort((o1, o2) => isAscending
+            ? o1.email.compareTo(o2.email)
+            : -o1.email.compareTo(o2.email));
+      case 3:
+        plainUsersList.sort((o1, o2) => isAscending
+            ? o1.startDate!.compareTo(o2.startDate!)
+            : -o1.startDate!.compareTo(o2.startDate!));
+      case 4:
+        plainUsersList.sort((o1, o2) => isAscending
+            ? o1.endDate!.compareTo(o2.endDate!)
+            : -o1.endDate!.compareTo(o2.endDate!));
+    }
   }
 
   void init() async {
