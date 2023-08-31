@@ -16,11 +16,12 @@ class QueueSection extends StatefulWidget {
   final List<QueueDataHolder> queueItems;
   final Function(String searchQueue) onSearchEntered;
 
-  const QueueSection(
-      {super.key,
-      required this.queueItems,
-      required this.isLoading,
-      required this.onSearchEntered,});
+  const QueueSection({
+    super.key,
+    required this.queueItems,
+    required this.isLoading,
+    required this.onSearchEntered,
+  });
 
   @override
   State<QueueSection> createState() => _QueueSectionState();
@@ -120,17 +121,17 @@ class _QueueSectionState extends State<QueueSection> {
                     : widget.queueItems.isEmpty
                         ? const Expanded(
                             child: Text('Пользователи не найдены :('))
-                        : bloc.state.toggleSelection.contains(QueueViewType.ListView)
-                            ? Expanded(
-                                child: QueueList(
-                                controller: _controller,
-                                queueItems: widget.queueItems,
-                              ))
-                            : Expanded(
-                                child: QueueTable(
-                                  controller: _controller,
-                                ),
-                              ),
+                        : Expanded(
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 500),
+                              child: bloc.state.toggleSelection
+                                      .contains(QueueViewType.ListView)
+                                  ? QueueList(
+                                      controller: _controller,
+                                      queueItems: widget.queueItems)
+                                  : QueueTable(controller: _controller),
+                            ),
+                          ),
               ],
             ),
           ),
