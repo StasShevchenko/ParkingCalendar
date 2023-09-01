@@ -6,8 +6,8 @@ import '../../../../../../assets/colors/app_colors.dart';
 /// This widget is used to highlight
 /// day that is available for parking
 class ActiveCalendarDay extends StatelessWidget {
-  const ActiveCalendarDay({super.key, required this.dayNumber});
-
+  const ActiveCalendarDay({super.key, required this.dayNumber, required this.alpha});
+  final int alpha;
   final String dayNumber;
 
   @override
@@ -18,7 +18,7 @@ class ActiveCalendarDay extends StatelessWidget {
         aspectRatio: 1.0,
         child: Container(
           decoration: BoxDecoration(
-              color: AppColors.primaryAccentRed,
+              color: AppColors.primaryAccentRed.withAlpha(alpha),
               borderRadius: const BorderRadius.all(Radius.circular(12.0))),
           child: Center(
             child: Text(

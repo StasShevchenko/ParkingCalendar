@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
-import 'package:parking_project/presentation/pages/user/home_page/calendar_section.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/calendar_section.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/connection_error_section.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
-import 'package:parking_project/presentation/pages/user/home_page/queue_section.dart';
+import 'package:parking_project/presentation/pages/user/home_page/components/queue_section.dart';
+import 'package:parking_project/presentation/ui_kit/utils/swipe_to_refresh_container.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 import '../../../../utils/roles.dart';
@@ -19,8 +21,6 @@ class UserHomePage extends StatefulWidget {
 
 class _UserHomePageState extends State<UserHomePage>
     with SingleTickerProviderStateMixin {
-  Timer searchTimer = Timer(const Duration(milliseconds: 500), () {});
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -31,25 +31,9 @@ class _UserHomePageState extends State<UserHomePage>
           final bloc = context.read<HomePageBloc>();
           final userRoles = context.read<AuthCubit>().state.userData!.roles;
           if (state.isConnectionError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Ошибка!\n Проверьте ваше подключение к интернету!',
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        bloc.add(PageRefreshed());
-                      },
-                      child: const Text('Обновить'))
-                ],
-              ),
-            );
+            return ConnectionErrorSection(onButtonClicked: () {
+              bloc.add(PageRefreshed());
+            });
           } else if (state.isLoading) {
             return Center(
               child: CircularProgressIndicator(
@@ -58,81 +42,80 @@ class _UserHomePageState extends State<UserHomePage>
             );
           } else {
             return DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                backgroundColor: AppColors.background,
-                appBar: MediaQuery.of(context).size.width < 880 &&
-                        userRoles.contains(Role.User)
-                    ? AppBar(
-                        backgroundColor: AppColors.primaryBlue,
-                        toolbarHeight: 0,
-                        bottom: TabBar(
-                          indicatorColor: AppColors.primaryWhite,
-                          labelColor: AppColors.primaryWhite,
-                          unselectedLabelColor: Colors.grey,
-                          tabs: const [
-                            Tab(
-                              text: 'Календарь',
-                            ),
-                            Tab(text: 'Очередь')
-                          ],
-                        ),
-                      )
-                    : null,
-                body: MediaQuery.of(context).size.width < 880
-                    ? TabBarView(
-                        children: [
-                          if (userRoles.contains(Role.User))
-                            CalendarSection(
-                              userInfo: state.userInfo!,
-                            ),
-                          QueueSection(
-                              onSearchEntered: (value) {
-                                searchTimer.cancel();
-                                searchTimer = Timer(
-                                    const Duration(milliseconds: 500),
-                                    () => bloc.add(
-                                        SearchEntered(searchQueue: value)));
-                              },
-                              queueItems: state.queueItems!),
-                        ],
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (userRoles.contains(Role.User))
-                            Expanded(
-                              child: CalendarSection(
+              length: userRoles.contains(Role.User) ? 2 : 1,
+              child: SwipeToRefreshContainer(
+                onRefresh: () => bloc.add(PageRefreshed()),
+                child: Scaffold(
+                  backgroundColor: AppColors.background,
+                  appBar: MediaQuery.of(context).size.width < 880 &&
+                          userRoles.contains(Role.User)
+                      ? AppBar(
+                          surfaceTintColor: Colors.transparent,
+                          backgroundColor: AppColors.primaryBlue,
+                          toolbarHeight: 0,
+                          bottom: TabBar(
+                            indicatorColor: AppColors.primaryWhite,
+                            labelColor: AppColors.primaryWhite,
+                            unselectedLabelColor: Colors.grey,
+                            tabs: const [
+                              Tab(
+                                text: 'Календарь',
+                              ),
+                              Tab(text: 'Очередь')
+                            ],
+                          ),
+                        )
+                      : null,
+                  body: MediaQuery.of(context).size.width < 880
+                      ? TabBarView(
+                          children: [
+                            if (userRoles.contains(Role.User))
+                              CalendarSection(
                                 userInfo: state.userInfo!,
                               ),
-                            ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 32.0, top: 16.0),
-                              child: Center(
-                                child: ConstrainedBox(
-                                  constraints: const BoxConstraints(
-                                    maxWidth: 800
-                                  ),
-                                  child: QueueSection(
-                                    onSearchEntered: (value) {
-                                      searchTimer.cancel();
-                                      searchTimer = Timer(
-                                        const Duration(milliseconds: 500),
-                                        () => bloc.add(
+                            QueueSection(
+                                isLoading: state.isQueueLoading,
+                                onSearchEntered: (value) {
+                                  bloc.add(SearchEntered(searchQueue: value));
+                                },
+                                queueItems: state.queueItems!),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (userRoles.contains(Role.User))
+                              Expanded(
+                                flex: 2,
+                                child: CalendarSection(
+                                  userInfo: state.userInfo!,
+                                ),
+                              ),
+                            Expanded(
+                              flex: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 32.0, top: 16.0),
+                                child: Center(
+                                  child: ConstrainedBox(
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 800),
+                                    child: QueueSection(
+                                      isLoading: state.isQueueLoading,
+                                      onSearchEntered: (value) {
+                                        bloc.add(
                                           SearchEntered(searchQueue: value),
-                                        ),
-                                      );
-                                    },
-                                    queueItems: state.queueItems!,
+                                        );
+                                      },
+                                      queueItems: state.queueItems!,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
+                            )
+                          ],
+                        ),
+                ),
               ),
             );
           }
