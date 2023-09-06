@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:parking_project/data/models/admins.dart';
 import 'package:parking_project/data/models/offices.dart';
 import 'package:parking_project/data/models/user_info.dart';
 import 'package:parking_project/data/remote_data_source/superadmin_data_source.dart';
-import 'package:parking_project/presentation/pages/super_admin/admins_list_bloc/admins_bloc.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/text_fields.dart';
+import 'package:parking_project/presentation/pages/super_admin/components/user_card_component.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/offices_alert_dialog.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/office_card_component.dart';
 import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
+import 'package:parking_project/presentation/pages/super_admin/components/text_fields.dart';
+import 'package:parking_project/presentation/pages/super_admin/users_list_page_bloc/users_list_page_bloc.dart';
 import 'package:parking_project/presentation/ui_kit/bottom_sheet/show_app_bottom_sheet.dart';
+import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
 
 import '../../../assets/colors/app_colors.dart';
 import '../../../utils/device_info.dart';
 import 'components/bottom_sheet_content.dart';
 
-class AdminsListPage extends StatefulWidget {
-  const AdminsListPage({super.key});
+class UsersListPage extends StatelessWidget {
+  const UsersListPage({super.key});
 
-  @override
-  State<AdminsListPage> createState() => _AdminsListPageState();
-}
-
-class _AdminsListPageState extends State<AdminsListPage> {
   @override
   Widget build(BuildContext context) {
     final columnCount = switch (DeviceScreen.get(context)) {
@@ -33,7 +28,7 @@ class _AdminsListPageState extends State<AdminsListPage> {
     };
 
     final gridChildAspectRatio = switch (DeviceScreen.get(context)) {
-      FormFactorType.Mobile => 7.0,
+      FormFactorType.Mobile => 5.0,
       FormFactorType.Tablet => 2.0,
       FormFactorType.Desktop => 3.0
     };
@@ -41,30 +36,26 @@ class _AdminsListPageState extends State<AdminsListPage> {
     return RepositoryProvider(
       create: (context) => SuperAdminDataSource(),
       child: BlocProvider(
-        create: (context) =>
-            AdminsBloc(RepositoryProvider.of<SuperAdminDataSource>(context))
-              ..add(LoadAdminsEvent()),
+        create: (context) => UsersListPageBloc(),
         child: Scaffold(
           backgroundColor: AppColors.background,
-          body: BlocBuilder<AdminsBloc, AdminsState>(
+          body: BlocBuilder<UsersListPageBloc, UsersListPageState>(
             builder: (context, state) {
-              if (state is AdminsLoadingState) {
+              final bloc = context.read<UsersListPageBloc>();
+              if (state.isLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              }
-              if (state is AdminsErrorState) {
-                return Center(
-                  child: Text(state.err),
-                );
-              }
-              if (state is AdminsLoadedState) {
-                List<UserInfo> adminList = state.users;
+              } else if (state.isConnectionError) {
+                return ConnectionErrorSection(
+                    onButtonClicked: () => bloc.add(PageRefreshed()));
+              } else {
+                List<UserInfo> usersList = state.users;
                 return Center(
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: SizedBox(
                           width: 350,
                           child: TextFieldWidget(
@@ -72,29 +63,30 @@ class _AdminsListPageState extends State<AdminsListPage> {
                         ),
                       ),
                       Expanded(
-                        child: GridView.builder(
-                          itemCount: adminList.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: columnCount,
-                            childAspectRatio:
-                                MediaQuery.of(context).size.width /
-                                    (MediaQuery.of(context).size.height /
-                                        gridChildAspectRatio),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                            itemCount: usersList.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisSpacing: 16,
+                              crossAxisSpacing: 16,
+                              crossAxisCount: columnCount,
+                              childAspectRatio:
+                                  gridChildAspectRatio,
+                            ),
+                            itemBuilder: (context, index) {
+                              return UserGridItem(
+                                onTap: () {
+                                  final userInfo = usersList[index];
+                                  context.push('/admins_list/details',
+                                      extra: userInfo);
+                                },
+                                name:
+                                    "${usersList[index].firstName} ${usersList[index].secondName}",
+                              );
+                            },
                           ),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                final userInfo = adminList[index];
-                                context.push('/admins_list/details',
-                                    extra: userInfo);
-                              },
-                              child: OfficesGridItem(
-                                name: "${adminList[index].firstName} ${adminList[index].secondName}",
-                                address: "Воронеж",
-                              ),
-                            );
-                          },
                         ),
                       ),
                     ],

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:parking_project/data/models/user_info.dart';
 import 'package:parking_project/data/remote_data_source/dio_configuration/dio_client.dart';
 

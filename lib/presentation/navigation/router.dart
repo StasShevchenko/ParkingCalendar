@@ -7,8 +7,8 @@ import 'package:parking_project/presentation/navigation/app_routes.dart';
 import 'package:parking_project/presentation/navigation/auth_redirector.dart';
 import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page.dart';
-import 'package:parking_project/presentation/pages/super_admin/admins_detail_page.dart';
-import 'package:parking_project/presentation/pages/super_admin/admins_list_page.dart';
+import 'package:parking_project/presentation/pages/super_admin/user_detail_page.dart';
+import 'package:parking_project/presentation/pages/super_admin/users_list_page.dart';
 import 'package:parking_project/presentation/pages/user/home_page/home_page.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
 
@@ -64,7 +64,7 @@ final goRouter = GoRouter(
               ],
               path: AppRoutes.superAdminAdminsList,
               pageBuilder: (context, state) => const NoTransitionPage(
-                child: AdminsListPage(),
+                child: AuthRedirector(child: UsersListPage()),
               ),
             )
           ],

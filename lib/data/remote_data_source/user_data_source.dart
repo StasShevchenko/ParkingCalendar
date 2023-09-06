@@ -14,6 +14,13 @@ class UserDataSource {
 
 
   Future<List<UserInfo>> getAllUsers() async {
-    return [];
+    final List<UserInfo> users = [];
+    final response = ((await dio.get('/user')).data as List<dynamic>);
+    for(Map<String, dynamic> userItem in response){
+      UserInfo user = UserInfo.fromJson(userItem);
+      users.add(user);
+    }
+    return users;
   }
+
 }

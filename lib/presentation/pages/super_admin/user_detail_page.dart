@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:parking_project/assets/colors/app_colors.dart';
 import 'package:parking_project/data/models/user_info.dart';
 
@@ -29,7 +28,6 @@ class _AdminDetailPageState extends State<AdminDetailPage> {
           children: [
             const SizedBox(height: 15,),
             Text(widget.userInfo.email),const SizedBox(height: 5,),
-
           ],
         ),
       ),
