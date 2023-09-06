@@ -28,7 +28,7 @@ class UsersListPage extends StatelessWidget {
     };
 
     final gridChildAspectRatio = switch (DeviceScreen.get(context)) {
-      FormFactorType.Mobile => 5.0,
+      FormFactorType.Mobile => 3.0,
       FormFactorType.Tablet => 2.0,
       FormFactorType.Desktop => 3.0
     };
@@ -64,28 +64,33 @@ class UsersListPage extends StatelessWidget {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GridView.builder(
-                            itemCount: usersList.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisSpacing: 16,
-                              crossAxisSpacing: 16,
-                              crossAxisCount: columnCount,
-                              childAspectRatio:
-                                  gridChildAspectRatio,
+                          padding: const EdgeInsets.all(16.0),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                                maxWidth: DeviceScreen.get(context) ==
+                                        FormFactorType.Mobile
+                                    ? 420
+                                    : double.maxFinite),
+                            child: GridView.builder(
+                              itemCount: usersList.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisSpacing: 16,
+                                crossAxisSpacing: 16,
+                                crossAxisCount: columnCount,
+                                childAspectRatio: gridChildAspectRatio,
+                              ),
+                              itemBuilder: (context, index) {
+                                return UserGridItem(
+                                  onTap: () {
+                                    final userInfo = usersList[index];
+                                    context.push('/admins_list/details',
+                                        extra: userInfo);
+                                  },
+                                  user: usersList[index],
+                                );
+                              },
                             ),
-                            itemBuilder: (context, index) {
-                              return UserGridItem(
-                                onTap: () {
-                                  final userInfo = usersList[index];
-                                  context.push('/admins_list/details',
-                                      extra: userInfo);
-                                },
-                                name:
-                                    "${usersList[index].firstName} ${usersList[index].secondName}",
-                              );
-                            },
                           ),
                         ),
                       ),

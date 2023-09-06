@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../../../assets/colors/app_colors.dart';
+import '../../../../data/models/user_info.dart';
 
 class UserGridItem extends StatefulWidget {
-  final String? name;
+  final UserInfo user;
   final Function onTap;
 
   const UserGridItem({
     super.key,
-    this.name,
+    required this.user,
     required this.onTap,
   });
 
@@ -28,11 +29,47 @@ class UserGridItemState extends State<UserGridItem> {
         onTap: () {
           widget.onTap();
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(widget.name.toString()),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    '${widget.user.firstName} ${widget.user.secondName}',
+                    style: const TextStyle(fontSize: 16),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              ),
+              if (widget.user.isStaff && !widget.user.isSuperUser) ...{
+                const SizedBox(
+                  height: 4.0,
+                ),
+                const Text(
+                  'Администратор',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              } else if (widget.user.isSuperUser) ...{
+                const SizedBox(
+                  height: 4.0,
+                ),
+                const Text(
+                  'Старший администратор',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              },
+              const SizedBox(
+                height: 16.0,
+              ),
+              Text(
+                widget.user.email,
+                textAlign: TextAlign.end,
+              )
+            ],
+          ),
         ),
       ),
     );
