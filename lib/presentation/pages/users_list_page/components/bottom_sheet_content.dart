@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parking_project/data/models/offices.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/text_fields.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
+import 'package:parking_project/presentation/pages/users_list_page/components/text_field_widget.dart';
+import 'package:parking_project/presentation/pages/users_list_page/components/text_fields.dart';
 
 class BottomSheetContent extends StatefulWidget {
   final List<TextFieldsData> textFieldsData;

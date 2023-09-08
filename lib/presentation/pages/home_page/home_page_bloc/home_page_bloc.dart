@@ -4,8 +4,8 @@ import 'package:parking_project/data/models/queue_data_holder.dart';
 import 'package:parking_project/data/remote_data_source/queue_data_source.dart';
 import 'package:parking_project/data/remote_data_source/user_data_source.dart';
 
-import '../../../../../data/models/user.dart';
-import '../../../../../data/models/user_info.dart';
+import '../../../../data/models/user.dart';
+import '../../../../data/models/user_info.dart';
 import '../utils/queue_view_type.dart';
 
 part 'home_page_event.dart';
@@ -79,7 +79,6 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     try {
       emit(state.copyWith(isLoading: true, isConnectionError: false));
       final userInfo = await userDataSource.getUserById(user.id);
-      userDataSource.getAllUsers();
       final queueItems = await queueDataSource.getQueueItems();
       plainUsersList = mapToPlainUsers(queueItems);
       emit(

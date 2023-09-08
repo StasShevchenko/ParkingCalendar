@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../assets/colors/app_colors.dart';
+import '../../../assets/colors/app_colors.dart';
 import '../../auth_cubit/auth_cubit.dart';
 
-class UserProfilePage extends StatefulWidget {
-  const UserProfilePage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<UserProfilePage> createState() => _UserProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _UserProfilePageState extends State<UserProfilePage> {
+class _ProfilePageState extends State<ProfilePage> {
   String? _passwordText;
   TextEditingController passwordFieldController = TextEditingController();
 

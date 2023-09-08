@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:parking_project/assets/themes/theme.dart';
+import 'package:parking_project/presentation/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/navigation/router.dart';
-import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 
 void main() {
   usePathUrlStrategy();

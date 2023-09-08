@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:parking_project/data/models/user_info.dart';
-import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
+import 'package:parking_project/presentation/pages/home_page/home_page_bloc/home_page_bloc.dart';
 
-import '../../../../../assets/colors/app_colors.dart';
+import '../../../../assets/colors/app_colors.dart';
 
 class QueueTable extends StatelessWidget {
   final ScrollController controller;

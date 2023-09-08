@@ -68,12 +68,12 @@ final superAdminIcons = [
 final commonIcons = [
   NavigationDestinationDataHolder(
       icon: Icon(
-        Icons.admin_panel_settings_rounded,
+        Icons.supervisor_account_rounded,
         color: AppColors.primaryBlue,
       ),
       selectedIcon:
-      Icon(Icons.admin_panel_settings_rounded, color: AppColors.primaryWhite),
-      label: 'Админы',
+      Icon(Icons.supervisor_account_rounded, color: AppColors.primaryWhite),
+      label: 'Сотрудники',
       index: 2
   ),
   NavigationDestinationDataHolder(
@@ -101,7 +101,7 @@ List<NavigationRailDestination> mapToNavigationRailDestinations(
     navigationRailDestinations.add(NavigationRailDestination(
         icon: dataItem.icon,
         selectedIcon: dataItem.selectedIcon,
-        label: Text(dataItem.label)));
+        label: Text(dataItem.label,)));
   }
   return navigationRailDestinations;
 }

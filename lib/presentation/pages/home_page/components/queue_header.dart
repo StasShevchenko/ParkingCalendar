@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../assets/colors/app_colors.dart';
-import '../../../../../utils/number_to_month.dart';
+import '../../../../assets/colors/app_colors.dart';
+import '../../../../utils/number_to_month.dart';
 
 class QueueHeader extends StatelessWidget {
   final String monthName;

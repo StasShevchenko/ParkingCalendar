@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:parking_project/presentation/pages/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page_bloc/login_page_bloc.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../assets/colors/app_colors.dart';
+import '../../auth_cubit/auth_cubit.dart';
 import '../../navigation/app_routes.dart';
 
 class LoginPage extends StatefulWidget {

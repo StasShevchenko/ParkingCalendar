@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_header.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_header_content.dart';
+import 'package:parking_project/presentation/pages/home_page/components/queue_header.dart';
+import 'package:parking_project/presentation/pages/home_page/components/queue_header_content.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
-import '../../../../../data/models/queue_data_holder.dart';
+import '../../../../data/models/queue_data_holder.dart';
 
 class QueueList extends StatelessWidget {
   final ScrollController controller;

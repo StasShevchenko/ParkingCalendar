@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../assets/colors/app_colors.dart';
+import '../../../../../assets/colors/app_colors.dart';
 
 
 /// This widget is used to highlight

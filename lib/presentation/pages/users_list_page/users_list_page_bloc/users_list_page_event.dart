@@ -1,4 +1,4 @@
-part of 'users_list_page_bloc.dart';
+part of '../../users_list_page/users_list_page_bloc/users_list_page_bloc.dart';
 
 sealed class UsersListPageEvent{}
 
