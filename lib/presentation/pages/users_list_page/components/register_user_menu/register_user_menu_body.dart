@@ -19,7 +19,32 @@ class RegisterUserMenuBody extends StatelessWidget {
       create: (context) => RegisterUserMenuBloc(),
       child: BlocConsumer<RegisterUserMenuBloc, RegisterUserMenuState>(
         listener: (context, state) {
-
+          if (state.isUserCreated == 1) {
+            context.pop();
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  surfaceTintColor: Colors.white,
+                  backgroundColor: Colors.white,
+                  title: Center(
+                      child: Text(
+                    'Регистрация завершена!',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  )),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () {
+                          context.pop();
+                        },
+                        child: const Text('Закрыть'))
+                  ],
+                  content: const Text(
+                      'Пользователь был успешно зарегистрирован.\nПароль был отправлен на указанную почту.'),
+                );
+              },
+            );
+          }
         },
         builder: (context, state) {
           final bloc = context.read<RegisterUserMenuBloc>();
@@ -44,7 +69,8 @@ class RegisterUserMenuBody extends StatelessWidget {
                     textInputAction: TextInputAction.next,
                     onTapOutside: (_) => FocusScope.of(context).unfocus(),
                     decoration: InputDecoration(
-                        errorText: state.isEmailError ? 'Введите почту!' : null,
+                        errorText:
+                            state.isEmailError ? state.emailErrorText : null,
                         prefixIconColor: AppColors.primaryBlue,
                         prefixIcon: const Padding(
                           padding: EdgeInsets.only(
@@ -58,10 +84,13 @@ class RegisterUserMenuBody extends StatelessWidget {
                     height: 16,
                   ),
                   TextField(
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      bloc.add(NameEntered(value: value));
+                    },
                     textInputAction: TextInputAction.next,
                     onTapOutside: (_) => FocusScope.of(context).unfocus(),
                     decoration: InputDecoration(
+                        errorText: state.isNameError ? 'Введите имя!' : null,
                         prefixIconColor: AppColors.primaryBlue,
                         prefixIcon: const Padding(
                           padding: EdgeInsets.only(
@@ -75,16 +104,20 @@ class RegisterUserMenuBody extends StatelessWidget {
                     height: 16,
                   ),
                   TextField(
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      bloc.add(SecondNameEntered(value: value));
+                    },
                     textInputAction: TextInputAction.next,
                     onTapOutside: (_) => FocusScope.of(context).unfocus(),
                     decoration: InputDecoration(
                         prefixIconColor: AppColors.primaryBlue,
+                        errorText:
+                            state.isSecondNameError ? 'Введите фамилию!' : null,
                         prefixIcon: const Padding(
                           padding: EdgeInsets.only(
                             left: 8.0,
                           ),
-                          child: Icon(Icons.mail),
+                          child: Icon(Icons.people),
                         ),
                         labelText: 'Введите фамилию'),
                   ),
@@ -93,10 +126,16 @@ class RegisterUserMenuBody extends StatelessWidget {
                   ),
                   creatorInfo.roles.contains(Role.SuperAdmin)
                       ? RolesSection(
-                          onAdminChecked: () {},
-                          onUserChecked: () {},
-                          isUserChecked: true,
-                          isAdminChecked: true)
+                          onAdminChecked: () {
+                            bloc.add(RoleToggled(value: Role.Admin));
+                          },
+                          onUserChecked: () {
+                            bloc.add(RoleToggled(value: Role.User));
+                          },
+                          isUserChecked: state.roles.contains(Role.User),
+                          isAdminChecked: state.roles.contains(Role.Admin),
+                          isRolesError: state.isRolesError,
+                        )
                       : const Text(
                           'Зарегистрированный пользователь будет добавлен в очередь!',
                           style: TextStyle(fontWeight: FontWeight.bold),
@@ -107,6 +146,7 @@ class RegisterUserMenuBody extends StatelessWidget {
                   Center(
                     child: Flex(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      verticalDirection: VerticalDirection.up,
                       crossAxisAlignment:
                           DeviceScreen.get(context) == FormFactorType.Mobile
                               ? CrossAxisAlignment.stretch
@@ -126,11 +166,22 @@ class RegisterUserMenuBody extends StatelessWidget {
                           width: 8,
                           height: 16,
                         ),
-                        ElevatedButton(
-                            onPressed: () {
-                              bloc.add(CreatePressed());
-                            },
-                            child: const Text('Зарегистрировать пользователя')),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(
+                              maxHeight: 44, minWidth: 279),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                bloc.add(CreatePressed());
+                              },
+                              child: state.isWaitingForRegistration
+                                  ? const FittedBox(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : const Text(
+                                      'Зарегистрировать пользователя')),
+                        ),
                       ],
                     ),
                   )

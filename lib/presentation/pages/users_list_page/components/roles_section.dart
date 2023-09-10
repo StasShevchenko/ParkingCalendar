@@ -6,13 +6,15 @@ class RolesSection extends StatelessWidget {
   final Function onAdminChecked;
   final bool isUserChecked;
   final bool isAdminChecked;
+  final bool isRolesError;
 
   const RolesSection(
       {super.key,
       required this.onAdminChecked,
       required this.onUserChecked,
       required this.isUserChecked,
-      required this.isAdminChecked});
+      required this.isAdminChecked,
+      required this.isRolesError});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class RolesSection extends StatelessWidget {
               activeColor: AppColors.primaryBlue,
               value: isAdminChecked,
               onChanged: (value) {
-                onAdminChecked(value);
+                onAdminChecked();
               },
             ),
             const SizedBox(
@@ -47,7 +49,7 @@ class RolesSection extends StatelessWidget {
               activeColor: AppColors.primaryBlue,
               value: isUserChecked,
               onChanged: (value) {
-                onUserChecked(value);
+                onUserChecked();
               },
             ),
             const SizedBox(
@@ -55,7 +57,15 @@ class RolesSection extends StatelessWidget {
             ),
             const Text('Пользователь очереди')
           ],
-        )
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        if (isRolesError)
+          const Text(
+            'Выберите как минимум 1 роль!',
+            style: TextStyle(color: Colors.red),
+          )
       ],
     );
   }
