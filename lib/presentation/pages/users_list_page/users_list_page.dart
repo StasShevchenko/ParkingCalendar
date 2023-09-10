@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_project/data/models/user_info.dart';
 import 'package:parking_project/presentation/pages/users_list_page/users_list_page_bloc/users_list_page_bloc.dart';
-import 'package:parking_project/presentation/ui_kit/bottom_sheet/show_app_bottom_sheet.dart';
 import 'package:parking_project/presentation/ui_kit/text_field/debounced_text_field.dart';
 import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
 
@@ -11,11 +10,8 @@ import '../../../assets/colors/app_colors.dart';
 import '../../../utils/device_info.dart';
 import '../../../utils/roles.dart';
 import '../../auth_cubit/auth_cubit.dart';
-import 'components/adaptive_register_user_menu.dart';
-import 'components/bottom_sheet_content.dart';
-import 'components/users_alert_dialog.dart';
+import 'components/register_user_menu/adaptive_register_user_menu.dart';
 import 'components/role_chip.dart';
-import 'components/text_fields.dart';
 import 'components/user_card_component.dart';
 
 class UsersListPage extends StatelessWidget {
@@ -178,11 +174,9 @@ class UsersListPage extends StatelessWidget {
                   ? FloatingActionButton(
                       backgroundColor: AppColors.primaryBlue,
                       onPressed: () {
-                        showAdaptiveRegisterUserMenu(context,
-                            creatorInfo:
-                                context.read<AuthCubit>().state.userData!,
-                            title: 'Регистрация пользователя',
-                            textFieldsData: userFieldsData);
+                        showAdaptiveRegisterUserMenu(
+                          context,
+                        );
                       },
                       child: const Icon(Icons.add),
                     )
