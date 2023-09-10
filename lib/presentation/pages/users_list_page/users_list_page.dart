@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:parking_project/data/models/offices.dart';
 import 'package:parking_project/data/models/user_info.dart';
 import 'package:parking_project/presentation/pages/users_list_page/users_list_page_bloc/users_list_page_bloc.dart';
 import 'package:parking_project/presentation/ui_kit/bottom_sheet/show_app_bottom_sheet.dart';
@@ -12,8 +11,9 @@ import '../../../assets/colors/app_colors.dart';
 import '../../../utils/device_info.dart';
 import '../../../utils/roles.dart';
 import '../../auth_cubit/auth_cubit.dart';
+import 'components/adaptive_register_user_menu.dart';
 import 'components/bottom_sheet_content.dart';
-import 'components/offices_alert_dialog.dart';
+import 'components/users_alert_dialog.dart';
 import 'components/role_chip.dart';
 import 'components/text_fields.dart';
 import 'components/user_card_component.dart';
@@ -43,167 +43,150 @@ class UsersListPage extends StatelessWidget {
           final userInfo = context.read<AuthCubit>().state.userData!;
           List<UserInfo> usersList = state.users;
           return Scaffold(
-            backgroundColor: AppColors.background,
-            body: state.isLoading
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryBlue,
-                    ),
-                  )
-                : state.isConnectionError
-                    ? ConnectionErrorSection(
-                        onButtonClicked: () => bloc.add(PageRefreshed()))
-                    : Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                width: 400,
-                                child: DebouncedTextField(
-                                  debounceTime:
-                                      const Duration(milliseconds: 500),
-                                  onChanged: (value) => bloc
-                                      .add(SearchEntered(searchQuery: value)),
-                                  decoration: InputDecoration(
-                                      label: const Text('Поиск'),
-                                      prefixIcon: Icon(
-                                        Icons.search,
-                                        color: AppColors.primaryBlue,
-                                      )),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Theme(
-                                data: Theme.of(context).copyWith(
-                                  colorScheme: Theme.of(context)
-                                      .colorScheme
-                                      .copyWith(
-                                          secondaryContainer:
-                                              AppColors.primaryBlue,
-                                          onSecondaryContainer: Colors.white),
-                                ),
-                                child: Wrap(
-                                  spacing: 20,
-                                  runSpacing: 16,
-                                  children: [
-                                    RoleChip(
-                                        isSelected: state.toggledRoles
-                                            .contains(Role.User),
-                                        onSelected: (value) {
-                                          bloc.add(
-                                              FilterToggled(role: Role.User));
-                                        },
-                                        label: 'Пользователи очереди'),
-                                    RoleChip(
-                                        isSelected: state.toggledRoles
-                                            .contains(Role.Admin),
-                                        onSelected: (value) {
-                                          bloc.add(
-                                              FilterToggled(role: Role.Admin));
-                                        },
-                                        label: 'Администраторы'),
-                                    RoleChip(
-                                        isSelected: state.toggledRoles
-                                            .contains(Role.SuperAdmin),
-                                        onSelected: (value) {
-                                          bloc.add(FilterToggled(
-                                              role: Role.SuperAdmin));
-                                        },
-                                        label: 'Старшие администраторы')
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Expanded(
-                                child: state.isUsersLoading
-                                    ? Center(
-                                        child: CircularProgressIndicator(
+              backgroundColor: AppColors.background,
+              body: state.isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primaryBlue,
+                      ),
+                    )
+                  : state.isConnectionError
+                      ? ConnectionErrorSection(
+                          onButtonClicked: () => bloc.add(PageRefreshed()))
+                      : Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: 400,
+                                  child: DebouncedTextField(
+                                    debounceTime:
+                                        const Duration(milliseconds: 500),
+                                    onChanged: (value) => bloc
+                                        .add(SearchEntered(searchQuery: value)),
+                                    decoration: InputDecoration(
+                                        label: const Text('Поиск'),
+                                        prefixIcon: Icon(
+                                          Icons.search,
                                           color: AppColors.primaryBlue,
-                                        ),
-                                      )
-                                    : state.users.isEmpty
-                                        ? const Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Padding(
-                                              padding: EdgeInsets.all(24.0),
-                                              child: Text(
-                                                  'Пользователи не найдены :('),
-                                            ),
-                                          )
-                                        : ConstrainedBox(
-                                            constraints: BoxConstraints(
-                                                maxWidth:
-                                                    DeviceScreen.get(context) ==
-                                                            FormFactorType
-                                                                .Mobile
-                                                        ? 420
-                                                        : double.maxFinite),
-                                            child: GridView.builder(
-                                              itemCount: usersList.length,
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                mainAxisSpacing: 16,
-                                                crossAxisSpacing: 16,
-                                                crossAxisCount: columnCount,
-                                                childAspectRatio:
-                                                    gridChildAspectRatio,
-                                              ),
-                                              itemBuilder: (context, index) {
-                                                return UserGridItem(
-                                                  onTap: () {
-                                                    final userId =
-                                                        usersList[index]
-                                                            .id
-                                                            .toString();
-                                                    // admins_list/details/${usersList[index].id.toString()
-                                                    // context.goNamed('user_details',
-                                                    //     pathParameters: {
-                                                    //       'userId': userId
-                                                    //     });
-                                                    context.go(
-                                                        '/admins_list/details/${userId}');
-                                                  },
-                                                  user: usersList[index],
-                                                );
-                                              },
-                                            ),
+                                        )),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                Theme(
+                                  data: Theme.of(context).copyWith(
+                                    colorScheme: Theme.of(context)
+                                        .colorScheme
+                                        .copyWith(
+                                            secondaryContainer:
+                                                AppColors.primaryBlue,
+                                            onSecondaryContainer: Colors.white),
+                                  ),
+                                  child: Wrap(
+                                    spacing: 20,
+                                    runSpacing: 16,
+                                    children: [
+                                      RoleChip(
+                                          isSelected: state.toggledRoles
+                                              .contains(Role.User),
+                                          onSelected: (value) {
+                                            bloc.add(
+                                                FilterToggled(role: Role.User));
+                                          },
+                                          label: 'Пользователи очереди'),
+                                      RoleChip(
+                                          isSelected: state.toggledRoles
+                                              .contains(Role.Admin),
+                                          onSelected: (value) {
+                                            bloc.add(FilterToggled(
+                                                role: Role.Admin));
+                                          },
+                                          label: 'Администраторы'),
+                                      RoleChip(
+                                          isSelected: state.toggledRoles
+                                              .contains(Role.SuperAdmin),
+                                          onSelected: (value) {
+                                            bloc.add(FilterToggled(
+                                                role: Role.SuperAdmin));
+                                          },
+                                          label: 'Старшие администраторы')
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                Expanded(
+                                  child: state.isUsersLoading
+                                      ? Center(
+                                          child: CircularProgressIndicator(
+                                            color: AppColors.primaryBlue,
                                           ),
-                              ),
-                            ],
+                                        )
+                                      : state.users.isEmpty
+                                          ? const Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Padding(
+                                                padding: EdgeInsets.all(24.0),
+                                                child: Text(
+                                                    'Пользователи не найдены :('),
+                                              ),
+                                            )
+                                          : ConstrainedBox(
+                                              constraints: BoxConstraints(
+                                                  maxWidth: DeviceScreen.get(
+                                                              context) ==
+                                                          FormFactorType.Mobile
+                                                      ? 420
+                                                      : double.maxFinite),
+                                              child: GridView.builder(
+                                                itemCount: usersList.length,
+                                                gridDelegate:
+                                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                                  mainAxisSpacing: 16,
+                                                  crossAxisSpacing: 16,
+                                                  crossAxisCount: columnCount,
+                                                  childAspectRatio:
+                                                      gridChildAspectRatio,
+                                                ),
+                                                itemBuilder: (context, index) {
+                                                  return UserGridItem(
+                                                    onTap: () {
+                                                      final userId =
+                                                          usersList[index]
+                                                              .id
+                                                              .toString();
+                                                      context.go(
+                                                          '/admins_list/details/${userId}');
+                                                    },
+                                                    user: usersList[index],
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-            floatingActionButton: state.isConnectionError ||
-                    !userInfo.roles.contains(Role.SuperAdmin)
-                ? null
-                : FloatingActionButton(
-                    backgroundColor: AppColors.primaryBlue,
-                    onPressed: () => {
-                      DeviceScreen.get(context) == FormFactorType.Mobile
-                          ? showAppBottomSheet(
-                              context,
-                              BottomSheetContent(
-                                  title: "Добавить админа",
-                                  textFieldsData: adminFieldsData,
-                                  offices: offices),
-                            )
-                          : showDialog(
-                              context: context,
-                              builder: (context) => UsersAlertDialog(
-                                title: 'Добавить админа',
-                                textFieldsData: adminFieldsData,
-                                offices: offices,
-                              ),
-                            )
-                    },
-                    child: const Icon(Icons.add),
-                  ),
-          );
+              floatingActionButton: !state.isConnectionError ||
+                      userInfo.roles.contains(Role.SuperAdmin) ||
+                      userInfo.roles.contains(Role.Admin)
+                  ? FloatingActionButton(
+                      backgroundColor: AppColors.primaryBlue,
+                      onPressed: () {
+                        showAdaptiveRegisterUserMenu(context,
+                            creatorInfo:
+                                context.read<AuthCubit>().state.userData!,
+                            title: 'Регистрация пользователя',
+                            textFieldsData: userFieldsData);
+                      },
+                      child: const Icon(Icons.add),
+                    )
+                  : null);
         },
       ),
     );

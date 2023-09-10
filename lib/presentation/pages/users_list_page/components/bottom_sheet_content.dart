@@ -1,33 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:parking_project/data/models/offices.dart';
+import 'package:go_router/go_router.dart';
+import 'package:parking_project/data/models/user.dart';
+import 'package:parking_project/presentation/pages/users_list_page/components/roles_section.dart';
 import 'package:parking_project/presentation/pages/users_list_page/components/text_field_widget.dart';
 import 'package:parking_project/presentation/pages/users_list_page/components/text_fields.dart';
 
-class BottomSheetContent extends StatefulWidget {
+import '../../../../utils/roles.dart';
+
+class BottomSheetContent extends StatelessWidget {
   final List<TextFieldsData> textFieldsData;
-  final List<Office>? offices;
-
   final String title;
+  final User creatorInfo;
 
-  const BottomSheetContent({
-    super.key,
-    required this.title,
-    required this.textFieldsData,
-    this.offices,
-  });
-
-  @override
-  State<BottomSheetContent> createState() => _BottomSheetContentState();
-}
-
-class _BottomSheetContentState extends State<BottomSheetContent> {
-  Office? selectedItem;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedItem = widget.offices?[0];
-  }
+  const BottomSheetContent(
+      {super.key,
+      required this.title,
+      required this.textFieldsData,
+      required this.creatorInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +27,15 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              widget.title,
-              style: Theme.of(context).textTheme.titleLarge,
+              title,
+              style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 50,
             ),
-            Column(
-              children: widget.textFieldsData
+            Column(children: [
+              ...textFieldsData
                   .map((data) => [
                         TextFieldWidget(icon: data.icon, label: data.text),
                         const SizedBox(
@@ -55,29 +44,30 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
                       ])
                   .expand((element) => element)
                   .toList(),
-            ),
-            if (widget.offices != null)
-              DropdownButton(
-                menuMaxHeight: 400,
-                items: widget.offices?.map((e) {
-                  return DropdownMenuItem(
-                    value: e,
-                    child: Text(
-                      e.name.toString(),
-                    ),
-                  );
-                }).toList(),
-                value: selectedItem,
-                onChanged: (Object? value) {
-                  setState(() {
-                    selectedItem = value as Office?;
-                  });
-                },
-              ),
+              creatorInfo.roles.contains(Role.SuperAdmin)
+                  ? RolesSection(
+                      onAdminChecked: () {},
+                      onUserChecked: () {},
+                      isUserChecked: true,
+                      isAdminChecked: true)
+                  : const Text(
+                      'Зарегистрированный пользователь будет добавлен в очередь!',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+            ]),
             const SizedBox(
               height: 34,
             ),
             ElevatedButton(onPressed: () {}, child: const Text('Добавить')),
+            const SizedBox(
+              height: 16,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: const Text('Отмена'),
+            ),
           ],
         ),
       ),
