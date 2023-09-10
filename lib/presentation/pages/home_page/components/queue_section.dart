@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/list_grid_view_toggle.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_list.dart';
-import 'package:parking_project/presentation/pages/user/home_page/components/queue_table.dart';
-import 'package:parking_project/presentation/pages/user/home_page/utils/queue_view_type.dart';
-import 'package:parking_project/presentation/pages/user/home_page/home_page_bloc/home_page_bloc.dart';
+import 'package:parking_project/presentation/pages/home_page/components/list_grid_view_toggle.dart';
+import 'package:parking_project/presentation/pages/home_page/components/queue_list.dart';
+import 'package:parking_project/presentation/pages/home_page/components/queue_table.dart';
+import 'package:parking_project/presentation/pages/home_page/utils/queue_view_type.dart';
+import 'package:parking_project/presentation/pages/home_page/home_page_bloc/home_page_bloc.dart';
 import 'package:parking_project/presentation/ui_kit/text_field/debounced_text_field.dart';
 
-import '../../../../../assets/colors/app_colors.dart';
+import '../../../../assets/colors/app_colors.dart';
 
 class QueueSection extends StatefulWidget {
   final bool isLoading;

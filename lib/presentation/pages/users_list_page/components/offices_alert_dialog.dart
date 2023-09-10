@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:parking_project/data/models/offices.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/text_fields.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
+import 'package:parking_project/presentation/pages/users_list_page/components/text_field_widget.dart';
+import 'package:parking_project/presentation/pages/users_list_page/components/text_fields.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 
-class OfficesAlertDialog extends StatefulWidget {
+class UsersAlertDialog extends StatefulWidget {
   final List<TextFieldsData> textFieldsData;
   final String title;
   final List<Office>? offices;
-  const OfficesAlertDialog(
+  const UsersAlertDialog(
       {super.key, required this.title, required this.textFieldsData, this.offices});
 
   @override
-  State<OfficesAlertDialog> createState() => _OfficesAlertDialogState();
+  State<UsersAlertDialog> createState() => _UsersAlertDialogState();
 }
 
-class _OfficesAlertDialogState extends State<OfficesAlertDialog> {
+class _UsersAlertDialogState extends State<UsersAlertDialog> {
   Office? selectedItem;
   @override
   void initState() {

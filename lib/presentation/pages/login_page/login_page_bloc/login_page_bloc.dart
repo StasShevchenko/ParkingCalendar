@@ -4,7 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:parking_project/data/remote_data_source/auth_data_source.dart';
 
-import '../../auth_cubit/auth_cubit.dart';
+import '../../../auth_cubit/auth_cubit.dart';
+
 
 part 'login_page_event.dart';
 
