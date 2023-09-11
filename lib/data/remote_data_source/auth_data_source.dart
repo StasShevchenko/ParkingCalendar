@@ -8,4 +8,8 @@ class AuthRemoteDataSource {
     final refreshToken = response.data['jwtRefresh'];
     return refreshToken;
   }
+
+  Future<void> register() async{
+    await Future.delayed(Duration(seconds: 1));
+  }
 }
