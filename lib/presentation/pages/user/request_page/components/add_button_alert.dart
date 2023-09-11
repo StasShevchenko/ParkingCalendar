@@ -18,26 +18,32 @@ class RequestAlertDialog extends StatefulWidget {
 }
 
 class _RequestAlertDialogState extends State<RequestAlertDialog> {
-bool? isChecked = false;
-
+bool isRequestAllUsers = false;
+void setIgnoring(bool newValue) {
+  setState(() {
+    isRequestAllUsers = newValue;
+  });
+}
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
+
       surfaceTintColor: AppColors.primaryWhite,
       backgroundColor: AppColors.primaryWhite,
       title: Text("Добавить адресат"),
       content:
       Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
               Checkbox(
-                  value: isChecked,
+                  value: isRequestAllUsers,
                   activeColor: AppColors.primaryBlue,
-                  tristate: true,
-                  onChanged: (newBool) {
+                  onChanged: (newbool) {
                     setState(() {
-                      isChecked = newBool;
+                      setIgnoring(!isRequestAllUsers!);
                     });
                   }
               ),
@@ -47,21 +53,55 @@ bool? isChecked = false;
           const SizedBox(
             height: 16,
           ),
-          DropdownSearch<String>.multiSelection(
-            items: ["Марина", "Данил", "Елисей"],
+
+           IgnorePointer(
+            ignoring: isRequestAllUsers,
+            child: DropdownSearch<String>.multiSelection(
+              items: ["Марина", "Данил", "Елисей", "Даниил","Маринэ", "Данила", "Ева","Марк", "Аня", "Макс"],
+
+              //popupProps: PopupProps.menu showSelectedItems: true, showSearchBox: true ),
+              dropdownDecoratorProps: DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Выберете сотрудников",
+                  hintText: "",),
+              ),
+              onChanged: print,
+            ),
+           ),
+          const SizedBox(
+            height: 16,
+          ),
+          DropdownSearch<String>(
+            items: [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13",
+              "14",
+            ],
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                labelText: "Выберете сотрудников",
-                hintText: " ",
+                labelText: "Выберете количество дней",
+                hintText: "",
               ),
             ),
-            onChanged: print,
-          ),
+          )
         ],
       ),
-      actions: [
-        ElevatedButton(onPressed: () => Navigator.pop(context, 'Поделиться'), child: const Text('Поделиться'))
+      actions: <Widget>[
+        ElevatedButton(onPressed: () => Navigator.pop(context, 'Поделиться'), child: const Text('Поделиться')),
+        ElevatedButton(onPressed: () => Navigator.pop(context, 'Отмена'), child: const Text('Отмена'))
       ],
+
     );
   }
 }

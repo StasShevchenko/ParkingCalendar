@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parking_project/data/models/user_info.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 import '../../auth_cubit/auth_cubit.dart';
@@ -12,6 +13,8 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+
+
   String? _passwordText;
   TextEditingController passwordFieldController = TextEditingController();
 
@@ -47,11 +50,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  TextField(
+                  TextFormField(
+                    //initialValue: ,
                     controller: passwordFieldController,
                     textInputAction: TextInputAction.done,
                     onTapOutside: (_) => FocusScope.of(context).unfocus(),
                     obscureText: false,
+
                     decoration: InputDecoration(
                         prefixIconColor: AppColors.primaryBlue,
                         prefixIcon: const Padding(

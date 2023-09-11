@@ -9,8 +9,12 @@ class OfficesAlertDialog extends StatefulWidget {
   final List<TextFieldsData> textFieldsData;
   final String title;
   final List<Office>? offices;
+
   const OfficesAlertDialog(
-      {super.key, required this.title, required this.textFieldsData, this.offices});
+      {super.key,
+      required this.title,
+      required this.textFieldsData,
+      this.offices});
 
   @override
   State<OfficesAlertDialog> createState() => _OfficesAlertDialogState();
@@ -18,6 +22,7 @@ class OfficesAlertDialog extends StatefulWidget {
 
 class _OfficesAlertDialogState extends State<OfficesAlertDialog> {
   Office? selectedItem;
+
   @override
   void initState() {
     super.initState();
@@ -38,28 +43,28 @@ class _OfficesAlertDialogState extends State<OfficesAlertDialog> {
               Column(
                 children: widget.textFieldsData
                     .map((data) => [
-                  TextFieldWidget(icon: data.icon, label: data.text),
-                  const SizedBox(
-                    height: 16,
-                  )
-                ])
+                          TextFieldWidget(icon: data.icon, label: data.text),
+                          const SizedBox(
+                            height: 16,
+                          )
+                        ])
                     .expand((element) => element)
                     .toList(),
               ),
-              if(widget.offices != null)
-                   DropdownButton(
-                      menuMaxHeight: 400,
-                      items: widget.offices?.map((e) {
-                        return DropdownMenuItem(
-                            value: e, child: Text(e.name.toString()));
-                      }).toList(),
-                      value: selectedItem,
-                      onChanged: (Object? value) {
-                        setState(() {
-                          selectedItem = value as Office?;
-                        });
-                      },
-                    ),
+              if (widget.offices != null)
+                DropdownButton(
+                  menuMaxHeight: 400,
+                  items: widget.offices?.map((e) {
+                    return DropdownMenuItem(
+                        value: e, child: Text(e.name.toString()));
+                  }).toList(),
+                  value: selectedItem,
+                  onChanged: (Object? value) {
+                    setState(() {
+                      selectedItem = value as Office?;
+                    });
+                  },
+                )
             ],
           ),
         ),

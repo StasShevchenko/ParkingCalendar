@@ -4,30 +4,24 @@ import 'package:parking_project/presentation/pages/super_admin/components/text_f
 import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
-class BottomSheetContent extends StatefulWidget {
-  final List<TextFieldsData> textFieldsData;
-  final List<Office>? offices;
+import '../../../../../assets/colors/app_colors.dart';
+import '../../../../../data/models/user_info.dart';
 
-  final String title;
-
-  const BottomSheetContent({
-    super.key,
-    required this.title,
-    required this.textFieldsData,
-    this.offices,
-  });
+class RequestBottomSheetContent extends StatefulWidget {
+  final List<UserInfo> user = [];
 
   @override
-  State<BottomSheetContent> createState() => _BottomSheetContentState();
+  State<RequestBottomSheetContent> createState() =>
+      _RequestBottomSheetContentState();
 }
 
-class _BottomSheetContentState extends State<BottomSheetContent> {
-  Office? selectedItem;
+class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
+  bool isRequestAllUsers = false;
 
-  @override
-  void initState() {
-    super.initState();
-    selectedItem = widget.offices?[0];
+  void setIgnoring(bool newValue) {
+    setState(() {
+      isRequestAllUsers = newValue;
+    });
   }
 
   @override
@@ -39,46 +33,109 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              widget.title,
+              "Добавить адресат",
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 50,
+              height: 20,
             ),
             Column(
-              children: widget.textFieldsData
-                  .map((data) => [
-                        TextFieldWidget(icon: data.icon, label: data.text),
-                        const SizedBox(
-                          height: 16,
-                        )
-                      ])
-                  .expand((element) => element)
-                  .toList(),
-            ),
-            if (widget.offices != null)
-              DropdownButton(
-                menuMaxHeight: 400,
-                items: widget.offices?.map((e) {
-                  return DropdownMenuItem(
-                    value: e,
-                    child: Text(
-                      e.name.toString(),
+              children: [
+                Row(
+                  children: [
+                    Checkbox(
+                        value: isRequestAllUsers,
+                        activeColor: AppColors.primaryBlue,
+                        onChanged: (newbool) {
+                          setState(() {
+                            setIgnoring(!isRequestAllUsers!);
+                          });
+                        }),
+                    Text("Поделиться со всеми пользователями")
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                IgnorePointer(
+                  ignoring: isRequestAllUsers,
+                  child: DropdownSearch<String>.multiSelection(
+                    items: [
+                      "Марина",
+                      "Данил",
+                      "Елисей",
+                      "Даниил",
+                      "Маринэ",
+                      "Данила",
+                      "Ева",
+                      "Марк",
+                      "Аня",
+                      "Макс",
+                    ],
+
+                    //popupProps: PopupProps.menu showSelectedItems: true, showSearchBox: true ),
+                    dropdownDecoratorProps: DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "Выберете сотрудников",
+                        hintText: "",
+                      ),
                     ),
-                  );
-                }).toList(),
-                value: selectedItem,
-                onChanged: (Object? value) {
-                  setState(() {
-                    selectedItem = value as Office?;
-                  });
-                },
-              ),
-            const SizedBox(
-              height: 34,
+                    onChanged: print,
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                DropdownSearch<String>(
+                  items: [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10",
+                    "11",
+                    "12",
+                    "13",
+                    "14",
+                  ],
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Выберете количество дней",
+                      hintText: "",
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                            onPressed: () => Navigator.pop(context, 'Поделиться'),
+                            child: const Text('Поделиться')),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                            onPressed: () => Navigator.pop(context, 'Отмена'),
+                            child: const Text('Отмена')),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Добавить')),
           ],
         ),
       ),
