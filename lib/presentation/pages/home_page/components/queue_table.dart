@@ -32,6 +32,8 @@ class QueueTable extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
+              horizontalMargin: 16,
+              columnSpacing: 15,
               border: const TableBorder(
                   horizontalInside: BorderSide(color: Colors.white)),
               sortAscending: state.isAscendingSort,
@@ -87,12 +89,27 @@ class QueueTable extends StatelessWidget {
     return cells
         .map(
           (data) => DataCell(
-            Text(
-              data,
-              style: TextStyle(
-                  color: isActive
-                      ? AppColors.primaryWhite
-                      : AppColors.secondaryBlue),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 180),
+              child: data.toString().contains('@')
+                  ? SelectionArea(
+                      child: Text(
+                        data,
+                        softWrap: true,
+                        style: TextStyle(
+                            color: isActive
+                                ? AppColors.primaryWhite
+                                : AppColors.secondaryBlue),
+                      ),
+                    )
+                  : Text(
+                      data,
+                      softWrap: true,
+                      style: TextStyle(
+                          color: isActive
+                              ? AppColors.primaryWhite
+                              : AppColors.secondaryBlue),
+                    ),
             ),
           ),
         )

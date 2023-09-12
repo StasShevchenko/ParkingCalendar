@@ -4,9 +4,9 @@ import '../colors/app_colors.dart';
 
 ThemeData appTheme() => ThemeData(
     textSelectionTheme: TextSelectionThemeData(
-      cursorColor: AppColors.primaryBlue,
-      selectionHandleColor: AppColors.primaryBlue,
-      selectionColor: AppColors.primaryWhite
+      cursorColor: AppColors.primaryAccentRed,
+      selectionHandleColor: AppColors.primaryAccentRed,
+      selectionColor: AppColors.primaryAccentRed
     ),
     focusColor: AppColors.primaryBlue,
     useMaterial3: true,
