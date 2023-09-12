@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parking_project/data/models/offices.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/text_fields.dart';
-import 'package:parking_project/presentation/pages/super_admin/components/text_field_widget.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../../../../assets/colors/app_colors.dart';
@@ -9,6 +6,8 @@ import '../../../../../data/models/user_info.dart';
 
 class RequestBottomSheetContent extends StatefulWidget {
   final List<UserInfo> user = [];
+
+  RequestBottomSheetContent({super.key});
 
   @override
   State<RequestBottomSheetContent> createState() =>
@@ -18,14 +17,16 @@ class RequestBottomSheetContent extends StatefulWidget {
 class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
   bool isRequestAllUsers = false;
 
-  void setIgnoring(bool newValue) {
+  void setIgnoring() {
+    print(isRequestAllUsers);
     setState(() {
-      isRequestAllUsers = newValue;
+      isRequestAllUsers = !isRequestAllUsers;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    print('dfkjkdfj');
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -47,10 +48,9 @@ class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
                     Checkbox(
                         value: isRequestAllUsers,
                         activeColor: AppColors.primaryBlue,
-                        onChanged: (newbool) {
-                          setState(() {
-                            setIgnoring(!isRequestAllUsers!);
-                          });
+                        onChanged: (_) {
+                          print('changed!');
+                          setIgnoring();
                         }),
                     Text("Поделиться со всеми пользователями")
                   ],
@@ -120,7 +120,8 @@ class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                            onPressed: () => Navigator.pop(context, 'Поделиться'),
+                            onPressed: () =>
+                                Navigator.pop(context, 'Поделиться'),
                             child: const Text('Поделиться')),
                       ),
                       const SizedBox(

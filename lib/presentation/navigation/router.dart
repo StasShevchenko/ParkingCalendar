@@ -11,7 +11,7 @@ import 'package:parking_project/presentation/pages/home_page/home_page.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
 
 import '../auth_cubit/auth_cubit.dart';
-import '../pages/user/request_page/request_page.dart';
+import '../pages/request_page/request_page.dart';
 import 'app_routes.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();

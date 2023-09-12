@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parking_project/presentation/pages/user/request_page/components/add_button_alert.dart';
-import 'package:parking_project/presentation/pages/user/request_page/request_in_section.dart';
-import 'package:parking_project/presentation/pages/user/request_page/request_out_section.dart';
+import 'package:parking_project/presentation/pages/request_page/request_in_section.dart';
+import 'package:parking_project/presentation/pages/request_page/request_out_section.dart';
 import 'package:parking_project/presentation/ui_kit/bottom_sheet/show_app_bottom_sheet.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 import '../../../../utils/device_info.dart';
-import '../../auth_cubit/auth_cubit.dart';
+import 'components/add_button_alert.dart';
 import 'components/add_button_mobile.dart';
 
 class RequestPage extends StatefulWidget {
