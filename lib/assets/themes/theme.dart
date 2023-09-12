@@ -4,7 +4,7 @@ import '../colors/app_colors.dart';
 
 ThemeData appTheme() => ThemeData(
     textSelectionTheme: TextSelectionThemeData(
-      cursorColor: AppColors.primaryAccentRed,
+      cursorColor: AppColors.primaryBlue,
       selectionHandleColor: AppColors.primaryAccentRed,
       selectionColor: AppColors.primaryAccentRed
     ),
@@ -15,7 +15,7 @@ ThemeData appTheme() => ThemeData(
     fontFamily: 'Golos',
     appBarTheme: AppBarTheme(
         elevation: 0,
-        scrolledUnderElevation: 0.0,
+        scrolledUnderElevation: 0.0, 
         color: AppColors.primaryBlue,
         titleTextStyle: TextStyle(
           color: AppColors.primaryWhite,

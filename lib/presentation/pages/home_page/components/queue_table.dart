@@ -92,16 +92,13 @@ class QueueTable extends StatelessWidget {
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 180),
               child: data.toString().contains('@')
-                  ? SelectionArea(
-                      child: Text(
-                        data,
-                        softWrap: true,
-                        style: TextStyle(
-                            color: isActive
-                                ? AppColors.primaryWhite
-                                : AppColors.secondaryBlue),
-                      ),
-                    )
+                  ? SelectableText(
+                    data,
+                    style: TextStyle(
+                        color: isActive
+                            ? AppColors.primaryWhite
+                            : AppColors.secondaryBlue),
+                  )
                   : Text(
                       data,
                       softWrap: true,
