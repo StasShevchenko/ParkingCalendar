@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/presentation/pages/profile_page/components/confirm_code_dialog.dart';
 import 'package:parking_project/presentation/pages/profile_page/reset_password_bloc/reset_password_bloc.dart';
+import 'package:parking_project/utils/device_info.dart';
 
 import '../../../assets/colors/app_colors.dart';
 import '../../auth_cubit/auth_cubit.dart';
@@ -54,7 +56,27 @@ class ProfilePage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Ваша почта: ${userInfo.email}'),
+                                (DeviceOS.isMobileDevice)
+                                    ? InkWell(
+                                        onLongPress: () async {
+                                          await Clipboard.setData(ClipboardData(
+                                              text: userInfo.email));
+                                          if (context.mounted) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    duration: const Duration(
+                                                        seconds: 2),
+                                                    backgroundColor:
+                                                        AppColors.primaryBlue,
+                                                    content: const Text(
+                                                        'Почта скопирована в буфер обмена!')));
+                                          }
+                                        },
+                                        child: Text(
+                                            'Ваша почта: ${userInfo.email}'),
+                                      )
+                                    : SelectableText(
+                                        'Ваша почта: ${userInfo.email}'),
                                 const SizedBox(
                                   height: 16,
                                 ),
