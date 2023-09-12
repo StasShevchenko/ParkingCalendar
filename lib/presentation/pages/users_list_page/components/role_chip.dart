@@ -16,6 +16,7 @@ class RoleChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
+        showCheckmark: false,
         side:  BorderSide(color: isSelected ? Colors.transparent : AppColors.secondaryBlue),
         label: Text(
           label,
