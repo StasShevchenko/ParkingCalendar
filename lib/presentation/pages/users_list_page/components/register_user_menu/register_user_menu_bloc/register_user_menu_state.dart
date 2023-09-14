@@ -24,7 +24,7 @@ class RegisterUserMenuState {
       this.isNameError = false,
       this.isWaitingForRegistration = false,
       this.isSecondNameError = false,
-      this.isUserCreated = 0});
+      this.isUserCreated = -1});
 
   RegisterUserMenuState copyWith(
       {String? email,

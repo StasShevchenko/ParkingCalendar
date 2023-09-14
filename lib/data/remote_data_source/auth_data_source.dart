@@ -1,3 +1,6 @@
+import 'package:dio/src/response.dart';
+import 'package:parking_project/data/models/register_user_dto.dart';
+
 import 'dio_configuration/dio_client.dart';
 
 class AuthRemoteDataSource {
@@ -9,7 +12,8 @@ class AuthRemoteDataSource {
     return refreshToken;
   }
 
-  Future<void> register() async{
-    await Future.delayed(Duration(seconds: 1));
+  Future<Response> register(RegisterUserDto userInfo) async{
+    final result = await dio.post('/auth/register', data: userInfo.toJson());
+    return result;
   }
 }

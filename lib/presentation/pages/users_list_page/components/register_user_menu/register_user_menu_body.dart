@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_project/presentation/pages/users_list_page/components/register_user_menu/register_user_menu_bloc/register_user_menu_bloc.dart';
+import 'package:parking_project/presentation/ui_kit/alert_dialog/failure_dialog.dart';
+import 'package:parking_project/presentation/ui_kit/alert_dialog/success_dialog.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../../../assets/colors/app_colors.dart';
@@ -22,28 +24,24 @@ class RegisterUserMenuBody extends StatelessWidget {
           if (state.isUserCreated == 1) {
             context.pop();
             showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  surfaceTintColor: Colors.white,
-                  backgroundColor: Colors.white,
-                  title: Center(
-                      child: Text(
-                    'Регистрация завершена!',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  )),
-                  actions: [
-                    ElevatedButton(
-                        onPressed: () {
-                          context.pop();
-                        },
-                        child: const Text('Закрыть'))
-                  ],
-                  content: const Text(
-                      'Пользователь был успешно зарегистрирован.\nПароль был отправлен на указанную почту.'),
-                );
-              },
-            );
+                context: context,
+                builder: (context) {
+                  return const SuccessDialog(
+                    bodyText:
+                        'Пользователь был успешно зарегистрирован.\nПароль был отправлен на указанную почту.',
+                  );
+                });
+          }
+          if (state.isUserCreated == 0) {
+            context.pop();
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const FailureDialog(
+                    description:
+                        'Возможно, пользователь уже был зарегистрирован ранее.',
+                  );
+                });
           }
         },
         builder: (context, state) {
