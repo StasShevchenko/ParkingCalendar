@@ -15,7 +15,7 @@ class NewPasswordDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ResetPasswordBloc, ResetPasswordState>(
       listener: (context, state) {
-        if (state.isPasswordChanged == 1) {
+        if (state.isNewPasswordSaved == 1) {
           context.pop();
           showDialog(
             context: context,
@@ -23,7 +23,7 @@ class NewPasswordDialog extends StatelessWidget {
                 bodyText: 'Смена пароля произошла успешно!'),
           );
         }
-        if (state.isPasswordChanged == 0) {
+        if (state.isNewPasswordSaved == 0) {
           showDialog(
               context: context, builder: (context) => const FailureDialog());
         }

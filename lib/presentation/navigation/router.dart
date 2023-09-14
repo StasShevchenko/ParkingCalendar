@@ -11,6 +11,7 @@ import 'package:parking_project/presentation/pages/home_page/home_page.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
 
 import '../auth_cubit/auth_cubit.dart';
+import '../pages/forgot_password_page/forgot_password_page.dart';
 import '../pages/request_page/request_page.dart';
 import 'app_routes.dart';
 
@@ -84,10 +85,17 @@ final goRouter = GoRouter(
       ],
     ),
     GoRoute(
-      path: AppRoutes.initial,
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: LoginPage(),
-      ),
-    )
+        path: AppRoutes.initial,
+        pageBuilder: (context, state) => const NoTransitionPage(
+              child: LoginPage(),
+            ),
+        routes: [
+          GoRoute(
+            path: AppRoutes.forgotPassword,
+            pageBuilder: (context, state) => const NoTransitionPage(
+              child: ForgotPasswordPage(),
+            ),
+          ),
+        ])
   ],
 );

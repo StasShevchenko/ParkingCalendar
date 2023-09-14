@@ -14,14 +14,14 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     on<ResetPasswordEvent>((event, emit) async {
       switch (event) {
         case ResetPasswordClicked _:
-          await passwordDataSource.getResetPasswordCode(userInfo.id);
+          await passwordDataSource.getResetPasswordCode('');
         case CodeEntered codeEnteredEvent:
           emit(state.copyWith(
               isCodeError: false, code: codeEnteredEvent.codeValue));
         case ConfirmCodeClicked _:
           emit(state.copyWith(isCodeResultLoading: true));
           final result = await passwordDataSource.confirmResetPasswordCode(
-              userId: userInfo.id, code: state.code);
+              code: state.code);
           if (result) {
             emit(state.copyWith(
                 isCodeConfirmed: 1,
@@ -47,8 +47,8 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
                 isPasswordError: true, isPasswordChangeLoading: false));
           } else {
             emit(state.copyWith(isPasswordChangeLoading: true));
-            final result = await passwordDataSource.changePassword(
-                userId: userInfo.id, newPassword: state.password);
+            final result = await passwordDataSource.changePassword(repeatPassword: '', newPassword: '', email: ''
+            );
             if (result) {
               emit(state.copyWith(
                   isPasswordChanged: 1, isPasswordChangeLoading: false));

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page_bloc/login_page_bloc.dart';
+import 'package:parking_project/presentation/ui_kit/text_field/obscured_text_field.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../assets/colors/app_colors.dart';
@@ -130,14 +131,11 @@ class _LoginPageState extends State<LoginPage> {
                               constraints:
                                   const BoxConstraints(maxWidth: 350),
                               // Password text field
-                              child: TextField(
+                              child: ObscuredTextField(
                                 textInputAction: TextInputAction.done,
                                 onChanged: (value) => bloc.add(
                                     PasswordEntered(passwordValue: value)),
                                 controller: _passwordController,
-                                onTapOutside: (_) =>
-                                    FocusScope.of(context).unfocus(),
-                                obscureText: true,
                                 decoration: InputDecoration(
                                     prefixIconColor: AppColors.primaryBlue,
                                     errorText: state.passwordError
@@ -172,9 +170,14 @@ class _LoginPageState extends State<LoginPage> {
                             ConstrainedBox(
                               constraints: const BoxConstraints(
                                   minWidth: 350, maxWidth: 350),
-                              child: const Text(
-                                'Забыли пароль?',
-                                textAlign: TextAlign.right,
+                              child: InkWell(
+                                onTap: (){
+                                  context.go('/loginPage/forgot_password');
+                                },
+                                child: const Text(
+                                  'Забыли пароль?',
+                                  textAlign: TextAlign.right,
+                                ),
                               ),
                             ),
                             const SizedBox(

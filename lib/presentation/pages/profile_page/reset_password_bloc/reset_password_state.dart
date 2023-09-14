@@ -8,7 +8,7 @@ class ResetPasswordState {
   final String password;
   final bool isPasswordError;
   final bool isPasswordChangeLoading;
-  final int isPasswordChanged;
+  final int isNewPasswordSaved;
 
   ResetPasswordState({
     this.code = '',
@@ -18,7 +18,7 @@ class ResetPasswordState {
     this.isPasswordError = false,
     this.isPasswordChangeLoading = false,
     this.isCodeResultLoading = false,
-    this.isPasswordChanged = -1,
+    this.isNewPasswordSaved = -1,
   });
 
   ResetPasswordState copyWith(
@@ -39,6 +39,6 @@ class ResetPasswordState {
             isPasswordChangeLoading ?? this.isPasswordChangeLoading,
         isCodeResultLoading: isCodeResultLoading ?? this.isCodeResultLoading,
         isPasswordError: isPasswordError ?? this.isPasswordError,
-        isPasswordChanged: isPasswordChanged ?? this.isPasswordChanged);
+        isNewPasswordSaved: isPasswordChanged ?? this.isNewPasswordSaved);
   }
 }
