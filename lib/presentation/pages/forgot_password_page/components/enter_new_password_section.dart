@@ -8,11 +8,12 @@ class EnterNewPasswordSection extends StatelessWidget {
   final ForgotPasswordState state;
   final ForgotPasswordBloc bloc;
 
-  const EnterNewPasswordSection({super.key, required this.state, required this.bloc});
+  const EnterNewPasswordSection(
+      {super.key, required this.state, required this.bloc});
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -24,39 +25,63 @@ class EnterNewPasswordSection extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        TextField(
-          onTapOutside: (event) => FocusScope.of(context).unfocus(),
-          onChanged: (value) {},
-          decoration: InputDecoration(
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 350),
+          child: TextField(
+            onTapOutside: (event) => FocusScope.of(context).unfocus(),
+            onChanged: (value) {
+              bloc.add(PasswordEntered(value: value));
+            },
+            decoration: InputDecoration(
               prefixIcon: Icon(
                 Icons.lock,
                 color: AppColors.primaryBlue,
               ),
               labelText: 'Пароль',
-          ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        TextField(
-          onTapOutside: (event) => FocusScope.of(context).unfocus(),
-          onChanged: (value) {},
-          decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.lock,
-              color: AppColors.primaryBlue,
             ),
-            labelText: 'Подтверждение пароля',
           ),
         ),
         const SizedBox(
           height: 16,
         ),
-        LoaderButton(
-            onPressed: () {},
-            isLoading: state.isCodeResultLoading,
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 350),
+          child: TextField(
+            onTapOutside: (event) => FocusScope.of(context).unfocus(),
+            onChanged: (value) {
+              bloc.add(RepeatPasswordEntered(value: value));
+            },
+            decoration: InputDecoration(
+              prefixIcon: Icon(
+                Icons.lock,
+                color: AppColors.primaryBlue,
+              ),
+              labelText: 'Подтверждение пароля',
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        if (state.isPasswordError)
+          Text(
+            state.passwordErrorText,
+            style: const TextStyle(color: Colors.red),
+          ),
+        const SizedBox(
+          height: 16,
+        ),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 350),
+          child: LoaderButton(
+            onPressed: () {
+              bloc.add(SavePasswordClicked());
+            },
+            isLoading: state.isPasswordChangeLoading,
             minWidth: double.maxFinite,
-            child: const Text('Подтвердить'))
+            child: const Text('Подтвердить'),
+          ),
+        )
       ],
     );
   }

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:parking_project/presentation/pages/forgot_password_page/forgot_password_bloc/forgot_password_bloc.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 import '../../../ui_kit/button/loader_button.dart';
-import '../forgot_password_bloc/forgot_password_bloc.dart';
 
-class EnterCodeSection extends StatelessWidget {
+class EnterEmailSection extends StatelessWidget {
   final ForgotPasswordState state;
   final ForgotPasswordBloc bloc;
 
-  const EnterCodeSection({super.key, required this.state, required this.bloc});
+  const EnterEmailSection(
+      {super.key, required this.state, required this.bloc});
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          'Введите код отправленный на указанную вами почту',
-          textAlign: TextAlign.center,
+          'Введите почту для сброса пароля',
           style: TextStyle(fontSize: 16),
         ),
         const SizedBox(
@@ -30,17 +30,15 @@ class EnterCodeSection extends StatelessWidget {
           ),
           child: TextField(
             onTapOutside: (event) => FocusScope.of(context).unfocus(),
-            onChanged: (value) {
-              bloc.add(CodeEntered(codeValue: value));
-            },
+            onChanged: (value) {bloc.add(EmailEntered(value: value));},
             decoration: InputDecoration(
                 prefixIcon: Icon(
-                  Icons.numbers,
+                  Icons.lock,
                   color: AppColors.primaryBlue,
                 ),
-                labelText: 'Код подтверждения',
+                labelText: 'Пароль',
                 errorText:
-                state.isCodeError ? 'Неверный код!' : null),
+                    state.isEmailError ? 'Указанная почта не найдена!' : null),
           ),
         ),
         const SizedBox(
@@ -51,10 +49,8 @@ class EnterCodeSection extends StatelessWidget {
             maxWidth: 350
           ),
           child: LoaderButton(
-              onPressed: () {
-                bloc.add(ConfirmCodeClicked());
-              },
-              isLoading: state.isCodeResultLoading,
+              onPressed: () {bloc.add(ConfirmEmailClicked());},
+              isLoading: state.isEmailResultLoading,
               minWidth: double.maxFinite,
               child: const Text('Подтвердить')),
         )

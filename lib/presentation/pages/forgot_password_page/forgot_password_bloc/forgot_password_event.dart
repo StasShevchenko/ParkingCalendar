@@ -2,19 +2,33 @@ part of 'forgot_password_bloc.dart';
 
 sealed class ForgotPasswordEvent {}
 
-class ResetPasswordClicked extends ForgotPasswordEvent{}
 
-class CodeEntered extends ForgotPasswordEvent{
+class CodeEntered extends ForgotPasswordEvent {
   final String codeValue;
-  CodeEntered({required this.codeValue});
 
+  CodeEntered({required this.codeValue});
 }
 
-class ConfirmCodeClicked extends ForgotPasswordEvent{}
+class ConfirmEmailClicked extends ForgotPasswordEvent {}
 
-class PasswordEntered extends ForgotPasswordEvent{
+class EmailEntered extends ForgotPasswordEvent {
   final String value;
+
+  EmailEntered({required this.value});
+}
+
+class ConfirmCodeClicked extends ForgotPasswordEvent {}
+
+class PasswordEntered extends ForgotPasswordEvent {
+  final String value;
+
   PasswordEntered({required this.value});
 }
 
-class SavePasswordClicked extends ForgotPasswordEvent{}
+class RepeatPasswordEntered extends ForgotPasswordEvent {
+  final String value;
+
+  RepeatPasswordEntered({required this.value});
+}
+
+class SavePasswordClicked extends ForgotPasswordEvent {}

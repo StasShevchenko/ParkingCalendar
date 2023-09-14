@@ -4,18 +4,26 @@ class PasswordDataSource {
   final dio = DioClient.get();
 
   Future<void> getResetPasswordCode(String email) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await dio.post('/user/forgotPassword', data: {'email': email});
   }
 
-  Future<bool> confirmResetPasswordCode(
-      {required String code}) async {
-    await Future.delayed(const Duration(seconds: 1));
+  Future<bool> confirmResetPasswordCode({required String code}) async {
+    await dio.post('/user/reviewKey', data: {'key': code});
     return true;
   }
 
   Future<bool> changePassword(
-      {required String repeatPassword, required String newPassword, required String email}) async {
-    await Future.delayed(const Duration(seconds: 1));
+      {required String repeatPassword,
+      required String newPassword,
+      required String email}) async {
+    await dio.post(
+      '/user/changePassword',
+      data: {
+        'newPassword': newPassword,
+        'repeat_newPassword': repeatPassword,
+        'email': email
+      },
+    );
     return false;
   }
 }

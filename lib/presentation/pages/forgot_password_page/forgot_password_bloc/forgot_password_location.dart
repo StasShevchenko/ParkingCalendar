@@ -1,0 +1,1 @@
+enum ForgotPasswordLocation { EnterEmail, EnterCode, EnterPassword }
