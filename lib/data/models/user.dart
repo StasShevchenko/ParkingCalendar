@@ -6,18 +6,21 @@ class User {
   final List<Role> roles;
   final String firstName;
   final String secondName;
+  final bool changePassword;
 
   User(
       {required this.email,
       required this.firstName,
       required this.secondName,
       required this.id,
+      required this.changePassword,
       required this.roles});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       email: json['email'],
       id: json['id'],
+      changePassword: json['changePassword'],
       firstName: json['first_name'],
       secondName: json['second_name'],
       roles: [
