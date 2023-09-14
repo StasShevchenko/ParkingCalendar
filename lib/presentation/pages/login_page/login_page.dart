@@ -172,9 +172,14 @@ class _LoginPageState extends State<LoginPage> {
                             ConstrainedBox(
                               constraints: const BoxConstraints(
                                   minWidth: 350, maxWidth: 350),
-                              child: const Text(
-                                'Забыли пароль?',
-                                textAlign: TextAlign.right,
+                              child: InkWell(
+                                onTap: (){
+                                  context.go('/loginPage/forgot_password');
+                                },
+                                child: const Text(
+                                  'Забыли пароль?',
+                                  textAlign: TextAlign.right,
+                                ),
                               ),
                             ),
                             const SizedBox(

@@ -1,5 +1,6 @@
 class AppRoutes {
-  static const initial = '/';
+  static const initial = '/loginPage';
+  static const forgotPassword = 'forgot_password';
 
   //User routes: prefix user
   static const userHome = '/home';

@@ -3,25 +3,23 @@ import 'package:parking_project/data/remote_data_source/password_data_source.dar
 
 import '../../../../data/models/user.dart';
 
-part 'reset_password_event.dart';
-part 'reset_password_state.dart';
+part 'forgot_password_event.dart';
+part 'forgot_password_state.dart';
 
-class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
-  final User userInfo;
+class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
   PasswordDataSource passwordDataSource = PasswordDataSource();
 
-  ResetPasswordBloc({required this.userInfo}) : super(ResetPasswordState()) {
-    on<ResetPasswordEvent>((event, emit) async {
+  ForgotPasswordBloc() : super(ForgotPasswordState()) {
+    on<ForgotPasswordEvent>((event, emit) async {
       switch (event) {
         case ResetPasswordClicked _:
-          await passwordDataSource.getResetPasswordCode('');
+          await passwordDataSource.getResetPasswordCode(state.email);
         case CodeEntered codeEnteredEvent:
           emit(state.copyWith(
               isCodeError: false, code: codeEnteredEvent.codeValue));
         case ConfirmCodeClicked _:
           emit(state.copyWith(isCodeResultLoading: true));
-          final result = await passwordDataSource.confirmResetPasswordCode(
-              code: state.code);
+          final result = await passwordDataSource.confirmResetPasswordCode(code: state.code);
           if (result) {
             emit(state.copyWith(
                 isCodeConfirmed: 1,
@@ -47,18 +45,18 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
                 isPasswordError: true, isPasswordChangeLoading: false));
           } else {
             emit(state.copyWith(isPasswordChangeLoading: true));
-            final result = await passwordDataSource.changePassword(repeatPassword: '', newPassword: '', email: ''
-            );
+            final result = await passwordDataSource.changePassword(
+                repeatPassword: state.password, newPassword: state.password, email: state.email);
             if (result) {
               emit(state.copyWith(
-                  isPasswordChanged: 1, isPasswordChangeLoading: false));
+                  isNewPasswordSaved: 1, isPasswordChangeLoading: false));
             } else {
               emit(
               state.copyWith(
-                  isPasswordChanged: 0, isPasswordChangeLoading: false));
+                  isNewPasswordSaved: 0, isPasswordChangeLoading: false));
             }
             emit(
-            state.copyWith(isPasswordChanged: -1));
+            state.copyWith(isNewPasswordSaved: -1));
           }
       }
     });
