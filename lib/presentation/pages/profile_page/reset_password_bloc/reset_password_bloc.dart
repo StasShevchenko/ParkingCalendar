@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:parking_project/data/remote_data_source/password_data_source.dart';
 
 import '../../../../data/models/user.dart';
 
 part 'reset_password_event.dart';
+
 part 'reset_password_state.dart';
 
 class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
@@ -13,28 +15,6 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   ResetPasswordBloc({required this.userInfo}) : super(ResetPasswordState()) {
     on<ResetPasswordEvent>((event, emit) async {
       switch (event) {
-        case ResetPasswordClicked _:
-          await passwordDataSource.getResetPasswordCode('');
-        case CodeEntered codeEnteredEvent:
-          emit(state.copyWith(
-              isCodeError: false, code: codeEnteredEvent.codeValue));
-        case ConfirmCodeClicked _:
-          emit(state.copyWith(isCodeResultLoading: true));
-          final result = await passwordDataSource.confirmResetPasswordCode(
-              code: state.code);
-          if (result) {
-            emit(state.copyWith(
-                isCodeConfirmed: 1,
-                isCodeError: false,
-                isCodeResultLoading: false));
-            emit(
-              state.copyWith(isCodeConfirmed: -1),
-            );
-          } else {
-            emit(
-              state.copyWith(isCodeError: true, isCodeResultLoading: false),
-            );
-          }
         case PasswordEntered passwordEnteredEvent:
           emit(
             state.copyWith(
@@ -44,22 +24,34 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
           final isPasswordError = state.password.length < 8;
           if (isPasswordError) {
             emit(state.copyWith(
-                isPasswordError: true, isPasswordChangeLoading: false));
+                isPasswordError: true,
+                passwordErrorText: 'Длина не меньше 8 символов!',
+                isPasswordChangeLoading: false));
+          } else if (state.password != state.repeatPassword) {
+            emit(state.copyWith(
+                isPasswordError: true,
+                passwordErrorText: 'Пароли должны совпадать!',
+                isPasswordChangeLoading: false));
           } else {
             emit(state.copyWith(isPasswordChangeLoading: true));
-            final result = await passwordDataSource.changePassword(repeatPassword: '', newPassword: '', email: ''
-            );
-            if (result) {
+            try {
+              await passwordDataSource.changePassword(
+                  email: userInfo.email,
+                  repeatPassword: state.repeatPassword,
+                  newPassword: state.password);
               emit(state.copyWith(
                   isPasswordChanged: 1, isPasswordChangeLoading: false));
-            } else {
-              emit(
-              state.copyWith(
-                  isPasswordChanged: 0, isPasswordChangeLoading: false));
+              emit(state.copyWith(isPasswordChanged: -1));
+            } on DioException {
+              emit(state.copyWith(
+                  isPasswordError: true,
+                  passwordErrorText: 'Слишком простой пароль!',
+                  isPasswordChangeLoading: false));
             }
-            emit(
-            state.copyWith(isPasswordChanged: -1));
           }
+        case RepeatPasswordEntered event:
+          emit(state.copyWith(
+              isPasswordError: false, repeatPassword: event.value));
       }
     });
   }

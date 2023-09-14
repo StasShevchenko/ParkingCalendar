@@ -5,6 +5,7 @@ import 'package:parking_project/presentation/pages/profile_page/reset_password_b
 import 'package:parking_project/presentation/ui_kit/alert_dialog/failure_dialog.dart';
 import 'package:parking_project/presentation/ui_kit/alert_dialog/success_dialog.dart';
 import 'package:parking_project/presentation/ui_kit/button/loader_button.dart';
+import 'package:parking_project/presentation/ui_kit/text_field/obscured_text_field.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 
@@ -15,7 +16,7 @@ class NewPasswordDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ResetPasswordBloc, ResetPasswordState>(
       listener: (context, state) {
-        if (state.isNewPasswordSaved == 1) {
+        if (state.isPasswordChanged == 1) {
           context.pop();
           showDialog(
             context: context,
@@ -23,7 +24,7 @@ class NewPasswordDialog extends StatelessWidget {
                 bodyText: 'Смена пароля произошла успешно!'),
           );
         }
-        if (state.isNewPasswordSaved == 0) {
+        if (state.isPasswordChanged == 0) {
           showDialog(
               context: context, builder: (context) => const FailureDialog());
         }
@@ -38,7 +39,7 @@ class NewPasswordDialog extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           content: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 150),
+            constraints: const BoxConstraints(maxWidth: 200, minWidth: 200),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -46,20 +47,41 @@ class NewPasswordDialog extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                TextField(
+                ObscuredTextField(
                   onChanged: (value) {
                     bloc.add(PasswordEntered(value: value));
                   },
                   decoration: InputDecoration(
                     label: const Text('Новый пароль'),
-                    errorText:
-                        state.isPasswordError ? 'Неверная длина пароля' : null,
                     prefixIcon: Icon(
                       Icons.lock,
                       color: AppColors.primaryBlue,
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 16,
+                ),
+                ObscuredTextField(
+                  onChanged: (value) {
+                    bloc.add(RepeatPasswordEntered(value: value));
+                  },
+                  decoration: InputDecoration(
+                    label: const Text('Подтверждение пароля'),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: AppColors.primaryBlue,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                if (state.isPasswordError)
+                  Text(
+                    state.passwordErrorText,
+                    style: TextStyle(color: Colors.red),
+                  ),
                 const SizedBox(
                   height: 16,
                 ),

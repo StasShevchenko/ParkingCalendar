@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parking_project/presentation/pages/profile_page/components/confirm_code_dialog.dart';
+import 'package:parking_project/presentation/pages/profile_page/components/new_password_dialog.dart';
 import 'package:parking_project/presentation/pages/profile_page/reset_password_bloc/reset_password_bloc.dart';
 import 'package:parking_project/utils/device_info.dart';
 
@@ -90,12 +90,11 @@ class ProfilePage extends StatelessWidget {
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              bloc.add(ResetPasswordClicked());
                               showDialog(
                                 context: context,
                                 builder: (_) => BlocProvider.value(
                                   value: context.read<ResetPasswordBloc>(),
-                                  child: const ConfirmCodeDialog(),
+                                  child: const NewPasswordDialog(),
                                 ),
                               );
                             },
