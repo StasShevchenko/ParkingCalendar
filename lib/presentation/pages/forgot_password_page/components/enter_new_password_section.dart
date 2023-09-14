@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parking_project/presentation/ui_kit/text_field/obscured_text_field.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 import '../../../ui_kit/button/loader_button.dart';
@@ -27,8 +28,7 @@ class EnterNewPasswordSection extends StatelessWidget {
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 350),
-          child: TextField(
-            onTapOutside: (event) => FocusScope.of(context).unfocus(),
+          child: ObscuredTextField(
             onChanged: (value) {
               bloc.add(PasswordEntered(value: value));
             },
@@ -46,8 +46,7 @@ class EnterNewPasswordSection extends StatelessWidget {
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 350),
-          child: TextField(
-            onTapOutside: (event) => FocusScope.of(context).unfocus(),
+          child: ObscuredTextField(
             onChanged: (value) {
               bloc.add(RepeatPasswordEntered(value: value));
             },

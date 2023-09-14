@@ -33,10 +33,10 @@ class EnterEmailSection extends StatelessWidget {
             onChanged: (value) {bloc.add(EmailEntered(value: value));},
             decoration: InputDecoration(
                 prefixIcon: Icon(
-                  Icons.lock,
+                  Icons.mail,
                   color: AppColors.primaryBlue,
                 ),
-                labelText: 'Пароль',
+                labelText: 'Почта',
                 errorText:
                     state.isEmailError ? 'Указанная почта не найдена!' : null),
           ),
