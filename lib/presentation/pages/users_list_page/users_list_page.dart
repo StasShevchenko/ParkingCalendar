@@ -141,30 +141,35 @@ class UsersListPage extends StatelessWidget {
                                                                 .Mobile
                                                         ? 420
                                                         : double.maxFinite),
-                                                child: GridView.builder(
-                                                  itemCount: usersList.length,
-                                                  gridDelegate:
-                                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                                    mainAxisSpacing: 16,
-                                                    crossAxisSpacing: 16,
-                                                    crossAxisCount: columnCount,
-                                                    childAspectRatio:
-                                                        gridChildAspectRatio,
-                                                  ),
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return UserGridItem(
-                                                      onTap: () {
-                                                        final userId =
-                                                            usersList[index]
-                                                                .id
-                                                                .toString();
-                                                        context.go(
-                                                            '/admins_list/details/${userId}');
-                                                      },
-                                                      user: usersList[index],
-                                                    );
+                                                child: RefreshIndicator(
+                                                  onRefresh: () async {
+                                                    bloc.add(PageRefreshed());
                                                   },
+                                                  child: GridView.builder(
+                                                    itemCount: usersList.length,
+                                                    gridDelegate:
+                                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                                      mainAxisSpacing: 16,
+                                                      crossAxisSpacing: 16,
+                                                      crossAxisCount: columnCount,
+                                                      childAspectRatio:
+                                                          gridChildAspectRatio,
+                                                    ),
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return UserGridItem(
+                                                        onTap: () {
+                                                          final userId =
+                                                              usersList[index]
+                                                                  .id
+                                                                  .toString();
+                                                          context.go(
+                                                              '/admins_list/details/${userId}');
+                                                        },
+                                                        user: usersList[index],
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
                                               ),
                                   ),
@@ -172,7 +177,7 @@ class UsersListPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                floatingActionButton: !state.isConnectionError ||
+                floatingActionButton: !state.isConnectionError &&
                         userInfo.roles.contains(Role.SuperAdmin) ||
                         userInfo.roles.contains(Role.Admin)
                     ? FloatingActionButton(
