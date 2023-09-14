@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parking_project/presentation/pages/profile_page/components/confirm_code_dialog.dart';
+import 'package:parking_project/presentation/pages/profile_page/components/adaptive_new_password_menu.dart';
 import 'package:parking_project/presentation/pages/profile_page/reset_password_bloc/reset_password_bloc.dart';
 import 'package:parking_project/utils/device_info.dart';
 
@@ -13,12 +13,14 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userInfo = context.read<AuthCubit>().state.userData!;
+    final userInfo = context.watch<AuthCubit>().state.userData!;
     return BlocProvider(
-      create: (context) => ResetPasswordBloc(userInfo: userInfo),
+      create: (context) => ResetPasswordBloc(
+          userInfo: userInfo, authCubit: context.read<AuthCubit>()),
       child: BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
         builder: (context, state) {
           final bloc = context.read<ResetPasswordBloc>();
+
           return Scaffold(
             backgroundColor: AppColors.background,
             body: Padding(
@@ -81,6 +83,19 @@ class ProfilePage extends StatelessWidget {
                                   height: 16,
                                 ),
                                 Text('Ваши роли: ${userInfo.userRolesString}'),
+                                if (!userInfo.changePassword) ...{
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  const Badge(
+                                    backgroundColor: Colors.red,
+                                    label: Text('!'),
+                                    child: Text(
+                                      'Настоятельно рекомендуем вам изменить сгенерированный пароль на новый!',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  )
+                                },
                               ],
                             ),
                           ),
@@ -90,14 +105,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              bloc.add(ResetPasswordClicked());
-                              showDialog(
-                                context: context,
-                                builder: (_) => BlocProvider.value(
-                                  value: context.read<ResetPasswordBloc>(),
-                                  child: const ConfirmCodeDialog(),
-                                ),
-                              );
+                              showAdaptiveNewPasswordMenu(context, bloc);
                             },
                             child: const Text('Изменить пароль')),
                         const SizedBox(

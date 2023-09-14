@@ -5,12 +5,17 @@ import '../../utils/roles.dart';
 
 /// Class responsible for navigation icons handling
 class AppDestinations {
-  static List<NavigationDestinationDataHolder> getDestinations(
-      User? userInfo
-      ) {
+  static List<NavigationDestinationDataHolder> getDestinations(User? userInfo) {
+    var badgeCount = '0';
+    if (userInfo != null) {
+      if (!userInfo.changePassword) {
+        badgeCount = '1';
+      }
+    }
+
     List<NavigationDestinationDataHolder> iconsDataList = [];
     iconsDataList.addAll(userIcons);
-    iconsDataList.addAll(commonIcons);
+    iconsDataList.addAll(commonIcons(profileBadgeCount: badgeCount));
     return iconsDataList;
   }
 }
