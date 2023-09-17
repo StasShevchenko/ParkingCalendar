@@ -6,7 +6,6 @@ import 'dio_configuration/dio_client.dart';
 
 class QueueDataSource{
   final dio = DioClient.get();
-
   Future<List<QueueDataHolder>> getQueueItems([String fullName = '']) async{
     final responseData = (await dio.get('/queue/allNextPeriod?fullName=$fullName')).data as List<dynamic>;
     List<QueueDataHolder> dataHoldersList = [];

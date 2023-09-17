@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:parking_project/data/models/user_info.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 
 class RequestInSection extends StatelessWidget {
+  const RequestInSection({super.key});
+
   //final UserInfo userInfo;
   //const RequestInSection({super.key, required this.userInfo});
 
@@ -26,7 +27,7 @@ class RequestInSection extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(13.0),
                 child: Row(children: [
-                  Expanded(
+                  const Expanded(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -34,11 +35,11 @@ class RequestInSection extends StatelessWidget {
                             children: [
                               Text(
                                 "Сергей ",
-                                style: const TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16),
                               ),
                               Text(
                                 "Сергеев",
-                                style: const TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
@@ -46,11 +47,11 @@ class RequestInSection extends StatelessWidget {
                             children: [
                               Text(
                                 "1-",
-                                style: const TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16),
                               ),
                               Text(
                                 "12",
-                                style: const TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
@@ -127,7 +128,7 @@ class RequestInSection extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(13.0),
                 child: Row(children: [
-                  Expanded(
+                  const Expanded(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -135,11 +136,11 @@ class RequestInSection extends StatelessWidget {
                             children: [
                               Text(
                                 "Сергей ",
-                                style: const TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16),
                               ),
                               Text(
                                 "Сергеев",
-                                style: const TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
@@ -147,11 +148,11 @@ class RequestInSection extends StatelessWidget {
                             children: [
                               Text(
                                 "1-",
-                                style: const TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16),
                               ),
                               Text(
                                 "12",
-                                style: const TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16),
                               ),
                             ],
                           ),

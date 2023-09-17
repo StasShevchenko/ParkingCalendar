@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/presentation/pages/home_page/components/calendar_section.dart';
-import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
-import 'package:parking_project/presentation/pages/home_page/home_page_bloc/home_page_bloc.dart';
 import 'package:parking_project/presentation/pages/home_page/components/queue_section.dart';
+import 'package:parking_project/presentation/pages/home_page/home_page_bloc/home_page_bloc.dart';
+import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
 import 'package:parking_project/presentation/ui_kit/utils/swipe_to_refresh_container.dart';
 
 import '../../../assets/colors/app_colors.dart';
