@@ -2,11 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:parking_project/data/remote_data_source/password_data_source.dart';
 
-import '../../../../data/models/user.dart';
 import 'forgot_password_location.dart';
 
 part 'forgot_password_event.dart';
-
 part 'forgot_password_state.dart';
 
 class ForgotPasswordBloc

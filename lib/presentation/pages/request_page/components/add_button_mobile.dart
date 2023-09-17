@@ -18,7 +18,6 @@ class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
   bool isRequestAllUsers = false;
 
   void setIgnoring() {
-    print(isRequestAllUsers);
     setState(() {
       isRequestAllUsers = !isRequestAllUsers;
     });
@@ -26,7 +25,6 @@ class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
 
   @override
   Widget build(BuildContext context) {
-    print('dfkjkdfj');
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -49,10 +47,9 @@ class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
                         value: isRequestAllUsers,
                         activeColor: AppColors.primaryBlue,
                         onChanged: (_) {
-                          print('changed!');
                           setIgnoring();
                         }),
-                    Text("Поделиться со всеми пользователями")
+                    const Text("Поделиться со всеми пользователями")
                   ],
                 ),
                 const SizedBox(
@@ -61,7 +58,7 @@ class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
                 IgnorePointer(
                   ignoring: isRequestAllUsers,
                   child: DropdownSearch<String>.multiSelection(
-                    items: [
+                    items: const [
                       "Марина",
                       "Данил",
                       "Елисей",
@@ -75,7 +72,7 @@ class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
                     ],
 
                     //popupProps: PopupProps.menu showSelectedItems: true, showSearchBox: true ),
-                    dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
                         labelText: "Выберете сотрудников",
                         hintText: "",
@@ -88,7 +85,7 @@ class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
                   height: 16,
                 ),
                 DropdownSearch<String>(
-                  items: [
+                  items: const [
                     "1",
                     "2",
                     "3",
@@ -104,7 +101,7 @@ class _RequestBottomSheetContentState extends State<RequestBottomSheetContent> {
                     "13",
                     "14",
                   ],
-                  dropdownDecoratorProps: DropDownDecoratorProps(
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       labelText: "Выберете количество дней",
                       hintText: "",

@@ -28,7 +28,7 @@ void showAdaptiveNewPasswordMenu(BuildContext context, ResetPasswordBloc bloc) {
                   topRight: Radius.circular(32),
                 ),
               ),
-              child: NewPasswordMenuBody(),
+              child: const NewPasswordMenuBody(),
             ),
           ),
     );
