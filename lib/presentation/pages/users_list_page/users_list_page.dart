@@ -49,7 +49,10 @@ class UsersListPage extends StatelessWidget {
                       )
                     : state.isConnectionError
                         ? ConnectionErrorSection(
-                            onButtonClicked: () => bloc.add(PageRefreshed()))
+                            onButtonClicked: () => bloc.add(
+                              PageRefreshed(),
+                            ),
+                          )
                         : Center(
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -99,16 +102,19 @@ class UsersListPage extends StatelessWidget {
                                             isSelected: state.toggledRoles
                                                 .contains(Role.Admin),
                                             onSelected: (value) {
-                                              bloc.add(FilterToggled(
-                                                  role: Role.Admin));
+                                              bloc.add(
+                                                FilterToggled(role: Role.Admin),
+                                              );
                                             },
                                             label: 'Администраторы'),
                                         RoleChip(
                                             isSelected: state.toggledRoles
                                                 .contains(Role.SuperAdmin),
                                             onSelected: (value) {
-                                              bloc.add(FilterToggled(
-                                                  role: Role.SuperAdmin));
+                                              bloc.add(
+                                                FilterToggled(
+                                                    role: Role.SuperAdmin),
+                                              );
                                             },
                                             label: 'Старшие администраторы')
                                       ],
@@ -143,7 +149,9 @@ class UsersListPage extends StatelessWidget {
                                                         : double.maxFinite),
                                                 child: RefreshIndicator(
                                                   onRefresh: () async {
-                                                    bloc.add(PageRefreshed());
+                                                    bloc.add(
+                                                      PageRefreshed(),
+                                                    );
                                                   },
                                                   child: GridView.builder(
                                                     itemCount: usersList.length,
@@ -151,7 +159,8 @@ class UsersListPage extends StatelessWidget {
                                                         SliverGridDelegateWithFixedCrossAxisCount(
                                                       mainAxisSpacing: 16,
                                                       crossAxisSpacing: 16,
-                                                      crossAxisCount: columnCount,
+                                                      crossAxisCount:
+                                                          columnCount,
                                                       childAspectRatio:
                                                           gridChildAspectRatio,
                                                     ),
@@ -178,7 +187,7 @@ class UsersListPage extends StatelessWidget {
                             ),
                           ),
                 floatingActionButton: !state.isConnectionError &&
-                        userInfo.roles.contains(Role.SuperAdmin) ||
+                            userInfo.roles.contains(Role.SuperAdmin) ||
                         userInfo.roles.contains(Role.Admin)
                     ? FloatingActionButton(
                         backgroundColor: AppColors.primaryBlue,

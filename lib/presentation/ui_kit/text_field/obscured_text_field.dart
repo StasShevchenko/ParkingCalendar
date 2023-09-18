@@ -31,15 +31,16 @@ class _ObscuredTextFieldState extends State<ObscuredTextField> {
         }
       },
       decoration: widget.decoration!.copyWith(
-          suffixIcon: IconButton(
-        onPressed: () {
-          setState(() {
-            _isVisible = !_isVisible;
-          });
-        },
-        icon: Icon(_isVisible ? Icons.visibility : Icons.visibility_off,
-            color: AppColors.primaryBlue),
-      )),
+        suffixIcon: IconButton(
+          onPressed: () {
+            setState(() {
+              _isVisible = !_isVisible;
+            });
+          },
+          icon: Icon(_isVisible ? Icons.visibility : Icons.visibility_off,
+              color: AppColors.primaryBlue),
+        ),
+      ),
     );
   }
 }

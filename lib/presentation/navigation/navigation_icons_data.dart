@@ -47,21 +47,6 @@ final adminIcons = [
       index: 0),
 ];
 
-final superAdminIcons = [
-  // NavigationDestinationDataHolder(
-  //   icon: Icon(
-  //     Icons.business_rounded,
-  //     color: AppColors.primaryBlue,
-  //   ),
-  //   selectedIcon: Icon(
-  //     Icons.business_rounded,
-  //     color: AppColors.primaryWhite,
-  //   ),
-  //   label: 'Отделы',
-  //   index: 2
-  // ),
-];
-
 List<NavigationDestinationDataHolder> commonIcons(
         {required String profileBadgeCount}) =>
     [
@@ -97,10 +82,12 @@ List<NavigationDestination> mapToNavigationDestinations(
     List<NavigationDestinationDataHolder> destinationsData) {
   List<NavigationDestination> navigationDestinations = [];
   for (var dataItem in destinationsData) {
-    navigationDestinations.add(NavigationDestination(
-        icon: dataItem.icon,
-        selectedIcon: dataItem.selectedIcon,
-        label: dataItem.label));
+    navigationDestinations.add(
+      NavigationDestination(
+          icon: dataItem.icon,
+          selectedIcon: dataItem.selectedIcon,
+          label: dataItem.label),
+    );
   }
   return navigationDestinations;
 }
@@ -109,12 +96,15 @@ List<NavigationRailDestination> mapToNavigationRailDestinations(
     List<NavigationDestinationDataHolder> destinationsData) {
   List<NavigationRailDestination> navigationRailDestinations = [];
   for (var dataItem in destinationsData) {
-    navigationRailDestinations.add(NavigationRailDestination(
+    navigationRailDestinations.add(
+      NavigationRailDestination(
         icon: dataItem.icon,
         selectedIcon: dataItem.selectedIcon,
         label: Text(
           dataItem.label,
-        )));
+        ),
+      ),
+    );
   }
   return navigationRailDestinations;
 }

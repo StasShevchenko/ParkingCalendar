@@ -17,31 +17,31 @@ void showAdaptiveNewPasswordMenu(BuildContext context, ResetPasswordBloc bloc) {
           top: Radius.circular(32),
         ),
       ),
-      builder: (context) =>
-          BlocProvider.value(
-            value: bloc,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  topRight: Radius.circular(32),
-                ),
-              ),
-              child: const NewPasswordMenuBody(),
+      builder: (context) => BlocProvider.value(
+        value: bloc,
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(32),
             ),
           ),
+          child: const NewPasswordMenuBody(),
+        ),
+      ),
     );
   } else {
     showDialog(
-        context: context,
-        builder: (context) =>
-            BlocProvider.value(
-              value: bloc,
-              child: AlertDialog(
-                  surfaceTintColor: AppColors.primaryWhite,
-                  backgroundColor: AppColors.primaryWhite,
-                  content: const NewPasswordMenuBody()),
-            ));
+      context: context,
+      builder: (context) => BlocProvider.value(
+        value: bloc,
+        child: AlertDialog(
+          surfaceTintColor: AppColors.primaryWhite,
+          backgroundColor: AppColors.primaryWhite,
+          content: const NewPasswordMenuBody(),
+        ),
+      ),
+    );
   }
 }

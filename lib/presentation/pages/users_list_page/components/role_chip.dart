@@ -16,20 +16,22 @@ class RoleChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
-        showCheckmark: false,
-        side:  BorderSide(color: isSelected ? Colors.transparent : AppColors.secondaryBlue),
-        label: Text(
-          label,
-          style: TextStyle(
-              color: isSelected ? Colors.white : AppColors.secondaryBlue),
-        ),
-        selected: isSelected,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        selectedColor: AppColors.primaryBlue,
-        onSelected: (value) {
-          onSelected(value);
-        });
+      showCheckmark: false,
+      side: BorderSide(
+          color: isSelected ? Colors.transparent : AppColors.secondaryBlue),
+      label: Text(
+        label,
+        style: TextStyle(
+            color: isSelected ? Colors.white : AppColors.secondaryBlue),
+      ),
+      selected: isSelected,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      selectedColor: AppColors.primaryBlue,
+      onSelected: (value) {
+        onSelected(value);
+      },
+    );
   }
 }

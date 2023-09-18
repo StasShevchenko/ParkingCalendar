@@ -15,18 +15,19 @@ class QueueList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        controller: controller,
-        itemCount: queueItems.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: StickyHeader(
-              header: QueueHeader(
-                monthName: queueItems[index].monthName,
-              ),
-              content: QueueHeaderContent(usersList: queueItems[index].users),
+      controller: controller,
+      itemCount: queueItems.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: StickyHeader(
+            header: QueueHeader(
+              monthName: queueItems[index].monthName,
             ),
-          );
-        });
+            content: QueueHeaderContent(usersList: queueItems[index].users),
+          ),
+        );
+      },
+    );
   }
 }

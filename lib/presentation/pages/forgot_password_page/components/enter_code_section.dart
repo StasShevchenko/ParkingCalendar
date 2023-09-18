@@ -12,7 +12,7 @@ class EnterCodeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -25,9 +25,7 @@ class EnterCodeSection extends StatelessWidget {
           height: 16,
         ),
         ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 350
-          ),
+          constraints: const BoxConstraints(maxWidth: 350),
           child: TextField(
             onTapOutside: (event) => FocusScope.of(context).unfocus(),
             onChanged: (value) {
@@ -39,24 +37,22 @@ class EnterCodeSection extends StatelessWidget {
                   color: AppColors.primaryBlue,
                 ),
                 labelText: 'Код подтверждения',
-                errorText:
-                state.isCodeError ? 'Неверный код!' : null),
+                errorText: state.isCodeError ? 'Неверный код!' : null),
           ),
         ),
         const SizedBox(
           height: 16,
         ),
         ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 350
-          ),
+          constraints: const BoxConstraints(maxWidth: 350),
           child: LoaderButton(
-              onPressed: () {
-                bloc.add(ConfirmCodeClicked());
-              },
-              isLoading: state.isCodeResultLoading,
-              minWidth: double.maxFinite,
-              child: const Text('Подтвердить')),
+            onPressed: () {
+              bloc.add(ConfirmCodeClicked());
+            },
+            isLoading: state.isCodeResultLoading,
+            minWidth: double.maxFinite,
+            child: const Text('Подтвердить'),
+          ),
         )
       ],
     );

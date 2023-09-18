@@ -15,10 +15,13 @@ class UserDataSource {
   Future<List<UserInfo>> getAllUsers(List<Role> roles,
       [String fullName = '']) async {
     final List<UserInfo> users = [];
-    final response = ((await dio.get('/user', queryParameters: {
-      'roles': roles.map((role) => role.getName()).toList().toString(),
-      'fullName': fullName
-    }))
+    final response = ((await dio.get(
+      '/user',
+      queryParameters: {
+        'roles': roles.map((role) => role.getName()).toList().toString(),
+        'fullName': fullName
+      },
+    ))
         .data as List<dynamic>);
     for (Map<String, dynamic> userItem in response) {
       UserInfo user = UserInfo.fromJson(userItem);

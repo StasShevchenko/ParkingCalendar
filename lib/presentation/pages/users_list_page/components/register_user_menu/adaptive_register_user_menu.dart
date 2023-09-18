@@ -10,10 +10,12 @@ void showAdaptiveRegisterUserMenu(BuildContext context) {
     showAppBottomSheet(context, const RegisterUserMenuBody());
   } else {
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-            surfaceTintColor: AppColors.primaryWhite,
-            backgroundColor: AppColors.primaryWhite,
-            content: const RegisterUserMenuBody()));
+      context: context,
+      builder: (context) => AlertDialog(
+        surfaceTintColor: AppColors.primaryWhite,
+        backgroundColor: AppColors.primaryWhite,
+        content: const RegisterUserMenuBody(),
+      ),
+    );
   }
 }

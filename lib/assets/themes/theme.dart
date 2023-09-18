@@ -3,27 +3,29 @@ import 'package:flutter/material.dart';
 import '../colors/app_colors.dart';
 
 ThemeData appTheme() => ThemeData(
-    textSelectionTheme: TextSelectionThemeData(
-      cursorColor: AppColors.primaryBlue,
-      selectionHandleColor: AppColors.primaryAccentRed,
-      selectionColor: AppColors.primaryAccentRed
-    ),
-    focusColor: AppColors.primaryBlue,
-    useMaterial3: true,
-    visualDensity: const VisualDensity(horizontal: -1, vertical: -1),
-    colorScheme: const ColorScheme.highContrastLight(),
-    fontFamily: 'Golos',
-    appBarTheme: AppBarTheme(
-        elevation: 0,
-        scrolledUnderElevation: 0.0, 
-        color: AppColors.primaryBlue,
-        titleTextStyle: TextStyle(
-          color: AppColors.primaryWhite,
-          fontSize: 20,
-        )),
-    inputDecorationTheme: appInputDecorationTheme(),
-    textTheme: appTextTheme(),
-    elevatedButtonTheme: ElevatedButtonThemeData(style: elevatedButtonStyle()));
+      textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppColors.primaryBlue,
+          selectionHandleColor: AppColors.primaryAccentRed,
+          selectionColor: AppColors.primaryAccentRed),
+      focusColor: AppColors.primaryBlue,
+      useMaterial3: true,
+      visualDensity: const VisualDensity(horizontal: -1, vertical: -1),
+      colorScheme: const ColorScheme.highContrastLight(),
+      fontFamily: 'Golos',
+      appBarTheme: AppBarTheme(
+          elevation: 0,
+          scrolledUnderElevation: 0.0,
+          color: AppColors.primaryBlue,
+          titleTextStyle: TextStyle(
+            color: AppColors.primaryWhite,
+            fontSize: 20,
+          )),
+      inputDecorationTheme: appInputDecorationTheme(),
+      textTheme: appTextTheme(),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: elevatedButtonStyle(),
+      ),
+    );
 
 InputDecorationTheme appInputDecorationTheme() => InputDecorationTheme(
     contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -54,15 +56,19 @@ TextTheme appTextTheme() => TextTheme(
     ),
     bodyMedium: TextStyle(color: AppColors.secondaryBlue),
     titleLarge: TextStyle(color: AppColors.secondaryBlue, fontSize: 28),
-    titleMedium: TextStyle(color: AppColors.secondaryBlue, fontSize: 24, fontWeight: FontWeight.w700)
-);
-
+    titleMedium: TextStyle(
+        color: AppColors.secondaryBlue,
+        fontSize: 24,
+        fontWeight: FontWeight.w700));
 
 ButtonStyle elevatedButtonStyle() => ElevatedButton.styleFrom(
-    backgroundColor: AppColors.primaryBlue,
-    foregroundColor: AppColors.primaryWhite,
-    elevation: 0,
-    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-    textStyle:
-        const TextStyle(fontFamily: 'Golos', fontWeight: FontWeight.w700),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)));
+      backgroundColor: AppColors.primaryBlue,
+      foregroundColor: AppColors.primaryWhite,
+      elevation: 0,
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      textStyle:
+          const TextStyle(fontFamily: 'Golos', fontWeight: FontWeight.w700),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(32),
+      ),
+    );

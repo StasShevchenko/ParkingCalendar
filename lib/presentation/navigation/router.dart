@@ -85,17 +85,18 @@ final goRouter = GoRouter(
       ],
     ),
     GoRoute(
-        path: AppRoutes.initial,
-        pageBuilder: (context, state) => const NoTransitionPage(
-              child: LoginPage(),
-            ),
-        routes: [
-          GoRoute(
-            path: AppRoutes.forgotPassword,
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: ForgotPasswordPage(),
-            ),
+      path: AppRoutes.initial,
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: LoginPage(),
+      ),
+      routes: [
+        GoRoute(
+          path: AppRoutes.forgotPassword,
+          pageBuilder: (context, state) => const NoTransitionPage(
+            child: ForgotPasswordPage(),
           ),
-        ])
+        ),
+      ],
+    )
   ],
 );
