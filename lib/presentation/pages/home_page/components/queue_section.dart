@@ -132,7 +132,8 @@ class _QueueSectionState extends State<QueueSection> {
                                   : Align(
                                       alignment: Alignment.topCenter,
                                       child:
-                                          QueueTable(controller: _controller)),
+                                          QueueTable(controller: _controller),
+                                    ),
                             ),
                           ),
               ],

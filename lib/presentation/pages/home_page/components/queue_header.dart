@@ -15,20 +15,22 @@ class QueueHeader extends StatelessWidget {
       child: Center(
         child: Container(
           decoration: BoxDecoration(
-              color: monthName == numberToMonth(DateTime.now().month)
-                  ? AppColors.primaryBlue
-                  : AppColors.background,
-              borderRadius: BorderRadius.circular(20)),
+            color: monthName == numberToMonth(DateTime.now().month)
+                ? AppColors.primaryBlue
+                : AppColors.background,
+            borderRadius: BorderRadius.circular(20),
+          ),
           child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-              child: Text(
-                monthName,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: monthName == numberToMonth(DateTime.now().month)
-                        ? AppColors.primaryWhite
-                        : AppColors.secondaryBlue),
-              )),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            child: Text(
+              monthName,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: monthName == numberToMonth(DateTime.now().month)
+                      ? AppColors.primaryWhite
+                      : AppColors.secondaryBlue),
+            ),
+          ),
         ),
       ),
     );

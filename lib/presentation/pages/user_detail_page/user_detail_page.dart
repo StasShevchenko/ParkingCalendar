@@ -5,6 +5,7 @@ import 'package:parking_project/presentation/pages/user_detail_page/user_detial_
 import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
 
 import '../../../assets/colors/app_colors.dart';
+import '../../../utils/device_info.dart';
 
 class AdminDetailPage extends StatelessWidget {
   final String? userId;
@@ -35,12 +36,15 @@ class AdminDetailPage extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: Text(
-                  'Информация о сотруднике',
-                  style: Theme.of(context).textTheme.titleMedium,
+                automaticallyImplyLeading: false,
+                title: FittedBox(
+                  child: Text(
+                    'Информация о сотруднике',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
                 backgroundColor: Colors.transparent,
-                leading: IconButton(
+                leading: DeviceOS.isMobileDevice ? IconButton(
                   icon: Icon(
                     Icons.arrow_back_ios_rounded,
                     color: AppColors.primaryBlue,
@@ -48,7 +52,7 @@ class AdminDetailPage extends StatelessWidget {
                   onPressed: () {
                     context.pop();
                   },
-                ),
+                ) : null,
               ),
               backgroundColor: AppColors.background,
               body: Center(

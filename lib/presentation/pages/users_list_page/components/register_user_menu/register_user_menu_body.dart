@@ -35,13 +35,14 @@ class RegisterUserMenuBody extends StatelessWidget {
           if (state.isUserCreated == 0) {
             context.pop();
             showDialog(
-                context: context,
-                builder: (context) {
-                  return const FailureDialog(
-                    description:
-                        'Возможно, пользователь уже был зарегистрирован ранее.',
-                  );
-                });
+              context: context,
+              builder: (context) {
+                return const FailureDialog(
+                  description:
+                      'Возможно, пользователь уже был зарегистрирован ранее.',
+                );
+              },
+            );
           }
         },
         builder: (context, state) {
@@ -168,17 +169,17 @@ class RegisterUserMenuBody extends StatelessWidget {
                           constraints: const BoxConstraints(
                               maxHeight: 44, minWidth: 279),
                           child: ElevatedButton(
-                              onPressed: () {
-                                bloc.add(CreatePressed());
-                              },
-                              child: state.isWaitingForRegistration
-                                  ? const FittedBox(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  : const Text(
-                                      'Зарегистрировать пользователя')),
+                            onPressed: () {
+                              bloc.add(CreatePressed());
+                            },
+                            child: state.isWaitingForRegistration
+                                ? const FittedBox(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Text('Зарегистрировать пользователя'),
+                          ),
                         ),
                       ],
                     ),

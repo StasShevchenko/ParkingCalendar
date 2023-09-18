@@ -1,4 +1,4 @@
-import 'package:dio/src/response.dart';
+import 'package:dio/dio.dart';
 import 'package:parking_project/data/models/register_user_dto.dart';
 
 import 'dio_configuration/dio_client.dart';

@@ -14,21 +14,23 @@ class AuthRedirector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
-      if (state.authStatus == AuthStatus.loading) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      } else if (state.authStatus == AuthStatus.unauthenticated) {
-        Future(() {
-          context.go(AppRoutes.initial);
-        });
-        return Container();
-      } else if (role != null && !state.userData!.roles.contains(role)) {
-        return const Center(child: Text('Нет доступа!'));
-      } else {
-        return child;
-      }
-    });
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        if (state.authStatus == AuthStatus.loading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state.authStatus == AuthStatus.unauthenticated) {
+          Future(() {
+            context.go(AppRoutes.initial);
+          });
+          return Container();
+        } else if (role != null && !state.userData!.roles.contains(role)) {
+          return const Center(child: Text('Нет доступа!'));
+        } else {
+          return child;
+        }
+      },
+    );
   }
 }

@@ -18,7 +18,7 @@ class RegisterUserDto {
       'secondName': secondName,
       'email': email,
       'is_staff': isStaff,
-      'is_queue_user': isQueueUser
+      'in_queue': isQueueUser
     };
   }
 }
