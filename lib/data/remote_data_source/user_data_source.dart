@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:parking_project/data/remote_data_source/dio_configuration/dio_client.dart';
 
 import '../../utils/roles.dart';
@@ -28,5 +29,10 @@ class UserDataSource {
       users.add(user);
     }
     return users;
+  }
+
+  Future<Response> deleteUser(int userId) async {
+    final result = await dio.delete('/user/$userId');
+    return result;
   }
 }
