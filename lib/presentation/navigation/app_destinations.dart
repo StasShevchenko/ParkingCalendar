@@ -9,7 +9,7 @@ class AppDestinations {
     var badgeCount = '0';
     if (userInfo != null) {
       if (!userInfo.changePassword) {
-        badgeCount = '1';
+        badgeCount = '!';
       }
     }
 

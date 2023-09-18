@@ -87,13 +87,9 @@ class ProfilePage extends StatelessWidget {
                                   const SizedBox(
                                     height: 16,
                                   ),
-                                  const Badge(
-                                    backgroundColor: Colors.red,
-                                    label: Text('!'),
-                                    child: Text(
-                                      'Настоятельно рекомендуем вам изменить сгенерированный пароль на новый!',
-                                      style: TextStyle(color: Colors.red),
-                                    ),
+                                  Text(
+                                    'Настоятельно рекомендуем вам изменить сгенерированный пароль на новый!',
+                                    style: TextStyle(color: Colors.red),
                                   )
                                 },
                               ],
