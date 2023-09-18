@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parking_project/presentation/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/pages/user_detail_page/user_detial_page_bloc/user_detail_page_bloc.dart';
+import 'package:parking_project/presentation/ui_kit/alert_dialog/failure_dialog.dart';
+import 'package:parking_project/presentation/ui_kit/alert_dialog/success_dialog.dart';
 import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
 
 import '../../../assets/colors/app_colors.dart';
 import '../../../utils/device_info.dart';
+import '../../../utils/roles.dart';
 
-class AdminDetailPage extends StatelessWidget {
+class UserDetailPage extends StatelessWidget {
   final String? userId;
 
-  const AdminDetailPage({super.key, required this.userId});
+  const UserDetailPage({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +22,48 @@ class AdminDetailPage extends StatelessWidget {
 
     return BlocProvider<UserDetailPageBloc>(
       create: (context) => UserDetailPageBloc(userId: int.parse(userId!)),
-      child: BlocBuilder<UserDetailPageBloc, UserDetailPageState>(
+      child: BlocConsumer<UserDetailPageBloc, UserDetailPageState>(
+        listener: (context, state) async {
+          if (state.isUserWasDeleted == 1) {
+            context.pop();
+            await showDialog(
+              context: context,
+              builder: (context) =>
+                  const SuccessDialog(bodyText: 'Пользователь был удален!'),
+            );
+            if (context.mounted) {
+              context.pop();
+            }
+          }
+          if (state.isUserWasDeleted == -1) {
+            if (context.mounted) {
+              showDialog(
+                  context: context,
+                  builder: (context) => const FailureDialog());
+            }
+          }
+        },
         builder: (context, state) {
           final bloc = context.read<UserDetailPageBloc>();
-          if (state.connectionError) {
+          if (state.userWasNotFound) {
+            return const Center(
+              child: Text('Пользователь не найден!'),
+            );
+          } else if (state.connectionError) {
             return ConnectionErrorSection(
-                onButtonClicked: () => bloc.add(PageRefreshed()));
+              onButtonClicked: () => bloc.add(
+                PageRefreshed(),
+              ),
+            );
           } else if (state.isLoading) {
             return Container(
-                color: AppColors.background,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryBlue,
-                  ),
-                ));
+              color: AppColors.background,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryBlue,
+                ),
+              ),
+            );
           } else {
             return Scaffold(
               appBar: AppBar(
@@ -44,15 +76,17 @@ class AdminDetailPage extends StatelessWidget {
                   ),
                 ),
                 backgroundColor: Colors.transparent,
-                leading: DeviceOS.isMobileDevice ? IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios_rounded,
-                    color: AppColors.primaryBlue,
-                  ),
-                  onPressed: () {
-                    context.pop();
-                  },
-                ) : null,
+                leading: DeviceOS.isMobileDevice
+                    ? IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios_rounded,
+                          color: AppColors.primaryBlue,
+                        ),
+                        onPressed: () {
+                          context.pop();
+                        },
+                      )
+                    : null,
               ),
               backgroundColor: AppColors.background,
               body: Center(
@@ -78,7 +112,23 @@ class AdminDetailPage extends StatelessWidget {
                         'Роли: ${state.userInfo!.userRolesString}',
                         textAlign: TextAlign.center,
                         style: userInfoStyle,
-                      )
+                      ),
+                      if (context
+                          .read<AuthCubit>()
+                          .state
+                          .userData!
+                          .roles
+                          .contains(Role.SuperAdmin)) ...{
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            _showDeleteDialog(context, bloc);
+                          },
+                          child: const Text('Удалить пользователя'),
+                        )
+                      },
                     ],
                   ),
                 ),
@@ -87,6 +137,38 @@ class AdminDetailPage extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context, UserDetailPageBloc bloc) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              'Удаление пользователя',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          content: const Text('Вы действительно хотите удалить пользователя?'),
+          actions: [
+            ElevatedButton(
+              onPressed: () => context.pop(),
+              child: const Text('Отмена'),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                bloc.add(DeleteClicked());
+              },
+              child: const Text('Подтвердить'),
+            )
+          ],
+        );
+      },
     );
   }
 }

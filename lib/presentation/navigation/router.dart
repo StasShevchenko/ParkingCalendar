@@ -55,11 +55,13 @@ final goRouter = GoRouter(
             GoRoute(
               routes: [
                 GoRoute(
-                    path: AppRoutes.superAdminAdminsDetail,
-                    name: 'user_details',
-                    pageBuilder: (context, state) => NoTransitionPage(
-                        child: AdminDetailPage(
-                            userId: state.pathParameters['userId'])))
+                  path: AppRoutes.superAdminAdminsDetail,
+                  name: 'user_details',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    child:
+                        UserDetailPage(userId: state.pathParameters['userId']),
+                  ),
+                )
               ],
               path: AppRoutes.superAdminAdminsList,
               pageBuilder: (context, state) => const NoTransitionPage(

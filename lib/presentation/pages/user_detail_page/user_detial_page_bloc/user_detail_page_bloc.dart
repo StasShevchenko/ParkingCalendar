@@ -3,6 +3,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:parking_project/data/models/user_info.dart';
+import 'package:parking_project/data/remote_data_source/superadmin_data_source.dart';
 import 'package:parking_project/data/remote_data_source/user_data_source.dart';
 
 part 'user_detail_page_event.dart';
@@ -12,28 +13,47 @@ part 'user_detail_page_state.dart';
 class UserDetailPageBloc
     extends Bloc<UserDetailPageEvent, UserDetailPageState> {
   final dataSource = UserDataSource();
+  final superAdminDataSource = SuperAdminDataSource();
+
   final int userId;
+  late UserInfo userInfo;
 
   UserDetailPageBloc({required this.userId}) : super(UserDetailPageState()) {
-    init();
-    on<UserDetailPageEvent>((event, emit) {
+    _init();
+    on<UserDetailPageEvent>((event, emit) async {
       switch (event) {
         case PageRefreshed _:
-          init();
+          _init();
+        case DeleteClicked _:
+          try {
+            if (userInfo.isStaff) {
+              await superAdminDataSource.deleteAdmin(userId);
+              emit(state.copyWith(isUserWasDeleted: 1));
+            } else {
+              await dataSource.deleteUser(userId);
+              emit(state.copyWith(isUserWasDeleted: 1));
+            }
+          } on DioException {
+            emit(state.copyWith(isUserWasDeleted: -1));
+          }
       }
     });
   }
 
-  init() async {
+  _init() async {
     try {
-      final user = await dataSource.getUserById(userId);
+      userInfo = await dataSource.getUserById(userId);
       emit(state.copyWith(
-        userInfo: user,
+        userInfo: userInfo,
         isLoading: false,
         connectionError: false,
       ));
-    } on DioException {
-      emit(state.copyWith(connectionError: true));
+    } on DioException catch (exception){
+      if(exception.response!.statusCode == 400) {
+        emit(state.copyWith(userWasNotFound: true));
+      }else{
+        emit(state.copyWith(connectionError: true));
+      }
     }
   }
 }

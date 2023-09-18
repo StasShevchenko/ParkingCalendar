@@ -8,18 +8,22 @@ ThemeData appTheme() => ThemeData(
           selectionHandleColor: AppColors.primaryAccentRed,
           selectionColor: AppColors.primaryAccentRed),
       focusColor: AppColors.primaryBlue,
+      dialogTheme: const DialogTheme(surfaceTintColor: Colors.white),
+      cardTheme:
+          const CardTheme(color: Colors.white, surfaceTintColor: Colors.white),
       useMaterial3: true,
       visualDensity: const VisualDensity(horizontal: -1, vertical: -1),
       colorScheme: const ColorScheme.highContrastLight(),
       fontFamily: 'Golos',
       appBarTheme: AppBarTheme(
-          elevation: 0,
-          scrolledUnderElevation: 0.0,
-          color: AppColors.primaryBlue,
-          titleTextStyle: TextStyle(
-            color: AppColors.primaryWhite,
-            fontSize: 20,
-          )),
+        elevation: 0,
+        scrolledUnderElevation: 0.0,
+        color: AppColors.primaryBlue,
+        titleTextStyle: TextStyle(
+          color: AppColors.primaryWhite,
+          fontSize: 20,
+        ),
+      ),
       inputDecorationTheme: appInputDecorationTheme(),
       textTheme: appTextTheme(),
       elevatedButtonTheme: ElevatedButtonThemeData(
