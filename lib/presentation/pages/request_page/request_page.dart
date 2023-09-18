@@ -19,17 +19,7 @@ class _RequestPageState extends State<RequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    final columnCount = switch (DeviceScreen.get(context)) {
-      FormFactorType.Mobile => 1,
-      FormFactorType.Tablet => 2,
-      FormFactorType.Desktop => 3
-    };
 
-    final gridChildAspectRatio = switch (DeviceScreen.get(context)) {
-      FormFactorType.Mobile => 7.0,
-      FormFactorType.Tablet => 2.0,
-      FormFactorType.Desktop => 3.0
-    };
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -52,13 +42,13 @@ class _RequestPageState extends State<RequestPage> {
         )
             : null,
         body: MediaQuery.of(context).size.width < 880
-            ? TabBarView(
+            ? const TabBarView(
           children: [
             RequestInSection(),
             RequestOutSection(),
           ],
         )
-            : Row(
+            : const Row(
           children: [
             Expanded(
               child: RequestInSection(

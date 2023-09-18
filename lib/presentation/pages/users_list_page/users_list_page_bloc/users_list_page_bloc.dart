@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:parking_project/data/remote_data_source/user_data_source.dart';
@@ -12,11 +14,11 @@ class UsersListPageBloc extends Bloc<UsersListPageEvent,UsersListPageState>{
   UserDataSource userDataSource = UserDataSource();
 
   UsersListPageBloc() : super(UsersListPageState()) {
-    init();
+    _init();
     on<UsersListPageEvent>((event, emit) async {
      switch(event){
        case PageRefreshed _:
-         init();
+         _init();
        case FilterToggled toggleEvent:
         final currentRoles = state.toggledRoles.toList();
         if(currentRoles.contains(toggleEvent.role)) {
@@ -35,12 +37,12 @@ class UsersListPageBloc extends Bloc<UsersListPageEvent,UsersListPageState>{
     });
   }
 
-  void init() async {
+  void _init() async {
     try{
       emit(state.copyWith(isLoading: true));
       final usersList = await userDataSource.getAllUsers(state.toggledRoles);
       emit(state.copyWith(isLoading: false, users:  usersList, isConnectionError: false));
-    } on DioException catch(exception){
+    } on DioException {
       emit(state.copyWith(isLoading: false, isConnectionError: true));
     }
   }

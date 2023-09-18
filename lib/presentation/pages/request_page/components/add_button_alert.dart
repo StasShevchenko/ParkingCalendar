@@ -28,7 +28,7 @@ void setIgnoring() {
     return AlertDialog(
       surfaceTintColor: AppColors.primaryWhite,
       backgroundColor: AppColors.primaryWhite,
-      title: Text("Добавить адресат"),
+      title: const Text("Добавить адресат"),
       content:
       Column(
         mainAxisSize: MainAxisSize.min,
@@ -39,21 +39,20 @@ void setIgnoring() {
                   value: isRequestAllUsers,
                   activeColor: AppColors.primaryBlue,
                   onChanged: (_){
-                    print('clicked!');
                     setIgnoring();
                   }
               ),
-              Text("Поделиться со всеми пользователями")
+              const Text("Поделиться со всеми пользователями")
             ],
           ),
           const SizedBox(
             height: 16,
           ),
-          isRequestAllUsers ? Text('Абракадабра') :
+          isRequestAllUsers ? const Text('Абракадабра') :
            DropdownSearch<String>.multiSelection(
-             items: ["Марина", "Данил", "Елисей", "Даниил","Маринэ", "Данила", "Ева","Марк", "Аня", "Макс"],
+             items: const ["Марина", "Данил", "Елисей", "Даниил","Маринэ", "Данила", "Ева","Марк", "Аня", "Макс"],
              //popupProps: PopupProps.menu showSelectedItems: true, showSearchBox: true ),
-             dropdownDecoratorProps: DropDownDecoratorProps(
+             dropdownDecoratorProps: const DropDownDecoratorProps(
                dropdownSearchDecoration: InputDecoration(
                  labelText: "Выберете сотрудников",
                  hintText: "",),
@@ -64,7 +63,7 @@ void setIgnoring() {
             height: 16,
           ),
           DropdownSearch<String>(
-            items: [
+            items: const [
               "1",
               "2",
               "3",
@@ -80,7 +79,7 @@ void setIgnoring() {
               "13",
               "14",
             ],
-            dropdownDecoratorProps: DropDownDecoratorProps(
+            dropdownDecoratorProps: const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 labelText: "Выберете количество дней",
                 hintText: "",

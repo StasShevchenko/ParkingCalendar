@@ -21,7 +21,7 @@ class FailureDialog extends StatelessWidget {
         children: [
           const Text('Кажется что-то пошло не так! Повторите операцию снова.'),
           if(description != null) ...{
-            SizedBox(height: 8,),
+            const SizedBox(height: 8,),
             Text(description!)
           }
         ],

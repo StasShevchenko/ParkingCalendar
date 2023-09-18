@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:parking_project/data/models/user_info.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 
 class RequestOutSection extends StatelessWidget {
-  //final UserInfo userInfo;
-  //const RequestOutSection({super.key, required this.userInfo});
+
+  const RequestOutSection({super.key});
 
   @override
   Widget build(BuildContext context) {

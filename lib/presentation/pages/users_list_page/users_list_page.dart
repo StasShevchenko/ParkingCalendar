@@ -164,7 +164,7 @@ class UsersListPage extends StatelessWidget {
                                                                   .id
                                                                   .toString();
                                                           context.go(
-                                                              '/admins_list/details/${userId}');
+                                                              '/admins_list/details/$userId');
                                                         },
                                                         user: usersList[index],
                                                       );
