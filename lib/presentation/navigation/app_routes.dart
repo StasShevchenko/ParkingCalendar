@@ -8,10 +8,7 @@ class AppRoutes {
   static const userProfile = '/profile';
 
   //Super admin routes: prefix superAdmin
-  static const superAdminOffices = '/offices_list';
   static const superAdminAdminsList = '/admins_list';
-  static const superAdminAdminsDetail = 'details/:userId';
-
-  //Admin routes: prefix Admin
-  static const adminHome = '/admin_home';
+  static const userDetails = 'details/:userId';
+  static const queueDetails = 'queue_details/:userId';
 }

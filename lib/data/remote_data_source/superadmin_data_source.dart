@@ -8,4 +8,14 @@ class SuperAdminDataSource {
     final response = await dio.delete('/user/admin/$userId');
     return response;
   }
+
+  Future<Response> addAdminRole(int userId) async {
+    final response = await dio.get('/user/getAdminRole/$userId');
+    return response;
+  }
+
+  Future<Response> removeAdminRole(int userId) async {
+    final response = await dio.get('/user/deleteAdminRole/$userId');
+    return response;
+  }
 }
