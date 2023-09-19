@@ -5,3 +5,5 @@ sealed class UserDetailPageEvent {}
 class PageRefreshed extends UserDetailPageEvent{}
 
 class DeleteClicked extends UserDetailPageEvent{}
+
+class AdminRoleToggled extends UserDetailPageEvent{}

@@ -5,11 +5,13 @@ import 'package:parking_project/presentation/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/pages/user_detail_page/user_detial_page_bloc/user_detail_page_bloc.dart';
 import 'package:parking_project/presentation/ui_kit/alert_dialog/failure_dialog.dart';
 import 'package:parking_project/presentation/ui_kit/alert_dialog/success_dialog.dart';
+import 'package:parking_project/presentation/ui_kit/button/loader_button.dart';
 import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
 
 import '../../../assets/colors/app_colors.dart';
 import '../../../utils/device_info.dart';
 import '../../../utils/roles.dart';
+import 'components/show_delete_dialog.dart';
 
 class UserDetailPage extends StatelessWidget {
   final String? userId;
@@ -120,13 +122,31 @@ class UserDetailPage extends StatelessWidget {
                         const SizedBox(
                           height: 16,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            _showDeleteDialog(context, bloc);
-                          },
-                          child: const Text('Удалить пользователя'),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(minWidth: 280),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              showDeleteDialog(context, bloc);
+                            },
+                            child: const Text('Удалить пользователя'),
+                          ),
                         )
                       },
+                      if (userInfo.roles.contains(Role.SuperAdmin)) ...{
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        LoaderButton(
+                          isLoading: state.isAdminRoleChangeLoading,
+                          minWidth: 280,
+                          onPressed: () {
+                            bloc.add(AdminRoleToggled());
+                          },
+                          child: Text(bloc.userInfo.isStaff
+                              ? 'Убрать роль администратора'
+                              : 'Добавить роль администратора'),
+                        ),
+                      }
                     ],
                   ),
                 ),
@@ -135,38 +155,6 @@ class UserDetailPage extends StatelessWidget {
           }
         },
       ),
-    );
-  }
-
-  void _showDeleteDialog(BuildContext context, UserDetailPageBloc bloc) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Center(
-            child: Text(
-              'Удаление пользователя',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ),
-          content: const Text('Вы действительно хотите удалить пользователя?'),
-          actions: [
-            ElevatedButton(
-              onPressed: () => context.pop(),
-              child: const Text('Отмена'),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                bloc.add(DeleteClicked());
-              },
-              child: const Text('Подтвердить'),
-            )
-          ],
-        );
-      },
     );
   }
 }

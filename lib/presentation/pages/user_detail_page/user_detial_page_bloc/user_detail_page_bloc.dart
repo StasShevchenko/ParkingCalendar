@@ -36,6 +36,32 @@ class UserDetailPageBloc
           } on DioException {
             emit(state.copyWith(isUserWasDeleted: -1));
           }
+        case AdminRoleToggled():
+          try {
+            emit(state.copyWith(isAdminRoleChangeLoading: true));
+            if (userInfo.isStaff) {
+              await superAdminDataSource.removeAdminRole(userId);
+              userInfo = await dataSource.getUserById(userId);
+              emit(
+                state.copyWith(
+                  isAdminRoleChangeLoading: false,
+                  userInfo: userInfo,
+                ),
+              );
+            } else {
+              await superAdminDataSource.addAdminRole(userId);
+              userInfo = await dataSource.getUserById(userId);
+              emit(state.copyWith(
+                isAdminRoleChangeLoading: false,
+                userInfo: userInfo,
+              ));
+            }
+          } on DioException {
+            emit(
+              state.copyWith(
+                  isAdminRoleChangeLoading: false, connectionError: true),
+            );
+          }
       }
     });
   }
@@ -48,10 +74,10 @@ class UserDetailPageBloc
         isLoading: false,
         connectionError: false,
       ));
-    } on DioException catch (exception){
-      if(exception.response!.statusCode == 400) {
+    } on DioException catch (exception) {
+      if (exception.response!.statusCode == 400) {
         emit(state.copyWith(userWasNotFound: true));
-      }else{
+      } else {
         emit(state.copyWith(connectionError: true));
       }
     }
