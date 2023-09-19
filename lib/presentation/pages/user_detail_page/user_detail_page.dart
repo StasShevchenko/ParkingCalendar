@@ -19,6 +19,7 @@ class UserDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const userInfoStyle = TextStyle(fontSize: 16);
+    final userInfo = context.read<AuthCubit>().state.userData!;
 
     return BlocProvider<UserDetailPageBloc>(
       create: (context) => UserDetailPageBloc(userId: int.parse(userId!)),
@@ -113,12 +114,9 @@ class UserDetailPage extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: userInfoStyle,
                       ),
-                      if (context
-                          .read<AuthCubit>()
-                          .state
-                          .userData!
-                          .roles
-                          .contains(Role.SuperAdmin)) ...{
+                      if (userInfo.roles.contains(Role.SuperAdmin) ||
+                          (!bloc.userInfo.isStaff) &&
+                              userInfo.roles.contains(Role.Admin)) ...{
                         const SizedBox(
                           height: 16,
                         ),
