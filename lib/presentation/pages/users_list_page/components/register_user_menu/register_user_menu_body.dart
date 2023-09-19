@@ -12,7 +12,9 @@ import '../../../../auth_cubit/auth_cubit.dart';
 import '../roles_section.dart';
 
 class RegisterUserMenuBody extends StatelessWidget {
-  const RegisterUserMenuBody({super.key});
+  final Function refreshCallback;
+
+  const RegisterUserMenuBody({super.key, required this.refreshCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -20,29 +22,33 @@ class RegisterUserMenuBody extends StatelessWidget {
     return BlocProvider<RegisterUserMenuBloc>(
       create: (context) => RegisterUserMenuBloc(),
       child: BlocConsumer<RegisterUserMenuBloc, RegisterUserMenuState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state.isUserCreated == 1) {
             context.pop();
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return const SuccessDialog(
-                    bodyText:
-                        'Пользователь был успешно зарегистрирован.\nПароль был отправлен на указанную почту.',
-                  );
-                });
-          }
-          if (state.isUserCreated == 0) {
-            context.pop();
-            showDialog(
+            await showDialog(
               context: context,
               builder: (context) {
-                return const FailureDialog(
-                  description:
-                      'Возможно, пользователь уже был зарегистрирован ранее.',
+                return const SuccessDialog(
+                  bodyText:
+                      'Пользователь был успешно зарегистрирован.\nПароль был отправлен на указанную почту.',
                 );
               },
             );
+            refreshCallback();
+          }
+          if (state.isUserCreated == 0) {
+            if (context.mounted) {
+              context.pop();
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const FailureDialog(
+                    description:
+                        'Возможно, пользователь уже был зарегистрирован ранее.',
+                  );
+                },
+              );
+            }
           }
         },
         builder: (context, state) {

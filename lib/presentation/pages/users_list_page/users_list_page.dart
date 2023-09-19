@@ -194,6 +194,7 @@ class UsersListPage extends StatelessWidget {
                         onPressed: () {
                           showAdaptiveRegisterUserMenu(
                             context,
+                            refreshCallback: () => bloc.add(PageRefreshed())
                           );
                         },
                         child: const Icon(Icons.add),

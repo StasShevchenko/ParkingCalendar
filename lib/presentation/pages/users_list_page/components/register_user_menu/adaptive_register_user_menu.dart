@@ -5,16 +5,23 @@ import 'package:parking_project/utils/device_info.dart';
 import '../../../../../assets/colors/app_colors.dart';
 import '../../../../ui_kit/bottom_sheet/show_app_bottom_sheet.dart';
 
-void showAdaptiveRegisterUserMenu(BuildContext context) {
+void showAdaptiveRegisterUserMenu(BuildContext context,
+    {required Function refreshCallback}) {
   if (DeviceScreen.get(context) == FormFactorType.Mobile) {
-    showAppBottomSheet(context, const RegisterUserMenuBody());
+    showAppBottomSheet(
+        context,
+        RegisterUserMenuBody(
+          refreshCallback: refreshCallback,
+        ));
   } else {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         surfaceTintColor: AppColors.primaryWhite,
         backgroundColor: AppColors.primaryWhite,
-        content: const RegisterUserMenuBody(),
+        content: RegisterUserMenuBody(
+          refreshCallback: refreshCallback,
+        ),
       ),
     );
   }
