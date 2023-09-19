@@ -37,6 +37,16 @@ final goRouter = GoRouter(
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: AuthRedirector(child: UserHomePage()),
               ),
+              routes: [
+                GoRoute(
+                  path: AppRoutes.queueDetails,
+                  name: 'queue_details',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    child:
+                    UserDetailPage(userId: state.pathParameters['userId']),
+                  ),
+                )
+              ]
             )
           ],
         ),
@@ -55,7 +65,7 @@ final goRouter = GoRouter(
             GoRoute(
               routes: [
                 GoRoute(
-                  path: AppRoutes.superAdminAdminsDetail,
+                  path: AppRoutes.userDetails,
                   name: 'user_details',
                   pageBuilder: (context, state) => NoTransitionPage(
                     child:
