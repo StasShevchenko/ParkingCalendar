@@ -45,6 +45,16 @@ class UserDetailPage extends StatelessWidget {
                   builder: (context) => const FailureDialog());
             }
           }
+          if (state.isUserRoleChangeLoading != null &&
+              state.isUserRoleChangeLoading == false) {
+            if (context.mounted) {
+              showDialog(
+                context: context,
+                builder: (context) => const SuccessDialog(
+                    bodyText: 'Пользователь был добавлен в очередь!'),
+              );
+            }
+          }
         },
         builder: (context, state) {
           final bloc = context.read<UserDetailPageBloc>();
@@ -132,7 +142,8 @@ class UserDetailPage extends StatelessWidget {
                           ),
                         )
                       },
-                      if (userInfo.roles.contains(Role.SuperAdmin)) ...{
+                      if (userInfo.roles.contains(Role.SuperAdmin) &&
+                          userInfo.roles.contains(Role.User)) ...{
                         const SizedBox(
                           height: 16,
                         ),
@@ -140,13 +151,31 @@ class UserDetailPage extends StatelessWidget {
                           isLoading: state.isAdminRoleChangeLoading,
                           minWidth: 280,
                           onPressed: () {
-                            bloc.add(AdminRoleToggled());
+                            bloc.add(
+                              AdminRoleToggled(),
+                            );
                           },
                           child: Text(bloc.userInfo.isStaff
                               ? 'Убрать роль администратора'
                               : 'Добавить роль администратора'),
                         ),
-                      }
+                      },
+                      if (userInfo.roles.contains(Role.Admin) &&
+                          !bloc.userInfo.isUser) ...{
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        LoaderButton(
+                          isLoading: state.isUserRoleChangeLoading ?? false,
+                          minWidth: 280,
+                          onPressed: () {
+                            bloc.add(
+                              UserRoleToggled(),
+                            );
+                          },
+                          child: const Text('Добавить пользователя в очередь'),
+                        ),
+                      },
                     ],
                   ),
                 ),

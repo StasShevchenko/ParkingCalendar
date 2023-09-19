@@ -3,6 +3,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:parking_project/data/models/user_info.dart';
+import 'package:parking_project/data/remote_data_source/queue_data_source.dart';
 import 'package:parking_project/data/remote_data_source/superadmin_data_source.dart';
 import 'package:parking_project/data/remote_data_source/user_data_source.dart';
 
@@ -14,6 +15,7 @@ class UserDetailPageBloc
     extends Bloc<UserDetailPageEvent, UserDetailPageState> {
   final dataSource = UserDataSource();
   final superAdminDataSource = SuperAdminDataSource();
+  final queueDataSource = QueueDataSource();
 
   final int userId;
   late UserInfo userInfo;
@@ -61,6 +63,17 @@ class UserDetailPageBloc
               state.copyWith(
                   isAdminRoleChangeLoading: false, connectionError: true),
             );
+          }
+        case UserRoleToggled():
+          try {
+            emit(state.copyWith(isUserRoleChangeLoading: true));
+            await queueDataSource.addUserToQueue(userId);
+            userInfo = await dataSource.getUserById(userId);
+            emit(state.copyWith(
+                isUserRoleChangeLoading: false, userInfo: userInfo));
+          } on DioException {
+            emit(state.copyWith(
+                isUserRoleChangeLoading: false, connectionError: true));
           }
       }
     });
