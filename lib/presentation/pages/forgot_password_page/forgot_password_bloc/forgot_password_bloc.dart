@@ -5,6 +5,7 @@ import 'package:parking_project/data/remote_data_source/password_data_source.dar
 import 'forgot_password_location.dart';
 
 part 'forgot_password_event.dart';
+
 part 'forgot_password_state.dart';
 
 class ForgotPasswordBloc
@@ -67,12 +68,12 @@ class ForgotPasswordBloc
           } else {
             emit(state.copyWith(isPasswordChangeLoading: true));
             try {
-              await passwordDataSource.changePassword(
+              await passwordDataSource.forgotPasswordChange(
                   repeatPassword: state.password,
                   newPassword: state.password,
-                  email: state.email);
-                emit(state.copyWith(
-                    isNewPasswordSaved: true, isPasswordChangeLoading: false));
+                  key: state.code);
+              emit(state.copyWith(
+                  isNewPasswordSaved: true, isPasswordChangeLoading: false));
             } on DioException {
               emit(state.copyWith(
                   isPasswordChangeLoading: false,

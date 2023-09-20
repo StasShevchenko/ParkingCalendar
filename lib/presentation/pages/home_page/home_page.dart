@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/presentation/pages/home_page/components/calendar_section.dart';
 import 'package:parking_project/presentation/pages/home_page/components/queue_section.dart';
 import 'package:parking_project/presentation/pages/home_page/home_page_bloc/home_page_bloc.dart';
+import 'package:parking_project/presentation/ui_kit/progress_indicator/project_progress_indicator.dart';
 import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
 import 'package:parking_project/presentation/ui_kit/utils/swipe_to_refresh_container.dart';
 
@@ -33,11 +34,7 @@ class _UserHomePageState extends State<UserHomePage>
               bloc.add(PageRefreshed());
             });
           } else if (state.isLoading) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryBlue,
-              ),
-            );
+            return ProjectProgressIndicator();
           } else {
             return DefaultTabController(
               length: userRoles.contains(Role.User) ? 2 : 1,
@@ -92,8 +89,8 @@ class _UserHomePageState extends State<UserHomePage>
                             Expanded(
                               flex: 3,
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 32.0, top: 16.0),
+                                padding: const EdgeInsets.only(
+                                    right: 32.0, top: 16.0),
                                 child: Center(
                                   child: ConstrainedBox(
                                     constraints:

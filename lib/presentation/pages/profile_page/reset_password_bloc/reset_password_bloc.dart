@@ -39,7 +39,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
             emit(state.copyWith(isPasswordChangeLoading: true));
             try {
               await passwordDataSource.changePassword(
-                  email: userInfo.email,
+                  oldPassword: state.oldPassword,
                   repeatPassword: state.repeatPassword,
                   newPassword: state.password);
               authCubit.refresh(userInfo.email, state.password);
@@ -49,13 +49,16 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
             } on DioException {
               emit(state.copyWith(
                   isPasswordError: true,
-                  passwordErrorText: 'Слишком простой пароль!',
+                  passwordErrorText: 'Неверный старый пароль!',
                   isPasswordChangeLoading: false));
             }
           }
         case RepeatPasswordEntered event:
           emit(state.copyWith(
               isPasswordError: false, repeatPassword: event.value));
+        case OldPasswordEntered event:
+          emit(
+              state.copyWith(oldPassword: event.value, isPasswordError: false));
       }
     });
   }

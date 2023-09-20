@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_project/data/models/user_info.dart';
 import 'package:parking_project/presentation/pages/users_list_page/users_list_page_bloc/users_list_page_bloc.dart';
+import 'package:parking_project/presentation/ui_kit/progress_indicator/project_progress_indicator.dart';
 import 'package:parking_project/presentation/ui_kit/text_field/debounced_text_field.dart';
 import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
 
@@ -42,11 +43,7 @@ class UsersListPage extends StatelessWidget {
             child: Scaffold(
                 backgroundColor: AppColors.background,
                 body: state.isLoading
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primaryBlue,
-                        ),
-                      )
+                    ? const ProjectProgressIndicator()
                     : state.isConnectionError
                         ? ConnectionErrorSection(
                             onButtonClicked: () => bloc.add(
