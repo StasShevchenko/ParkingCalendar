@@ -12,6 +12,18 @@ class PasswordDataSource {
     return true;
   }
 
+  Future<bool> forgotPasswordChange(
+      {required String newPassword,
+      required String repeatPassword,
+      required String key}) async {
+    await dio.post('/user/forgotPasswordChange', data: {
+      'newPassword': newPassword,
+      'repeat_newPassword': repeatPassword,
+      'key': key
+    });
+    return true;
+  }
+
   Future<bool> changePassword(
       {required String repeatPassword,
       required String newPassword,
@@ -24,6 +36,6 @@ class PasswordDataSource {
         'oldPassword': oldPassword
       },
     );
-    return false;
+    return true;
   }
 }

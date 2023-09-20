@@ -49,7 +49,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
             } on DioException {
               emit(state.copyWith(
                   isPasswordError: true,
-                  passwordErrorText: 'Слишком простой пароль!',
+                  passwordErrorText: 'Неверный старый пароль!',
                   isPasswordChangeLoading: false));
             }
           }

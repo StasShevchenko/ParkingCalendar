@@ -45,7 +45,7 @@ class NewPasswordMenuBody extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 32,),
-                Text('Введите старый пароль'),
+                const Text('Введите старый пароль'),
                 const SizedBox(height: 16,),
                 ObscuredTextField(
                   onChanged: (value) {

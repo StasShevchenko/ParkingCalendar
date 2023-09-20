@@ -17,9 +17,7 @@ class AuthRedirector extends StatelessWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         if (state.authStatus == AuthStatus.loading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center();
         } else if (state.authStatus == AuthStatus.unauthenticated) {
           Future(() {
             context.go(AppRoutes.initial);

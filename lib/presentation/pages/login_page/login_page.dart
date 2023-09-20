@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page_bloc/login_page_bloc.dart';
+import 'package:parking_project/presentation/ui_kit/progress_indicator/project_progress_indicator.dart';
 import 'package:parking_project/presentation/ui_kit/text_field/obscured_text_field.dart';
 import 'package:parking_project/utils/device_info.dart';
 
@@ -43,11 +44,12 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: BlocBuilder<LoginPageBloc, LoginPageState>(
         builder: (context, state) {
-
           //Redirection section
           final authStatus = context.watch<AuthCubit>().state.authStatus;
-          if(authStatus == AuthStatus.authenticated) {
-            Future((){context.go(AppRoutes.userHome);});
+          if (authStatus == AuthStatus.authenticated) {
+            Future(() {
+              context.go(AppRoutes.userHome);
+            });
           }
 
           bloc = context.read<LoginPageBloc>();
@@ -100,8 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 40,
                             ),
                             ConstrainedBox(
-                              constraints:
-                                  const BoxConstraints(maxWidth: 350),
+                              constraints: const BoxConstraints(maxWidth: 350),
                               // Login text field
                               child: TextField(
                                 textInputAction: TextInputAction.next,
@@ -128,13 +129,12 @@ class _LoginPageState extends State<LoginPage> {
                               height: 16,
                             ),
                             ConstrainedBox(
-                              constraints:
-                                  const BoxConstraints(maxWidth: 350),
+                              constraints: const BoxConstraints(maxWidth: 350),
                               // Password text field
                               child: ObscuredTextField(
                                 textInputAction: TextInputAction.done,
-                                onChanged: (value) => bloc.add(
-                                    PasswordEntered(passwordValue: value)),
+                                onChanged: (value) => bloc
+                                    .add(PasswordEntered(passwordValue: value)),
                                 controller: _passwordController,
                                 decoration: InputDecoration(
                                     prefixIconColor: AppColors.primaryBlue,
@@ -171,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                               constraints: const BoxConstraints(
                                   minWidth: 350, maxWidth: 350),
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   context.go('/loginPage/forgot_password');
                                 },
                                 child: const Text(
