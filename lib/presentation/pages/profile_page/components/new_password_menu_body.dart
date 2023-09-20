@@ -45,6 +45,21 @@ class NewPasswordMenuBody extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 32,),
+                Text('Введите старый пароль'),
+                const SizedBox(height: 16,),
+                ObscuredTextField(
+                  onChanged: (value) {
+                    bloc.add(PasswordEntered(value: value));
+                  },
+                  decoration: InputDecoration(
+                    label: const Text('Старый пароль'),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: AppColors.primaryBlue,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16,),
                 const Text('Введите ваш новый пароль (не менее 8 символов): '),
                 const SizedBox(
                   height: 16,

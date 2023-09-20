@@ -67,10 +67,10 @@ class ForgotPasswordBloc
           } else {
             emit(state.copyWith(isPasswordChangeLoading: true));
             try {
-              await passwordDataSource.changePassword(
-                  repeatPassword: state.password,
-                  newPassword: state.password,
-                  email: state.email);
+              // await passwordDataSource.changePassword(
+              //     repeatPassword: state.password,
+              //     newPassword: state.password,
+              //     email: state.email);
                 emit(state.copyWith(
                     isNewPasswordSaved: true, isPasswordChangeLoading: false));
             } on DioException {

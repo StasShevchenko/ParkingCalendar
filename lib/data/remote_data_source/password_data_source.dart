@@ -15,13 +15,13 @@ class PasswordDataSource {
   Future<bool> changePassword(
       {required String repeatPassword,
       required String newPassword,
-      required String email}) async {
+      required String oldPassword}) async {
     await dio.post(
       '/user/changePassword',
       data: {
         'newPassword': newPassword,
         'repeat_newPassword': repeatPassword,
-        'email': email
+        'oldPassword': oldPassword
       },
     );
     return false;
