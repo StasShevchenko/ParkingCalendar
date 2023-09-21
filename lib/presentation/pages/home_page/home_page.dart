@@ -34,7 +34,7 @@ class _UserHomePageState extends State<UserHomePage>
               bloc.add(PageRefreshed());
             });
           } else if (state.isLoading) {
-            return ProjectProgressIndicator();
+            return const ProjectProgressIndicator();
           } else {
             return DefaultTabController(
               length: userRoles.contains(Role.User) ? 2 : 1,
