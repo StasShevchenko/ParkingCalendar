@@ -86,6 +86,7 @@ class UserDetailPage extends StatelessWidget {
                   child: Text(
                     'Информация о сотруднике',
                     style: Theme.of(context).textTheme.titleMedium,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 backgroundColor: Colors.transparent,
@@ -114,7 +115,7 @@ class UserDetailPage extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      Text(
+                      SelectableText(
                         'Почта: ${state.userInfo!.email}',
                         style: userInfoStyle,
                       ),
