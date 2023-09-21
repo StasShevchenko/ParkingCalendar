@@ -49,7 +49,7 @@ class NewPasswordMenuBody extends StatelessWidget {
                 const SizedBox(height: 16,),
                 ObscuredTextField(
                   onChanged: (value) {
-                    bloc.add(PasswordEntered(value: value));
+                    bloc.add(OldPasswordEntered(value: value));
                   },
                   decoration: InputDecoration(
                     label: const Text('Старый пароль'),
