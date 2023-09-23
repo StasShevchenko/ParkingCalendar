@@ -183,9 +183,9 @@ class UsersListPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                floatingActionButton: !state.isConnectionError &&
-                            userInfo.roles.contains(Role.SuperAdmin) ||
-                        userInfo.roles.contains(Role.Admin)
+                floatingActionButton: !state.isLoading && !state.isConnectionError &&
+                    (userInfo.roles.contains(Role.SuperAdmin) ||
+                        userInfo.roles.contains(Role.Admin))
                     ? FloatingActionButton(
                         backgroundColor: AppColors.primaryBlue,
                         onPressed: () {
