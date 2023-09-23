@@ -28,6 +28,7 @@ class UserDataSource {
       UserInfo user = UserInfo.fromJson(userItem);
       users.add(user);
     }
+    users.sort((o1, o2) => o1.firstName.compareTo(o2.firstName));
     return users;
   }
 
