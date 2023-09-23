@@ -25,6 +25,17 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     init();
     on<HomePageEvent>((event, emit) async {
       switch (event) {
+        case QueueRefreshed _:
+          emit(state.copyWith(isQueueLoading: true));
+          final queueItems = await queueDataSource.getQueueItems(state.searchValue);
+          plainUsersList = mapToPlainUsers(queueItems);
+          sortPlainUsers(state.sortColumn, !state.isAscendingSort);
+          emit(
+            state.copyWith(
+                queueItems: queueItems,
+                isQueueLoading: false,
+                plainUsersList: plainUsersList),
+          );
         case PageRefreshed _:
           init();
         case SearchEntered searchEvent:

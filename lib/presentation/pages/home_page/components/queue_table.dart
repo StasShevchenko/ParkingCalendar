@@ -27,19 +27,22 @@ class QueueTable extends StatelessWidget {
     return BlocBuilder<HomePageBloc, HomePageState>(
       builder: (context, state) {
         final bloc = context.read<HomePageBloc>();
-        return SingleChildScrollView(
-          controller: controller,
+        return RefreshIndicator(
+          onRefresh: () async => bloc.add(QueueRefreshed()),
           child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              horizontalMargin: 16,
-              columnSpacing: 15,
-              border: const TableBorder(
-                  horizontalInside: BorderSide(color: Colors.white)),
-              sortAscending: state.isAscendingSort,
-              sortColumnIndex: state.sortColumn,
-              columns: getColumns(columnHeaders, bloc),
-              rows: getRows(state.plainUsersList),
+            controller: controller,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                horizontalMargin: 16,
+                columnSpacing: 15,
+                border: const TableBorder(
+                    horizontalInside: BorderSide(color: Colors.white)),
+                sortAscending: state.isAscendingSort,
+                sortColumnIndex: state.sortColumn,
+                columns: getColumns(columnHeaders, bloc),
+                rows: getRows(state.plainUsersList),
+              ),
             ),
           ),
         );
@@ -93,12 +96,12 @@ class QueueTable extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 180),
               child: data.toString().contains('@')
                   ? SelectableText(
-                    data,
-                    style: TextStyle(
-                        color: isActive
-                            ? AppColors.primaryWhite
-                            : AppColors.secondaryBlue),
-                  )
+                      data,
+                      style: TextStyle(
+                          color: isActive
+                              ? AppColors.primaryWhite
+                              : AppColors.secondaryBlue),
+                    )
                   : Text(
                       data,
                       softWrap: true,

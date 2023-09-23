@@ -5,7 +5,6 @@ import 'package:parking_project/presentation/pages/home_page/components/queue_se
 import 'package:parking_project/presentation/pages/home_page/home_page_bloc/home_page_bloc.dart';
 import 'package:parking_project/presentation/ui_kit/progress_indicator/project_progress_indicator.dart';
 import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
-import 'package:parking_project/presentation/ui_kit/utils/swipe_to_refresh_container.dart';
 
 import '../../../assets/colors/app_colors.dart';
 import '../../../utils/roles.dart';
@@ -38,79 +37,76 @@ class _UserHomePageState extends State<UserHomePage>
           } else {
             return DefaultTabController(
               length: userRoles.contains(Role.User) ? 2 : 1,
-              child: SwipeToRefreshContainer(
-                onRefresh: () => bloc.add(PageRefreshed()),
-                child: Scaffold(
-                  backgroundColor: AppColors.background,
-                  appBar: MediaQuery.of(context).size.width < 880 &&
-                          userRoles.contains(Role.User)
-                      ? AppBar(
-                          surfaceTintColor: Colors.transparent,
-                          backgroundColor: AppColors.primaryBlue,
-                          toolbarHeight: 0,
-                          bottom: TabBar(
-                            indicatorColor: AppColors.primaryWhite,
-                            labelColor: AppColors.primaryWhite,
-                            unselectedLabelColor: Colors.grey,
-                            tabs: const [
-                              Tab(
-                                text: 'Календарь',
-                              ),
-                              Tab(text: 'Очередь')
-                            ],
-                          ),
-                        )
-                      : null,
-                  body: MediaQuery.of(context).size.width < 880
-                      ? TabBarView(
-                          children: [
-                            if (userRoles.contains(Role.User))
-                              CalendarSection(
+              child: Scaffold(
+                backgroundColor: AppColors.background,
+                appBar: MediaQuery.of(context).size.width < 880 &&
+                        userRoles.contains(Role.User)
+                    ? AppBar(
+                        surfaceTintColor: Colors.transparent,
+                        backgroundColor: AppColors.primaryBlue,
+                        toolbarHeight: 0,
+                        bottom: TabBar(
+                          indicatorColor: AppColors.primaryWhite,
+                          labelColor: AppColors.primaryWhite,
+                          unselectedLabelColor: Colors.grey,
+                          tabs: const [
+                            Tab(
+                              text: 'Календарь',
+                            ),
+                            Tab(text: 'Очередь')
+                          ],
+                        ),
+                      )
+                    : null,
+                body: MediaQuery.of(context).size.width < 880
+                    ? TabBarView(
+                        children: [
+                          if (userRoles.contains(Role.User))
+                            CalendarSection(
+                              userInfo: state.userInfo!,
+                            ),
+                          QueueSection(
+                              isLoading: state.isQueueLoading,
+                              onSearchEntered: (value) {
+                                bloc.add(SearchEntered(searchQuery: value));
+                              },
+                              queueItems: state.queueItems!),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (userRoles.contains(Role.User))
+                            Expanded(
+                              flex: 2,
+                              child: CalendarSection(
                                 userInfo: state.userInfo!,
                               ),
-                            QueueSection(
-                                isLoading: state.isQueueLoading,
-                                onSearchEntered: (value) {
-                                  bloc.add(SearchEntered(searchQuery: value));
-                                },
-                                queueItems: state.queueItems!),
-                          ],
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (userRoles.contains(Role.User))
-                              Expanded(
-                                flex: 2,
-                                child: CalendarSection(
-                                  userInfo: state.userInfo!,
-                                ),
-                              ),
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 32.0, top: 16.0),
-                                child: Center(
-                                  child: ConstrainedBox(
-                                    constraints:
-                                        const BoxConstraints(maxWidth: 800),
-                                    child: QueueSection(
-                                      isLoading: state.isQueueLoading,
-                                      onSearchEntered: (value) {
-                                        bloc.add(
-                                          SearchEntered(searchQuery: value),
-                                        );
-                                      },
-                                      queueItems: state.queueItems!,
-                                    ),
+                            ),
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 32.0, top: 16.0),
+                              child: Center(
+                                child: ConstrainedBox(
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 800),
+                                  child: QueueSection(
+                                    isLoading: state.isQueueLoading,
+                                    onSearchEntered: (value) {
+                                      bloc.add(
+                                        SearchEntered(searchQuery: value),
+                                      );
+                                    },
+                                    queueItems: state.queueItems!,
                                   ),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                ),
+                            ),
+                          )
+                        ],
+                      ),
               ),
             );
           }
