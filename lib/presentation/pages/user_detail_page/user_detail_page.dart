@@ -90,6 +90,7 @@ class UserDetailPage extends StatelessWidget {
                   ),
                 ),
                 backgroundColor: Colors.transparent,
+                titleSpacing: 0,
                 leading: DeviceOS.isMobileDevice
                     ? IconButton(
                         icon: Icon(
