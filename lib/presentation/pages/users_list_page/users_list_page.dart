@@ -85,7 +85,7 @@ class UsersListPage extends StatelessWidget {
                                     ),
                                     child: Wrap(
                                       spacing: 8,
-                                      runSpacing: 16,
+                                      runSpacing: 8,
                                       children: [
                                         RoleChip(
                                             isSelected: state.toggledRoles
