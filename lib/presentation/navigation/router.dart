@@ -33,21 +33,21 @@ final goRouter = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRoutes.userHome,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: AuthRedirector(child: UserHomePage()),
-              ),
-              routes: [
-                GoRoute(
-                  path: AppRoutes.queueDetails,
-                  name: 'queue_details',
-                  pageBuilder: (context, state) => NoTransitionPage(
-                    child:
-                    UserDetailPage(userId: state.pathParameters['userId']),
-                  ),
-                )
-              ]
-            )
+                path: AppRoutes.userHome,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                      child: AuthRedirector(child: UserHomePage()),
+                    ),
+                routes: [
+                  GoRoute(
+                    path: AppRoutes.queueDetails,
+                    name: 'queue_details',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      child: AuthRedirector(
+                          child: UserDetailPage(
+                              userId: state.pathParameters['userId'])),
+                    ),
+                  )
+                ])
           ],
         ),
         StatefulShellBranch(
@@ -68,12 +68,13 @@ final goRouter = GoRouter(
                   path: AppRoutes.userDetails,
                   name: 'user_details',
                   pageBuilder: (context, state) => NoTransitionPage(
-                    child:
-                        UserDetailPage(userId: state.pathParameters['userId']),
+                    child: AuthRedirector(
+                        child: UserDetailPage(
+                            userId: state.pathParameters['userId'])),
                   ),
                 )
               ],
-              path: AppRoutes.superAdminAdminsList,
+              path: AppRoutes.usersList,
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: AuthRedirector(child: UsersListPage()),
               ),
