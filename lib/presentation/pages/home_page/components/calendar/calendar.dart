@@ -18,6 +18,7 @@ class Calendar extends StatelessWidget {
     return TableCalendar(
       daysOfWeekHeight: 32,
       locale: 'ru',
+      startingDayOfWeek: StartingDayOfWeek.monday,
       headerStyle: const HeaderStyle(
           titleCentered: true,
           formatButtonVisible: false,
