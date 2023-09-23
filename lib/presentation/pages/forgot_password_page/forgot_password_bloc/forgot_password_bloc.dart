@@ -58,7 +58,7 @@ class ForgotPasswordBloc
           if (isPasswordError) {
             emit(state.copyWith(
                 isPasswordError: true,
-                passwordErrorText: 'Длина не меньше 8 символов!',
+                passwordErrorText: 'Пароль должен содержать не менее 8 символов!',
                 isPasswordChangeLoading: false));
           } else if (state.password != state.repeatPassword) {
             emit(state.copyWith(
