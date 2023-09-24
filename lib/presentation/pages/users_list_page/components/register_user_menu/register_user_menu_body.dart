@@ -44,7 +44,8 @@ class RegisterUserMenuBody extends StatelessWidget {
                 builder: (context) {
                   return const FailureDialog(
                     description:
-                        'Возможно, пользователь уже был зарегистрирован ранее.',
+                        'Возможно, пользователь с данным почтовым адресом уже был '
+                        'зарегистрирован ранее. Также проверьте ваше подключение к интернету!',
                   );
                 },
               );

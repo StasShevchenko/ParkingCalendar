@@ -1,6 +1,5 @@
 part of 'forgot_password_bloc.dart';
 
-
 class ForgotPasswordState {
   final String email;
   final bool isEmailError;
@@ -11,6 +10,7 @@ class ForgotPasswordState {
   final bool isPasswordError;
   final String repeatPassword;
   final bool isEmailResultLoading;
+  final bool isConnectionError;
   final String passwordErrorText;
   final bool isPasswordChangeLoading;
   final ForgotPasswordLocation currentLocation;
@@ -21,6 +21,7 @@ class ForgotPasswordState {
     this.isCodeError = false,
     this.password = '',
     this.passwordErrorText = '',
+    this.isConnectionError = false,
     this.repeatPassword = '',
     this.currentLocation = ForgotPasswordLocation.EnterEmail,
     this.isPasswordError = false,
@@ -39,6 +40,7 @@ class ForgotPasswordState {
     bool? isEmailResultLoading,
     bool? isPasswordError,
     bool? isCodeResultLoading,
+    bool? isConnectionError,
     bool? isPasswordChangeLoading,
     String? passwordErrorText,
     String? repeatPassword,
@@ -54,6 +56,7 @@ class ForgotPasswordState {
       isPasswordChangeLoading:
           isPasswordChangeLoading ?? this.isPasswordChangeLoading,
       isCodeResultLoading: isCodeResultLoading ?? this.isCodeResultLoading,
+      isConnectionError: isConnectionError ?? this.isConnectionError,
       isPasswordError: isPasswordError ?? this.isPasswordError,
       isNewPasswordSaved: isNewPasswordSaved ?? this.isNewPasswordSaved,
       email: email ?? this.email,

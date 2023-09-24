@@ -112,6 +112,15 @@ class ForgotPasswordPage extends StatelessWidget {
                                         ),
                                     },
                                   ),
+                            if (state.isConnectionError)...{
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              const Text(
+                                'Ошибка соединения! Проверьте ваше подключение к интернету!',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            },
                             const SizedBox(
                               height: 8,
                             ),

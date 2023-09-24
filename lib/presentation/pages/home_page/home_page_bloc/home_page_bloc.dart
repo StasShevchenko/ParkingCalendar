@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
@@ -22,43 +24,55 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
   HomePageBloc({required this.user}) : super(HomePageState()) {
     //init bloc
-    init();
+    _init();
     on<HomePageEvent>((event, emit) async {
-      switch (event) {
-        case QueueRefreshed _:
-          emit(state.copyWith(isQueueLoading: true));
-          final queueItems = await queueDataSource.getQueueItems(state.searchValue);
-          plainUsersList = mapToPlainUsers(queueItems);
-          sortPlainUsers(state.sortColumn, !state.isAscendingSort);
-          emit(
-            state.copyWith(
-                queueItems: queueItems,
-                isQueueLoading: false,
-                plainUsersList: plainUsersList),
-          );
-        case PageRefreshed _:
-          init();
-        case SearchEntered searchEvent:
-          emit(state.copyWith(isQueueLoading: true));
-          final queueItems =
-              await queueDataSource.getQueueItems(searchEvent.searchQuery);
-          plainUsersList = mapToPlainUsers(queueItems);
-          sortPlainUsers(state.sortColumn, !state.isAscendingSort);
-          emit(
-            state.copyWith(
-                queueItems: queueItems,
-                isQueueLoading: false,
-                plainUsersList: plainUsersList),
-          );
-        case ToggleClicked toggleEvent:
-          emit(state.copyWith(toggleSelection: toggleEvent.chosenView));
-        case SortSelected sortEvent:
-          final isAscending = !sortEvent.isAscending;
-          sortPlainUsers(sortEvent.sortField, isAscending);
+      try {
+        switch (event) {
+          case QueueRefreshed _:
+            emit(state.copyWith(isQueueLoading: true));
+            final queueItems =
+                await queueDataSource.getQueueItems(state.searchValue);
+            plainUsersList = mapToPlainUsers(queueItems);
+            sortPlainUsers(state.sortColumn, !state.isAscendingSort);
+            emit(
+              state.copyWith(
+                  queueItems: queueItems,
+                  isQueueLoading: false,
+                  plainUsersList: plainUsersList),
+            );
+          case PageRefreshed _:
+            _init();
+          case SearchEntered searchEvent:
+            emit(state.copyWith(isQueueLoading: true));
+            final queueItems =
+                await queueDataSource.getQueueItems(searchEvent.searchQuery);
+            plainUsersList = mapToPlainUsers(queueItems);
+            sortPlainUsers(state.sortColumn, !state.isAscendingSort);
+            emit(
+              state.copyWith(
+                  queueItems: queueItems,
+                  isQueueLoading: false,
+                  plainUsersList: plainUsersList),
+            );
+          case ToggleClicked toggleEvent:
+            emit(state.copyWith(toggleSelection: toggleEvent.chosenView));
+          case SortSelected sortEvent:
+            final isAscending = !sortEvent.isAscending;
+            sortPlainUsers(sortEvent.sortField, isAscending);
+            emit(state.copyWith(
+                sortColumn: sortEvent.sortField,
+                plainUsersList: plainUsersList,
+                isAscendingSort: sortEvent.isAscending));
+        }
+      } on DioException catch (exception) {
+        if (exception.type == DioExceptionType.connectionTimeout ||
+            exception.error is SocketException ||
+            exception.type == DioExceptionType.connectionError) {
           emit(state.copyWith(
-              sortColumn: sortEvent.sortField,
-              plainUsersList: plainUsersList,
-              isAscendingSort: sortEvent.isAscending));
+              isConnectionError: true,
+              isLoading: false,
+              isQueueLoading: false));
+        }
       }
     });
   }
@@ -88,7 +102,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
-  void init() async {
+  void _init() async {
     try {
       emit(state.copyWith(isLoading: true, isConnectionError: false));
       final userInfo = await userDataSource.getUserById(user.id);
@@ -102,8 +116,13 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             isConnectionError: false,
             plainUsersList: plainUsersList),
       );
-    } on DioException {
-      emit(state.copyWith(isLoading: false, isConnectionError: true));
+    } on DioException catch (exception) {
+      if (exception.type == DioExceptionType.connectionTimeout ||
+          exception.error is SocketException ||
+          exception.type == DioExceptionType.connectionError) {
+        emit(state.copyWith(
+            isConnectionError: true, isLoading: false, isQueueLoading: false));
+      }
     }
   }
 
