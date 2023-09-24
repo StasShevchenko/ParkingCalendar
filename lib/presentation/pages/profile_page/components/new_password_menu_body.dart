@@ -32,112 +32,114 @@ class NewPasswordMenuBody extends StatelessWidget {
       },
       builder: (context, state) {
         final bloc = context.read<ResetPasswordBloc>();
-        return Padding(
-          padding: DeviceScreen.get(context) == FormFactorType.Mobile
-              ? const EdgeInsets.all(32.0)
-              : const EdgeInsets.all(0),
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Новый пароль',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 32,),
-                const Text('Введите старый пароль'),
-                const SizedBox(height: 16,),
-                ObscuredTextField(
-                  onChanged: (value) {
-                    bloc.add(OldPasswordEntered(value: value));
-                  },
-                  decoration: InputDecoration(
-                    label: const Text('Старый пароль'),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: AppColors.primaryBlue,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16,),
-                const Text('Введите ваш новый пароль (не менее 8 символов): '),
-                const SizedBox(
-                  height: 16,
-                ),
-                ObscuredTextField(
-                  onChanged: (value) {
-                    bloc.add(PasswordEntered(value: value));
-                  },
-                  decoration: InputDecoration(
-                    label: const Text('Новый пароль'),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: AppColors.primaryBlue,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                ObscuredTextField(
-                  onChanged: (value) {
-                    bloc.add(RepeatPasswordEntered(value: value));
-                  },
-                  decoration: InputDecoration(
-                    label: const Text('Подтверждение пароля'),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: AppColors.primaryBlue,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                if (state.isPasswordError)
+        return SingleChildScrollView(
+          child: Padding(
+            padding: DeviceScreen.get(context) == FormFactorType.Mobile
+                ? const EdgeInsets.all(32.0)
+                : const EdgeInsets.all(0),
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   Text(
-                    state.passwordErrorText,
-                    style: const TextStyle(color: Colors.red),
+                    'Новый пароль',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Center(
-                  child: Flex(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    verticalDirection: VerticalDirection.up,
-                    crossAxisAlignment:
-                    DeviceScreen.get(context) == FormFactorType.Mobile
-                        ? CrossAxisAlignment.stretch
-                        : CrossAxisAlignment.center,
-                    direction:
-                    DeviceScreen.get(context) == FormFactorType.Mobile
-                        ? Axis.vertical
-                        : Axis.horizontal,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          context.pop();
-                        },
-                        child: const Text('Отмена'),
+                  const SizedBox(height: 32,),
+                  const Text('Введите старый пароль'),
+                  const SizedBox(height: 16,),
+                  ObscuredTextField(
+                    onChanged: (value) {
+                      bloc.add(OldPasswordEntered(value: value));
+                    },
+                    decoration: InputDecoration(
+                      label: const Text('Старый пароль'),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: AppColors.primaryBlue,
                       ),
-                      const SizedBox(
-                        width: 8,
-                        height: 16,
-                      ),
-                      LoaderButton(
-                        onPressed: () {
-                          bloc.add(SavePasswordClicked());
-                        },
-                        isLoading: state.isPasswordChangeLoading,
-                        minWidth: 123,
-                        child: const Text('Сохранить'),
-                      )
-                    ],
+                    ),
                   ),
-                )
-              ],
-            ),
+                  const SizedBox(height: 16,),
+                  const Text('Введите ваш новый пароль (не менее 8 символов): '),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ObscuredTextField(
+                    onChanged: (value) {
+                      bloc.add(PasswordEntered(value: value));
+                    },
+                    decoration: InputDecoration(
+                      label: const Text('Новый пароль'),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: AppColors.primaryBlue,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ObscuredTextField(
+                    onChanged: (value) {
+                      bloc.add(RepeatPasswordEntered(value: value));
+                    },
+                    decoration: InputDecoration(
+                      label: const Text('Подтверждение пароля'),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: AppColors.primaryBlue,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  if (state.isPasswordError || state.isConnectionError)
+                    Text(
+                      state.isConnectionError ? 'Время запроса истекло! Проверьте ваше подключение к интернету!' : state.passwordErrorText,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Center(
+                    child: Flex(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      verticalDirection: VerticalDirection.up,
+                      crossAxisAlignment:
+                      DeviceScreen.get(context) == FormFactorType.Mobile
+                          ? CrossAxisAlignment.stretch
+                          : CrossAxisAlignment.center,
+                      direction:
+                      DeviceScreen.get(context) == FormFactorType.Mobile
+                          ? Axis.vertical
+                          : Axis.horizontal,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            context.pop();
+                          },
+                          child: const Text('Отмена'),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                          height: 16,
+                        ),
+                        LoaderButton(
+                          onPressed: () {
+                            bloc.add(SavePasswordClicked());
+                          },
+                          isLoading: state.isPasswordChangeLoading,
+                          minWidth: 123,
+                          child: const Text('Сохранить'),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+          ),
         );
       },
     );

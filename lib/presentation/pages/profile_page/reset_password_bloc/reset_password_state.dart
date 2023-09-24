@@ -5,6 +5,7 @@ class ResetPasswordState {
   final String repeatPassword;
   final String oldPassword;
   final bool isPasswordError;
+  final bool isConnectionError;
   final String passwordErrorText;
   final bool isPasswordChangeLoading;
   final int isPasswordChanged;
@@ -13,6 +14,7 @@ class ResetPasswordState {
     this.password = '',
     this.isPasswordError = false,
     this.repeatPassword = '',
+    this.isConnectionError = false,
     this.passwordErrorText = '',
     this.oldPassword = '',
     this.isPasswordChangeLoading = false,
@@ -26,6 +28,7 @@ class ResetPasswordState {
     bool? isPasswordError,
     String? oldPassword,
     bool? isPasswordChangeLoading,
+    bool? isConnectionError,
     int? isPasswordChanged,
   }) {
     return ResetPasswordState(
@@ -33,6 +36,7 @@ class ResetPasswordState {
         passwordErrorText: passwordErrorText ?? this.passwordErrorText,
         password: password ?? this.password,
         oldPassword: oldPassword ?? this.oldPassword,
+        isConnectionError: isConnectionError ?? this.isConnectionError,
         isPasswordChangeLoading:
             isPasswordChangeLoading ?? this.isPasswordChangeLoading,
         isPasswordError: isPasswordError ?? this.isPasswordError,
