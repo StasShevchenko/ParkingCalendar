@@ -177,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                                     minWidth: 350, maxWidth: 350),
                                 child: InkWell(
                                   onTap: () {
-                                    context.go('/loginPage/forgot_password');
+                                    context.go('/forgot_password');
                                   },
                                   child: const Text(
                                     'Забыли пароль?',
