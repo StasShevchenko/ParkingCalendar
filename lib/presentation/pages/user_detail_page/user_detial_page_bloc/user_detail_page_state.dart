@@ -34,7 +34,6 @@ class UserDetailPageState {
         connectionError: connectionError ?? this.connectionError,
         isAdminRoleChangeLoading:
             isAdminRoleChangeLoading ?? this.isAdminRoleChangeLoading,
-        isUserRoleChangeLoading:
-            isUserRoleChangeLoading ?? this.isUserRoleChangeLoading);
+        isUserRoleChangeLoading: isUserRoleChangeLoading);
   }
 }
