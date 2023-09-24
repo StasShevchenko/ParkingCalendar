@@ -6,7 +6,7 @@ class HomePageState {
   final bool isLoading;
   final bool isQueueLoading;
   final bool isConnectionError;
-  final String? searchValue;
+  final String searchValue;
   final Set<QueueViewType> toggleSelection;
   final int sortColumn;
   final bool isAscendingSort;
@@ -18,7 +18,7 @@ class HomePageState {
       this.isQueueLoading = false,
       this.isLoading = true,
       this.isConnectionError = false,
-      this.searchValue,
+      this.searchValue = '',
       this.toggleSelection = const {QueueViewType.ListView},
       this.sortColumn = 3,
       this.isAscendingSort = false,

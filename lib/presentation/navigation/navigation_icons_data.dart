@@ -29,11 +29,11 @@ final userIcons = [
       selectedIcon: Icon(Icons.home, color: AppColors.primaryWhite),
       label: 'Очередь',
       index: 0),
-  NavigationDestinationDataHolder(
-      icon: Icon(Icons.message, color: AppColors.primaryBlue),
-      selectedIcon: Icon(Icons.message, color: AppColors.primaryWhite),
-      label: 'Запросы',
-      index: 1),
+  // NavigationDestinationDataHolder(
+  //     icon: Icon(Icons.message, color: AppColors.primaryBlue),
+  //     selectedIcon: Icon(Icons.message, color: AppColors.primaryWhite),
+  //     label: 'Запросы',
+  //     index: 1),
 ];
 
 final adminIcons = [

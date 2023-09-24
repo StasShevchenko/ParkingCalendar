@@ -85,7 +85,7 @@ class UsersListPage extends StatelessWidget {
                                     ),
                                     child: Wrap(
                                       spacing: 8,
-                                      runSpacing: 16,
+                                      runSpacing: 8,
                                       children: [
                                         RoleChip(
                                             isSelected: state.toggledRoles
@@ -170,7 +170,7 @@ class UsersListPage extends StatelessWidget {
                                                                   .id
                                                                   .toString();
                                                           context.go(
-                                                              '/admins_list/details/$userId');
+                                                              '/users_list/details/$userId');
                                                         },
                                                         user: usersList[index],
                                                       );
@@ -183,9 +183,9 @@ class UsersListPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                floatingActionButton: !state.isConnectionError &&
-                            userInfo.roles.contains(Role.SuperAdmin) ||
-                        userInfo.roles.contains(Role.Admin)
+                floatingActionButton: !state.isLoading && !state.isConnectionError &&
+                    (userInfo.roles.contains(Role.SuperAdmin) ||
+                        userInfo.roles.contains(Role.Admin))
                     ? FloatingActionButton(
                         backgroundColor: AppColors.primaryBlue,
                         onPressed: () {

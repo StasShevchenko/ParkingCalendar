@@ -6,6 +6,8 @@ sealed class HomePageEvent {}
 
 class PageRefreshed extends HomePageEvent{}
 
+class QueueRefreshed extends HomePageEvent{}
+
 class SearchEntered extends HomePageEvent{
   final String searchQuery;
   SearchEntered({required this.searchQuery});

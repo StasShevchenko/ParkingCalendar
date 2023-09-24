@@ -23,6 +23,7 @@ class QueueDataSource {
         final userInfo = UserInfo.fromJson(user);
         dataHolder.users.add(userInfo);
       }
+      dataHolder.users.sort((o1, o2) => o1.firstName.compareTo(o2.secondName));
       dataHoldersList.add(dataHolder);
     }
     return dataHoldersList;
