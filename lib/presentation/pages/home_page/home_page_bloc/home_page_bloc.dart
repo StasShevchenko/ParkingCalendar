@@ -24,7 +24,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
   HomePageBloc({required this.user}) : super(HomePageState()) {
     //init bloc
-    init();
+    _init();
     on<HomePageEvent>((event, emit) async {
       try {
         switch (event) {
@@ -41,7 +41,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
                   plainUsersList: plainUsersList),
             );
           case PageRefreshed _:
-            init();
+            _init();
           case SearchEntered searchEvent:
             emit(state.copyWith(isQueueLoading: true));
             final queueItems =
@@ -102,7 +102,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
-  void init() async {
+  void _init() async {
     try {
       emit(state.copyWith(isLoading: true, isConnectionError: false));
       final userInfo = await userDataSource.getUserById(user.id);
