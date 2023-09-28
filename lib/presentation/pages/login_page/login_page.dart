@@ -137,7 +137,10 @@ class _LoginPageState extends State<LoginPage> {
                                     const BoxConstraints(maxWidth: 350),
                                 // Password text field
                                 child: ObscuredTextField(
-                                  textInputAction: TextInputAction.done,
+                                  textInputAction: TextInputAction.go,
+                                  onSubmitted: (value){
+                                    bloc.add(LoginButtonPressed());
+                                  },
                                   onChanged: (value) => bloc.add(
                                       PasswordEntered(passwordValue: value)),
                                   controller: _passwordController,
