@@ -7,6 +7,7 @@ class ObscuredTextField extends TextField {
     super.key,
     super.onChanged,
     super.decoration,
+    super.onSubmitted,
     super.controller,
     super.textInputAction,
   });
@@ -23,6 +24,7 @@ class _ObscuredTextFieldState extends State<ObscuredTextField> {
     return TextField(
       textInputAction: widget.textInputAction,
       obscureText: !_isVisible,
+      onSubmitted: widget.onSubmitted,
       onTapOutside: (_) => FocusScope.of(context).unfocus(),
       controller: widget.controller,
       onChanged: (value) {
