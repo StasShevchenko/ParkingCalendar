@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_project/presentation/navigation/app_destinations.dart';
 import 'package:parking_project/presentation/navigation/auth_redirector.dart';
+import 'package:parking_project/presentation/pages/home_page/home_page.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page.dart';
 import 'package:parking_project/presentation/pages/profile_page/profile_page.dart';
 import 'package:parking_project/presentation/pages/user_detail_page/user_detail_page.dart';
 import 'package:parking_project/presentation/pages/users_list_page/users_list_page.dart';
-import 'package:parking_project/presentation/pages/home_page/home_page.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
 
 import '../auth_cubit/auth_cubit.dart';
@@ -23,10 +23,12 @@ final goRouter = GoRouter(
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return ScaffoldWithNestedNavigation(
-          navigationShell: navigationShell,
-          navigationDestinations: AppDestinations.getDestinations(
-              context.watch<AuthCubit>().state.userData),
+        return AuthRedirector(
+          child: ScaffoldWithNestedNavigation(
+            navigationShell: navigationShell,
+            navigationDestinations: AppDestinations.getDestinations(
+                context.watch<AuthCubit>().state.userData),
+          ),
         );
       },
       branches: [
@@ -35,16 +37,15 @@ final goRouter = GoRouter(
             GoRoute(
                 path: AppRoutes.userHome,
                 pageBuilder: (context, state) => const NoTransitionPage(
-                      child: AuthRedirector(child: UserHomePage()),
+                      child: UserHomePage(),
                     ),
                 routes: [
                   GoRoute(
                     path: AppRoutes.queueDetails,
                     name: 'queue_details',
                     pageBuilder: (context, state) => NoTransitionPage(
-                      child: AuthRedirector(
-                          child: UserDetailPage(
-                              userId: state.pathParameters['userId'])),
+                      child: UserDetailPage(
+                          userId: state.pathParameters['userId']),
                     ),
                   )
                 ])
@@ -55,7 +56,7 @@ final goRouter = GoRouter(
             GoRoute(
               path: AppRoutes.userRequests,
               pageBuilder: (context, state) => const NoTransitionPage(
-                child: AuthRedirector(child: RequestPage()),
+                child: RequestPage(),
               ),
             ),
           ],
@@ -68,15 +69,14 @@ final goRouter = GoRouter(
                   path: AppRoutes.userDetails,
                   name: 'user_details',
                   pageBuilder: (context, state) => NoTransitionPage(
-                    child: AuthRedirector(
-                        child: UserDetailPage(
-                            userId: state.pathParameters['userId'])),
+                    child: UserDetailPage(
+                        userId: state.pathParameters['userId']),
                   ),
                 )
               ],
               path: AppRoutes.usersList,
               pageBuilder: (context, state) => const NoTransitionPage(
-                child: AuthRedirector(child: UsersListPage()),
+                child: UsersListPage(),
               ),
             )
           ],
@@ -88,7 +88,7 @@ final goRouter = GoRouter(
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: SafeArea(
                   child: Center(
-                    child: AuthRedirector(child: ProfilePage()),
+                    child: ProfilePage(),
                   ),
                 ),
               ),
