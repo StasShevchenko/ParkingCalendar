@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_project/data/models/user_info.dart';
-
+import 'package:parking_project/presentation/ui_kit/utils/user_avatar.dart';
 
 class QueueItem extends StatelessWidget {
   final UserInfo userInfo;
+
   const QueueItem({super.key, required this.userInfo});
 
   @override
@@ -19,13 +20,24 @@ class QueueItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                '${userInfo.firstName} ${userInfo.secondName}',
-                style: const TextStyle(
-                  fontSize: 16
-                ),
+              Row(
+                children: [
+                  UserAvatar(
+                    avatarPath: userInfo.avatar,
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Text(
+                    '${userInfo.firstName} ${userInfo.secondName}',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ],
               ),
-              Text(userInfo.email, textAlign: TextAlign.end,)
+              Text(
+                userInfo.email,
+                textAlign: TextAlign.end,
+              )
             ],
           ),
         ),
