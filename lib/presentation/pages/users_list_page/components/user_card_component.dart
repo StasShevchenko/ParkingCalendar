@@ -42,10 +42,12 @@ class UserGridItemState extends State<UserGridItem> {
                     avatarPath: widget.user.avatar,
                   ),
                   const SizedBox(width: 16,),
-                  Text(
-                    '${widget.user.firstName} ${widget.user.secondName}',
-                    style: const TextStyle(fontSize: 16),
-                    textAlign: TextAlign.left,
+                  Expanded(
+                    child: Text(
+                      '${widget.user.firstName} ${widget.user.secondName}',
+                      style: const TextStyle(fontSize: 16),
+                      textAlign: TextAlign.left,
+                    ),
                   ),
                 ],
               ),
