@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/presentation/pages/profile_page/components/adaptive_new_password_menu.dart';
+import 'package:parking_project/presentation/pages/profile_page/components/choose_avatar/choose_avatar_dialog.dart';
 import 'package:parking_project/presentation/pages/profile_page/reset_password_bloc/reset_password_bloc.dart';
+import 'package:parking_project/presentation/ui_kit/utils/user_avatar.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../assets/colors/app_colors.dart';
@@ -41,10 +43,23 @@ class ProfilePage extends StatelessWidget {
                         const SizedBox(
                           height: 24,
                         ),
-                        Text(
-                          'Рады вас видеть, ${userInfo.firstName}!',
-                          style: const TextStyle(fontSize: 16),
-                          textAlign: TextAlign.center,
+                        Row(
+                          children: [
+                            UserAvatar(
+                              avatarPath: userInfo.avatar,
+                              onClick: (){
+                                showChooseAvatarDialog(context);
+                              },
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              'Рады вас видеть, ${userInfo.firstName}!',
+                              style: const TextStyle(fontSize: 16),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                         const SizedBox(
                           height: 16,

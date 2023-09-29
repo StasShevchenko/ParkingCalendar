@@ -25,7 +25,7 @@ class User {
       changePassword: json['changePassword'],
       firstName: json['first_name'],
       avatar: json['avatar'] != null
-          ? 'https://back.parking-project.ru/static/${json['avatar']}'
+          ? 'https://back.parking-project.ru/static/${json['avatar'].trim()}'
           : null,
       secondName: json['second_name'],
       roles: [
