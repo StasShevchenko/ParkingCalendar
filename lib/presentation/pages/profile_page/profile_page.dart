@@ -45,11 +45,11 @@ class ProfilePage extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            UserAvatar(
-                              avatarPath: userInfo.avatar,
-                              onClick: (){
-                                showChooseAvatarDialog(context);
-                              },
+                            InkWell(
+                              onTap: () => showChooseAvatarDialog(context),
+                              child: UserAvatar(
+                                avatarPath: userInfo.avatar,
+                              ),
                             ),
                             const SizedBox(
                               width: 8,

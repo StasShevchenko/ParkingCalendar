@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parking_project/presentation/ui_kit/utils/user_avatar.dart';
 
 import '../../../../assets/colors/app_colors.dart';
 import '../../../../data/models/user_info.dart';
@@ -37,6 +38,10 @@ class UserGridItemState extends State<UserGridItem> {
             children: [
               Row(
                 children: [
+                  UserAvatar(
+                    avatarPath: widget.user.avatar,
+                  ),
+                  const SizedBox(width: 16,),
                   Text(
                     '${widget.user.firstName} ${widget.user.secondName}',
                     style: const TextStyle(fontSize: 16),
@@ -46,7 +51,7 @@ class UserGridItemState extends State<UserGridItem> {
               ),
               if (widget.user.isStaff && !widget.user.isSuperUser) ...{
                 const SizedBox(
-                  height: 4.0,
+                  height: 8.0,
                 ),
                 const Text(
                   'Администратор',
@@ -54,7 +59,7 @@ class UserGridItemState extends State<UserGridItem> {
                 ),
               } else if (widget.user.isSuperUser) ...{
                 const SizedBox(
-                  height: 4.0,
+                  height: 8.0,
                 ),
                 const Text(
                   'Старший администратор',
