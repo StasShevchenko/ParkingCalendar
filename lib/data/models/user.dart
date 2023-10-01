@@ -7,6 +7,7 @@ class User {
   final String firstName;
   final String secondName;
   final bool changePassword;
+  final String? avatar;
 
   User(
       {required this.email,
@@ -14,6 +15,7 @@ class User {
       required this.secondName,
       required this.id,
       required this.changePassword,
+      required this.avatar,
       required this.roles});
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,9 @@ class User {
       id: json['id'],
       changePassword: json['changePassword'],
       firstName: json['first_name'],
+      avatar: json['avatar'] != null
+          ? 'https://back.parking-project.ru/static/${json['avatar'].trim()}'
+          : null,
       secondName: json['second_name'],
       roles: [
         if (json['in_queue'] ?? false) Role.User,

@@ -12,6 +12,7 @@ class UserInfo {
   final bool isStaff;
   final bool isUser;
   final bool isActive;
+  final String? avatar;
 
   UserInfo(
       {required this.email,
@@ -22,6 +23,7 @@ class UserInfo {
       this.startDate,
       this.endDate,
       this.lastActiveDate,
+      this.avatar,
       this.isSuperUser = false,
       required this.isUser,
       required this.isActive});
@@ -39,6 +41,9 @@ class UserInfo {
       lastActiveDate: json['last_active_period'] != null
           ? DateTime.parse(json['last_active_period'])
           : null,
+      avatar: json['avatar'] != null
+          ? 'https://back.parking-project.ru/static/${json['avatar'].trim()}'
+          : null,
       isActive: json['active'] ?? false,
       isSuperUser: json['is_superuser'] ?? false,
       email: json['email'],
@@ -50,21 +55,21 @@ class UserInfo {
 
   String get userRolesString {
     List<Role> userRoles = [];
-    if(isStaff) userRoles.add(Role.Admin);
-    if(isSuperUser) userRoles.add(Role.SuperAdmin);
-    if(isUser) userRoles.add(Role.User);
+    if (isStaff) userRoles.add(Role.Admin);
+    if (isSuperUser) userRoles.add(Role.SuperAdmin);
+    if (isUser) userRoles.add(Role.User);
     String rolesString = '';
-    for(int i = 0; i<userRoles.length; i++) {
-      String suffix = i==userRoles.length - 1 ? ' ' : ', ';
-      if(userRoles[i] == Role.User) {
+    for (int i = 0; i < userRoles.length; i++) {
+      String suffix = i == userRoles.length - 1 ? ' ' : ', ';
+      if (userRoles[i] == Role.User) {
         String stringRole = 'пользователь очереди$suffix';
         rolesString += stringRole;
       }
-      if(userRoles[i] == Role.Admin && !userRoles.contains(Role.SuperAdmin)) {
+      if (userRoles[i] == Role.Admin && !userRoles.contains(Role.SuperAdmin)) {
         String stringRole = 'администратор$suffix';
         rolesString += stringRole;
       }
-      if(userRoles[i] == Role.SuperAdmin) {
+      if (userRoles[i] == Role.SuperAdmin) {
         String stringRole = 'старший администратор$suffix';
         rolesString += stringRole;
       }

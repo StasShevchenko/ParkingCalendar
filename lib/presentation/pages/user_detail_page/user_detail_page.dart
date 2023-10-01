@@ -7,6 +7,7 @@ import 'package:parking_project/presentation/ui_kit/alert_dialog/failure_dialog.
 import 'package:parking_project/presentation/ui_kit/alert_dialog/success_dialog.dart';
 import 'package:parking_project/presentation/ui_kit/button/loader_button.dart';
 import 'package:parking_project/presentation/ui_kit/utils/connection_error_section.dart';
+import 'package:parking_project/presentation/ui_kit/utils/user_avatar.dart';
 
 import '../../../assets/colors/app_colors.dart';
 import '../../../utils/device_info.dart';
@@ -107,78 +108,88 @@ class UserDetailPage extends StatelessWidget {
               body: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Имя: ${state.userInfo!.firstName} ${state.userInfo!.secondName}',
-                        style: userInfoStyle,
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      SelectableText(
-                        'Почта: ${state.userInfo!.email}',
-                        style: userInfoStyle,
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Text(
-                        'Роли: ${state.userInfo!.userRolesString}',
-                        textAlign: TextAlign.center,
-                        style: userInfoStyle,
-                      ),
-                      if (userInfo.roles.contains(Role.SuperAdmin) ||
-                          (!bloc.userInfo.isStaff) &&
-                              userInfo.roles.contains(Role.Admin)) ...{
+                  child: SizedBox(
+                    width: 350,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            UserAvatar(avatarPath: state.userInfo!.avatar,),
+                            const SizedBox(width: 8,),
+                            Text(
+                              'Имя: ${state.userInfo!.firstName} ${state.userInfo!.secondName}',
+                              style: userInfoStyle,
+                            ),
+                          ],
+                        ),
                         const SizedBox(
                           height: 16,
                         ),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(minWidth: 280),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              showDeleteDialog(context, bloc);
-                            },
-                            child: const Text('Удалить пользователя'),
+                        SelectableText(
+                          'Почта: ${state.userInfo!.email}',
+                          style: userInfoStyle,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          'Роли: ${state.userInfo!.userRolesString}',
+                          textAlign: TextAlign.center,
+                          style: userInfoStyle,
+                        ),
+                        if (userInfo.roles.contains(Role.SuperAdmin) ||
+                            (!bloc.userInfo.isStaff) &&
+                                userInfo.roles.contains(Role.Admin)) ...{
+                          const SizedBox(
+                            height: 16,
                           ),
-                        )
-                      },
-                      if (userInfo.roles.contains(Role.SuperAdmin) &&
-                          userInfo.roles.contains(Role.User)) ...{
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        LoaderButton(
-                          isLoading: state.isAdminRoleChangeLoading,
-                          minWidth: 280,
-                          onPressed: () {
-                            bloc.add(
-                              AdminRoleToggled(),
-                            );
-                          },
-                          child: Text(bloc.userInfo.isStaff
-                              ? 'Убрать роль администратора'
-                              : 'Добавить роль администратора'),
-                        ),
-                      },
-                      if (userInfo.roles.contains(Role.Admin) &&
-                          !bloc.userInfo.isUser) ...{
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        LoaderButton(
-                          isLoading: state.isUserRoleChangeLoading ?? false,
-                          minWidth: 280,
-                          onPressed: () {
-                            bloc.add(
-                              UserRoleToggled(),
-                            );
-                          },
-                          child: const Text('Добавить пользователя в очередь'),
-                        ),
-                      },
-                    ],
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(minWidth: 280),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                showDeleteDialog(context, bloc);
+                              },
+                              child: const Text('Удалить пользователя'),
+                            ),
+                          )
+                        },
+                        if (userInfo.roles.contains(Role.SuperAdmin) &&
+                            userInfo.roles.contains(Role.User)) ...{
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          LoaderButton(
+                            isLoading: state.isAdminRoleChangeLoading,
+                            minWidth: 280,
+                            onPressed: () {
+                              bloc.add(
+                                AdminRoleToggled(),
+                              );
+                            },
+                            child: Text(bloc.userInfo.isStaff
+                                ? 'Убрать роль администратора'
+                                : 'Добавить роль администратора'),
+                          ),
+                        },
+                        if (userInfo.roles.contains(Role.Admin) &&
+                            !bloc.userInfo.isUser) ...{
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          LoaderButton(
+                            isLoading: state.isUserRoleChangeLoading ?? false,
+                            minWidth: 280,
+                            onPressed: () {
+                              bloc.add(
+                                UserRoleToggled(),
+                              );
+                            },
+                            child: const Text('Добавить пользователя в очередь'),
+                          ),
+                        },
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -45,6 +45,12 @@ class DioClient {
     );
   }
 
+  static void clearAccess(){
+    if(instance != null) {
+      instance!.accessToken = null;
+    }
+  }
+
   static Dio get() {
     if (instance == null) {
       instance = DioClient();
