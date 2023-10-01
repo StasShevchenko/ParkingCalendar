@@ -5,13 +5,11 @@ import 'package:parking_project/data/app_secure_storage.dart';
 import 'package:parking_project/data/remote_data_source/dio_configuration/dio_client.dart';
 
 import '../../../data/models/user.dart';
-import '../../data/remote_data_source/auth_data_source.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AppSecureStorage _storage = AppSecureStorage();
-  AuthRemoteDataSource authRemoteDataSource = AuthRemoteDataSource();
   final dio = DioClient.get();
 
   AuthCubit() : super(AuthState()) {
@@ -58,8 +56,18 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthState(authStatus: AuthStatus.authenticated, userData: userData));
   }
 
-  Future<void> refresh(String login, String password) async {
-    final refreshToken = await authRemoteDataSource.login(login, password);
-    this.login(refreshToken);
+  Future<void> refresh()async{
+    DioClient.clearAccess();
+    final refreshToken = await _storage.readRefreshToken();
+    final response = await dio
+        .post('/token/refresh', data: {'refresh': refreshToken});
+   final newRefreshToken = (response.data as Map<String, dynamic>)['refresh'];
+   _storage.writeRefreshToken(newRefreshToken);
+   final json = JwtDecoder.decode(newRefreshToken);
+   final userData = User.fromJson(json['user']);
+    emit(
+      AuthState(
+          authStatus: AuthStatus.authenticated, userData: userData),
+    );
   }
 }

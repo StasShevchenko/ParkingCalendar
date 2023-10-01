@@ -12,7 +12,7 @@ void showChooseAvatarDialog(BuildContext context) {
   showDialog(
       context: context,
       builder: (context) => BlocProvider(
-            create: (context) => ChooseAvatarBloc(),
+            create: (context) => ChooseAvatarBloc(authCubit: context.read<AuthCubit>()),
             child: BlocConsumer<ChooseAvatarBloc, ChooseAvatarState>(
               listener: (context, state) {
                 if (state.isAvatarChangeLoading != null &&

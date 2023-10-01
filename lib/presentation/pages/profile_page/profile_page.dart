@@ -46,6 +46,7 @@ class ProfilePage extends StatelessWidget {
                         Row(
                           children: [
                             InkWell(
+                              borderRadius: BorderRadius.circular(100),
                               onTap: () => showChooseAvatarDialog(context),
                               child: UserAvatar(
                                 avatarPath: userInfo.avatar,

@@ -45,7 +45,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
                     oldPassword: state.oldPassword,
                     repeatPassword: state.repeatPassword,
                     newPassword: state.password);
-                authCubit.refresh(userInfo.email, state.password);
+                authCubit.refresh();
                 emit(state.copyWith(
                     isPasswordChanged: 1, isPasswordChangeLoading: false));
                 emit(state.copyWith(isPasswordChanged: -1));

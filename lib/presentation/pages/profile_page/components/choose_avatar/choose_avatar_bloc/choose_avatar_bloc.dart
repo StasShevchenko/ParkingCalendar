@@ -6,14 +6,17 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:parking_project/data/remote_data_source/avatars_data_source.dart';
 
+import '../../../../../auth_cubit/auth_cubit.dart';
+
 part 'choose_avatar_event.dart';
 
 part 'choose_avatar_state.dart';
 
 class ChooseAvatarBloc extends Bloc<ChooseAvatarEvent, ChooseAvatarState> {
   AvatarsDataSource dataSource = AvatarsDataSource();
+  AuthCubit authCubit;
 
-  ChooseAvatarBloc() : super(ChooseAvatarState()) {
+  ChooseAvatarBloc({required this.authCubit}) : super(ChooseAvatarState()) {
     _init();
     on<ChooseAvatarEvent>((event, emit) async {
       try {
@@ -25,6 +28,7 @@ class ChooseAvatarBloc extends Bloc<ChooseAvatarEvent, ChooseAvatarState> {
           case AvatarConfirmed _:
             emit(state.copyWith(isAvatarChangeLoading: true));
             await dataSource.changeAvatar(state.chosenAvatar.trim());
+            authCubit.refresh();
             emit(state.copyWith(isAvatarChangeLoading: false));
         }
       } on DioException catch (exception) {
