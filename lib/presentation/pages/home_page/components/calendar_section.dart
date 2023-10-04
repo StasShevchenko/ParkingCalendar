@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking_project/data/models/user_info.dart';
+import 'package:parking_project/presentation/pages/home_page/components/welcome_title.dart';
 import 'package:parking_project/utils/device_info.dart';
 
 import '../../../../assets/colors/app_colors.dart';
-import '../../../auth_cubit/auth_cubit.dart';
 import 'calendar/calendar.dart';
 
 class CalendarSection extends StatelessWidget {
@@ -27,18 +26,17 @@ class CalendarSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              'Здравствуйте, ${context.read<AuthCubit>().state.userData!.firstName}!',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(
-              height: 32,
-            ),
             if (userInfo.isActive) ...{
               ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 450),
+                constraints: const BoxConstraints(maxWidth: 400),
                 child: Column(
                   children: [
+                    const WelcomeTitle(
+                      isReminderNeeded: true,
+                    ),
+                    const SizedBox(
+                      height: 32,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,42 +71,64 @@ class CalendarSection extends StatelessWidget {
                 ),
               )
             } else ...{
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Text(
-                    'До вашей очереди\n осталось ${userInfo.startDate!.difference(DateTime.now()).inDays} дней!',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.width < 880
-                            ? 400
-                            : double.infinity,
-                        maxWidth: MediaQuery.of(context).size.width < 880
-                            ? 400
-                            : double.infinity),
-                    child: FractionallySizedBox(
-                      widthFactor: indicatorWidthFactor,
-                      child: AspectRatio(
-                        aspectRatio: 1.0,
-                        child: CircularProgressIndicator(
-                          strokeWidth: DeviceScreen.get(context) == FormFactorType.Desktop ? 14 : 10,
-                          value: (userInfo.startDate!
-                                  .difference(DateTime.now())
-                                  .inDays /
-                              userInfo.startDate!
-                                  .difference(userInfo.lastActiveDate!)
-                                  .inDays),
-                          color: AppColors.primaryAccentRed,
-                          backgroundColor: Colors.white,
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.width < 880
+                        ? 400
+                        : double.infinity,
+                    maxWidth: MediaQuery.of(context).size.width < 880
+                        ? 400
+                        : double.infinity),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          maxWidth: 400
+                        ),
+                        child: const WelcomeTitle(
+                          isReminderNeeded: false,
                         ),
                       ),
-                    ),
-                  )
-                ],
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Text(
+                            'До вашей очереди\n осталось ${userInfo.startDate!.difference(DateTime.now()).inDays} дней!',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          FractionallySizedBox(
+                            widthFactor: indicatorWidthFactor,
+                            child: AspectRatio(
+                              aspectRatio: 1.0,
+                              child: CircularProgressIndicator(
+                                strokeWidth: DeviceScreen.get(context) ==
+                                        FormFactorType.Desktop
+                                    ? 14
+                                    : 10,
+                                value: (userInfo.startDate!
+                                        .difference(DateTime.now())
+                                        .inDays /
+                                    userInfo.startDate!
+                                        .difference(userInfo.lastActiveDate!)
+                                        .inDays),
+                                color: AppColors.primaryAccentRed,
+                                backgroundColor: Colors.white,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               )
             },
           ],
