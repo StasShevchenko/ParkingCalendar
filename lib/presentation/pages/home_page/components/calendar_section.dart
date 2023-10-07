@@ -89,7 +89,7 @@ class CalendarSection extends StatelessWidget {
                           maxWidth: 400
                         ),
                         child: const WelcomeTitle(
-                          isReminderNeeded: false,
+                          isReminderNeeded: true,
                         ),
                       ),
                       const SizedBox(

@@ -13,26 +13,27 @@ class WelcomeTitle extends StatefulWidget {
   State<WelcomeTitle> createState() => _WelcomeTitleState();
 }
 
-class _WelcomeTitleState extends State<WelcomeTitle> with TickerProviderStateMixin {
+class _WelcomeTitleState extends State<WelcomeTitle>
+    with TickerProviderStateMixin {
   var _isReminderVisible = false;
   var titleAlignment = Alignment.center;
-  late AnimationController _bellAnimationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-
+  late AnimationController _bellAnimationController;
 
   @override
   void initState() {
-    _bellAnimationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _bellAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
     super.initState();
   }
 
   void _runAnimation() async {
-    for(int i = 0; i <3; i++) {
-      if(mounted) {
+    for (int i = 0; i < 3; i++) {
+      if (mounted) {
         await _bellAnimationController.forward();
         await _bellAnimationController.reverse();
       }
     }
-    Future.delayed(const Duration(seconds: 2), (){
+    Future.delayed(const Duration(seconds: 2), () {
       _runAnimation();
     });
   }
@@ -45,12 +46,12 @@ class _WelcomeTitleState extends State<WelcomeTitle> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    Future((){
-      if(widget.isReminderNeeded) {
+    Future(() {
+      if (widget.isReminderNeeded) {
         setState(() {
           titleAlignment = Alignment.centerLeft;
         });
-      } else{
+      } else {
         setState(() {
           titleAlignment = Alignment.center;
           _isReminderVisible = false;
@@ -58,10 +59,7 @@ class _WelcomeTitleState extends State<WelcomeTitle> with TickerProviderStateMix
       }
     });
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxHeight: 40,
-        minHeight: 40
-      ),
+      constraints: const BoxConstraints(maxHeight: 50, minHeight: 50),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -72,30 +70,49 @@ class _WelcomeTitleState extends State<WelcomeTitle> with TickerProviderStateMix
               'Здравствуйте, ${context.read<AuthCubit>().state.userData!.firstName}!',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            onEnd: (){
+            onEnd: () {
               setState(() {
                 _isReminderVisible = true;
                 _runAnimation();
               });
             },
           ),
-          if(_isReminderVisible)
-          Align(
-            alignment: Alignment.centerRight,
-            child: RotationTransition(
-              turns: Tween(begin: 0.0, end: -0.1)
-              .chain(CurveTween(curve: Curves.elasticIn))
-              .animate(_bellAnimationController),
-              child: IconButton(
-                iconSize: 30,
-                icon: Icon(Icons.add_alert, color: AppColors.primaryAccentRed,),
-                onPressed: () {
-                },
+          if (_isReminderVisible)
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: AppColors.background,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.shade400,
+                          blurRadius: 1,
+                          spreadRadius: 0.5,
+                          offset: Offset(0, 3)
+                      )
+                    ]
+                ),
+                child: RotationTransition(
+                  turns: Tween(begin: 0.0, end: -0.1)
+                      .chain(CurveTween(curve: Curves.elasticIn))
+                      .animate(_bellAnimationController),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.notifications,
+                      color: AppColors.primaryAccentRed,
+                      size: 30,
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
               ),
-            ),
-          )
+            )
         ],
       ),
     );
   }
+
 }
