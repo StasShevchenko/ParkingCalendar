@@ -6,8 +6,10 @@ import '../../../auth_cubit/auth_cubit.dart';
 
 class WelcomeTitle extends StatefulWidget {
   final bool isReminderNeeded;
+  final Function? onReminderClicked;
 
-  const WelcomeTitle({super.key, required this.isReminderNeeded});
+  const WelcomeTitle(
+      {super.key, required this.isReminderNeeded, this.onReminderClicked});
 
   @override
   State<WelcomeTitle> createState() => _WelcomeTitleState();
@@ -91,10 +93,8 @@ class _WelcomeTitleState extends State<WelcomeTitle>
                           color: Colors.grey.shade400,
                           blurRadius: 1,
                           spreadRadius: 0.5,
-                          offset: Offset(0, 3)
-                      )
-                    ]
-                ),
+                          offset: const Offset(0, 3))
+                    ]),
                 child: RotationTransition(
                   turns: Tween(begin: 0.0, end: -0.1)
                       .chain(CurveTween(curve: Curves.elasticIn))
@@ -105,7 +105,11 @@ class _WelcomeTitleState extends State<WelcomeTitle>
                       color: AppColors.primaryAccentRed,
                       size: 30,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      if(widget.onReminderClicked != null) {
+                        widget.onReminderClicked!();
+                      }
+                    },
                   ),
                 ),
               ),
@@ -114,5 +118,4 @@ class _WelcomeTitleState extends State<WelcomeTitle>
       ),
     );
   }
-
 }

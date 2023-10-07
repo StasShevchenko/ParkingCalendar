@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parking_project/data/models/user_info.dart';
+import 'package:parking_project/presentation/pages/home_page/components/card_reminder_dialog/card_reminder_dialog.dart';
 import 'package:parking_project/presentation/pages/home_page/components/welcome_title.dart';
 import 'package:parking_project/utils/device_info.dart';
 
@@ -31,8 +32,18 @@ class CalendarSection extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 400),
                 child: Column(
                   children: [
-                    const WelcomeTitle(
-                      isReminderNeeded: true,
+                    WelcomeTitle(
+                      isReminderNeeded: userInfo.nextUserId != null,
+                      onReminderClicked: () {
+                        if (userInfo.nextUserId != null) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CardReminderDialog(
+                                    isForNext: true, userId: userInfo.nextUserId!);
+                              });
+                        }
+                      },
                     ),
                     const SizedBox(
                       height: 32,
@@ -85,11 +96,20 @@ class CalendarSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxWidth: 400
-                        ),
-                        child: const WelcomeTitle(
-                          isReminderNeeded: true,
+                        constraints: const BoxConstraints(maxWidth: 400),
+                        child: WelcomeTitle(
+                          isReminderNeeded: userInfo.previousUserId != null,
+                          onReminderClicked: () {
+                            if (userInfo.previousUserId != null) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CardReminderDialog(
+                                        isForNext: false,
+                                        userId: userInfo.previousUserId!);
+                                  });
+                            }
+                          },
                         ),
                       ),
                       const SizedBox(

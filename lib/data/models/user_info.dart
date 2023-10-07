@@ -13,20 +13,25 @@ class UserInfo {
   final bool isUser;
   final bool isActive;
   final String? avatar;
+  final int? previousUserId;
+  final int? nextUserId;
 
-  UserInfo(
-      {required this.email,
-      required this.id,
-      this.isStaff = false,
-      required this.firstName,
-      required this.secondName,
-      this.startDate,
-      this.endDate,
-      this.lastActiveDate,
-      this.avatar,
-      this.isSuperUser = false,
-      required this.isUser,
-      required this.isActive});
+  UserInfo({
+    required this.email,
+    required this.id,
+    this.isStaff = false,
+    required this.firstName,
+    required this.secondName,
+    this.startDate,
+    this.endDate,
+    this.lastActiveDate,
+    this.avatar,
+    this.isSuperUser = false,
+    required this.isUser,
+    required this.isActive,
+    this.previousUserId,
+    this.nextUserId,
+  });
 
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     return UserInfo(
@@ -50,6 +55,8 @@ class UserInfo {
       isUser: json['in_queue'] ?? false,
       id: json['id'],
       isStaff: json['is_staff'] ?? false,
+      previousUserId: json['previous_active'],
+      nextUserId: json['next_active']
     );
   }
 
