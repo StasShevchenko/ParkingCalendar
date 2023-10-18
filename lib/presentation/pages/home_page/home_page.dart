@@ -62,8 +62,10 @@ class _UserHomePageState extends State<UserHomePage>
                     ? TabBarView(
                         children: [
                           if (userRoles.contains(Role.User))
-                            CalendarSection(
-                              userInfo: state.userInfo!,
+                            SingleChildScrollView(
+                              child: CalendarSection(
+                                userInfo: state.userInfo!,
+                              ),
                             ),
                           QueueSection(
                               isLoading: state.isQueueLoading,
