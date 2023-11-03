@@ -14,7 +14,7 @@ class ScaffoldWithNavigationRail extends StatelessWidget {
 
   final Widget body;
   final int selectedIndex;
-  final ValueChanged<int> onDestinationSelected;
+  final Function(int, BuildContext) onDestinationSelected;
   final List<NavigationDestinationDataHolder> destinations;
 
   @override
@@ -27,7 +27,7 @@ class ScaffoldWithNavigationRail extends StatelessWidget {
             indicatorColor: AppColors.secondaryBlue,
             selectedIndex: selectedIndex,
             onDestinationSelected: (index){
-              onDestinationSelected(destinations[index].index);
+              onDestinationSelected(destinations[index].index, context);
             },
             labelType: NavigationRailLabelType.all,
             destinations: mapToNavigationRailDestinations(destinations),

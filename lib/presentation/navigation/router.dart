@@ -21,91 +21,86 @@ final goRouter = GoRouter(
   initialLocation: AppRoutes.initial,
   navigatorKey: _rootNavigatorKey,
   routes: [
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) {
-        return AuthRedirector(
-          child: ScaffoldWithNestedNavigation(
-            navigationShell: navigationShell,
-            navigationDestinations: AppDestinations.getDestinations(
-                context.watch<AuthCubit>().state.userData),
+    ShellRoute(
+        builder: (context, state, child) {
+          return AuthRedirector(
+            child: ScaffoldWithNestedNavigation(
+              navigationDestinations: AppDestinations.getDestinations(
+                  context
+                      .watch<AuthCubit>()
+                      .state
+                      .userData),
+              child: child,
+            ),
+          );
+        },
+        routes: [
+          GoRoute(
+              path: AppRoutes.userHome,
+              pageBuilder: (context, state) =>
+              const NoTransitionPage(
+                child: UserHomePage(),
+              ),
+              routes: [
+                GoRoute(
+                  path: AppRoutes.queueDetails,
+                  name: 'queue_details',
+                  pageBuilder: (context, state) =>
+                      NoTransitionPage(
+                        child: UserDetailPage(
+                            userId: state.pathParameters['userId']),
+                      ),
+                )
+              ]),
+          GoRoute(
+            path: AppRoutes.userRequests,
+            pageBuilder: (context, state) =>
+            const NoTransitionPage(
+              child: RequestPage(),
+            ),
           ),
-        );
-      },
-      branches: [
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-                path: AppRoutes.userHome,
-                pageBuilder: (context, state) => const NoTransitionPage(
-                      child: UserHomePage(),
-                    ),
-                routes: [
-                  GoRoute(
-                    path: AppRoutes.queueDetails,
-                    name: 'queue_details',
-                    pageBuilder: (context, state) => NoTransitionPage(
+          GoRoute(
+            routes: [
+              GoRoute(
+                path: AppRoutes.userDetails,
+                name: 'user_details',
+                pageBuilder: (context, state) =>
+                    NoTransitionPage(
                       child: UserDetailPage(
                           userId: state.pathParameters['userId']),
                     ),
-                  )
-                ])
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: AppRoutes.userRequests,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: RequestPage(),
-              ),
+              )
+            ],
+            path: AppRoutes.usersList,
+            pageBuilder: (context, state) =>
+            const NoTransitionPage(
+              child: UsersListPage(),
             ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              routes: [
-                GoRoute(
-                  path: AppRoutes.userDetails,
-                  name: 'user_details',
-                  pageBuilder: (context, state) => NoTransitionPage(
-                    child: UserDetailPage(
-                        userId: state.pathParameters['userId']),
-                  ),
-                )
-              ],
-              path: AppRoutes.usersList,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: UsersListPage(),
-              ),
-            )
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: AppRoutes.userProfile,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: SafeArea(
-                  child: Center(
-                    child: ProfilePage(),
-                  ),
+          ),
+          GoRoute(
+            path: AppRoutes.userProfile,
+            pageBuilder: (context, state) =>
+            const NoTransitionPage(
+              child: SafeArea(
+                child: Center(
+                  child: ProfilePage(),
                 ),
               ),
             ),
-          ],
-        ),
-      ],
+          ),
+        ]
     ),
     GoRoute(
       path: AppRoutes.initial,
-      pageBuilder: (context, state) => const NoTransitionPage(
+      pageBuilder: (context, state) =>
+      const NoTransitionPage(
         child: LoginPage(),
       ),
       routes: [
         GoRoute(
           path: AppRoutes.forgotPassword,
-          pageBuilder: (context, state) => const NoTransitionPage(
+          pageBuilder: (context, state) =>
+          const NoTransitionPage(
             child: ForgotPasswordPage(),
           ),
         ),

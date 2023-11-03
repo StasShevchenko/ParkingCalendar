@@ -14,7 +14,7 @@ class ScaffoldWithNavigationBar extends StatelessWidget {
 
   final Widget body;
   final int selectedIndex;
-  final ValueChanged<int> onDestinationSelected;
+  final Function(int, BuildContext) onDestinationSelected;
   final List<NavigationDestinationDataHolder> destinations;
 
   @override
@@ -30,7 +30,7 @@ class ScaffoldWithNavigationBar extends StatelessWidget {
         selectedIndex: selectedIndex,
         destinations: mapToNavigationDestinations(destinations),
         onDestinationSelected: (index){
-          onDestinationSelected(destinations[index].index);
+          onDestinationSelected(destinations[index].index, context);
         },
       ),
     );
