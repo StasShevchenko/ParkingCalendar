@@ -39,10 +39,10 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
       return 1;
     }
     if (location.startsWith(AppRoutes.usersList)) {
-      return 1;
+      return 2;
     }
     if(location.startsWith(AppRoutes.userProfile)){
-      return 2;
+      return 3;
     }
     return 0;
   }

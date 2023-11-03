@@ -6,13 +6,13 @@ import 'package:parking_project/presentation/navigation/auth_redirector.dart';
 import 'package:parking_project/presentation/pages/home_page/home_page.dart';
 import 'package:parking_project/presentation/pages/login_page/login_page.dart';
 import 'package:parking_project/presentation/pages/profile_page/profile_page.dart';
+import 'package:parking_project/presentation/pages/requests_page/requests_page.dart';
 import 'package:parking_project/presentation/pages/user_detail_page/user_detail_page.dart';
 import 'package:parking_project/presentation/pages/users_list_page/users_list_page.dart';
 import 'package:parking_project/presentation/ui_kit/scaffold/scaffold_with_nested_navigation.dart';
 
 import '../auth_cubit/auth_cubit.dart';
 import '../pages/forgot_password_page/forgot_password_page.dart';
-import '../pages/request_page/request_page.dart';
 import 'app_routes.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -56,7 +56,7 @@ final goRouter = GoRouter(
             path: AppRoutes.userRequests,
             pageBuilder: (context, state) =>
             const NoTransitionPage(
-              child: RequestPage(),
+              child: RequestsPage(),
             ),
           ),
           GoRoute(
