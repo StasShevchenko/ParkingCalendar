@@ -27,7 +27,7 @@ class UsersListPage extends StatelessWidget {
     };
 
     final gridChildAspectRatio = switch (DeviceScreen.get(context)) {
-      FormFactorType.Mobile => 2.8,
+      FormFactorType.Mobile => 2.2,
       FormFactorType.Tablet => 1.5,
       FormFactorType.Desktop => 2.5
     };
