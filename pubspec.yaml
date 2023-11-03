@@ -1,6 +1,6 @@
 name: parking_project
 description: A new Flutter project.
-version: 1.0.0+1
+version: 1.0.2+1
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
