@@ -3,12 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:parking_project/data/models/request_dto.dart';
 
-class ProcessRequestDialogue extends StatelessWidget {
+class ProcessRequestDialog extends StatelessWidget {
   final bool isAgree;
   final RequestDto requestInfo;
   final DateFormat formatter = DateFormat('dd.MM.yyyy');
 
-  ProcessRequestDialogue({
+  ProcessRequestDialog({
     super.key,
     required this.isAgree,
     required this.requestInfo,

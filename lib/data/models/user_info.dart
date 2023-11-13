@@ -39,7 +39,7 @@ class UserInfo {
       secondName: json['secondName'],
       startDate: json['start_active_time'] != null
           ? DateTime.parse(json['start_active_time'])
-          : null,
+          : DateTime(2024),
       endDate: json['end_active_time'] != null
           ? DateTime.parse(json['end_active_time'])
           : null,

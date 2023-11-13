@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:parking_project/assets/colors/app_colors.dart';
 import 'package:parking_project/data/models/request_dto.dart';
-import 'package:parking_project/presentation/pages/requests_page/components/process_request_dialogue.dart';
+import 'package:parking_project/presentation/pages/requests_page/components/process_request_dialog.dart';
 
 class RequestItem extends StatelessWidget {
   final RequestDto request;
@@ -76,7 +76,7 @@ class RequestItem extends StatelessWidget {
                           onPressed: () {
                             showDialog(
                               context: context,
-                              builder: (context) => ProcessRequestDialogue(
+                              builder: (context) => ProcessRequestDialog(
                                   isAgree: true, requestInfo: request),
                             );
                           },
@@ -94,7 +94,7 @@ class RequestItem extends StatelessWidget {
                           onPressed: () {
                             showDialog(
                               context: context,
-                              builder: (context) => ProcessRequestDialogue(
+                              builder: (context) => ProcessRequestDialog(
                                   isAgree: false, requestInfo: request),
                             );
                           },
