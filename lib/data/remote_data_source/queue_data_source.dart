@@ -10,7 +10,7 @@ class QueueDataSource {
 
   Future<List<QueueDataHolder>> getQueueItems([String fullName = '']) async {
     final responseData =
-        (await dio.get('/queue/allNextPeriod?fullName=$fullName')).data
+        (await dio.get('/queue/getThisPeriod?fullName=$fullName')).data
             as List<dynamic>;
     List<QueueDataHolder> dataHoldersList = [];
     for (Map<String, dynamic> queueItem in responseData) {
