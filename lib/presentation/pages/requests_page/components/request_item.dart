@@ -136,21 +136,19 @@ class RequestItem extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Expanded(
-                child: Center(
-                  child: Container(
-                    height: 10,
-                    width: 10,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: _getRequestResultColor(request),
-                        boxShadow: [
-                          BoxShadow(
-                              color: _getRequestResultColor(request),
-                              blurRadius: 4,
-                              spreadRadius: 2)
-                        ]),
-                  ),
+              child: Center(
+                child: Container(
+                  height: 10,
+                  width: 10,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: _getRequestResultColor(request),
+                      boxShadow: [
+                        BoxShadow(
+                            color: _getRequestResultColor(request),
+                            blurRadius: 4,
+                            spreadRadius: 2)
+                      ]),
                 ),
               ),
             )
