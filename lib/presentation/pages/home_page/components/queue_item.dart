@@ -27,7 +27,9 @@ class QueueItem extends StatelessWidget {
             if (!userInfo.isActive &&
                 bloc.state.userInfo != null &&
                 !bloc.state.userInfo!.isActive &&
-                userInfo.id != bloc.state.userInfo!.id)
+                userInfo.id != bloc.state.userInfo!.id &&
+                (userInfo.startDate!.month != bloc.state.userInfo!.startDate!.month
+                || userInfo.startDate!.year > bloc.state.userInfo!.startDate!.year))
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(

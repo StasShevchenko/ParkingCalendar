@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:parking_project/data/models/request_dto.dart';
 import 'package:parking_project/data/remote_data_source/dio_configuration/dio_client.dart';
 import 'package:parking_project/utils/json_read.dart';
@@ -13,5 +14,10 @@ class RequestsDataSource{
     }
    // await Future.delayed(const Duration(seconds: 1));
     return requests;
+  }
+
+  Future<Response> sendSwapRequest(RequestDto request) async{
+    final response = await _dio.post("/swap/create", data: request.toJson());
+    return response;
   }
 }

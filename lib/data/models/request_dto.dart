@@ -8,7 +8,7 @@ class RequestDto {
 
   RequestDto({
     required this.isActive,
-    required this.result,
+    this.result,
     required this.sender,
     required this.receiver,
     required this.sent,
@@ -25,16 +25,39 @@ class RequestDto {
       swapInfo: SwapInfo.fromJson(json["swap"]),
     );
   }
+
+  Map<String, dynamic> toJson(){
+    return {
+      "sender": {
+        "id": sender.id,
+        "fullName": sender.fullName,
+        "email": sender.email
+      },
+      "receiver":{
+        "id": receiver.id,
+        "fullName": receiver.fullName,
+        "email": receiver.email
+      },
+      "sent": sent.toString(),
+      "swap":{
+        "from": swapInfo.from.toString(),
+        "to": swapInfo.to.toString()
+      }
+    };
+  }
 }
 
 class SenderReceiverInfo {
+  final int id;
   final String fullName;
   final String email;
 
-  SenderReceiverInfo({required this.fullName, required this.email});
+  SenderReceiverInfo(
+      {required this.fullName, required this.email, required this.id});
 
   factory SenderReceiverInfo.fromJson(Map<String, dynamic> json) {
-    return SenderReceiverInfo(fullName: json["fullName"], email: json["email"]);
+    return SenderReceiverInfo(
+        fullName: json["fullName"], email: json["email"], id: json["id"]);
   }
 }
 
