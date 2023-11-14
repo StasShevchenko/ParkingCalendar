@@ -58,7 +58,7 @@ class _SegmentedButtonRequestSectionState
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 32,
               ),
               Expanded(

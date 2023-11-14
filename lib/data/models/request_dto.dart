@@ -1,4 +1,5 @@
 class RequestDto {
+  final int id;
   final bool isActive;
   final bool? result;
   final SenderReceiverInfo sender;
@@ -7,6 +8,7 @@ class RequestDto {
   final SwapInfo swapInfo;
 
   RequestDto({
+    required this.id,
     required this.isActive,
     this.result,
     required this.sender,
@@ -17,7 +19,8 @@ class RequestDto {
 
   factory RequestDto.fromJson(Map<String, dynamic> json) {
     return RequestDto(
-      isActive: json["isActive"],
+      id: json["id"],
+      isActive: json["is_active"],
       result: json["result"],
       sender: SenderReceiverInfo.fromJson(json["sender"]),
       receiver: SenderReceiverInfo.fromJson(json["receiver"]),

@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:parking_project/assets/colors/app_colors.dart';
 import 'package:parking_project/data/models/request_dto.dart';
+import 'package:parking_project/presentation/auth_cubit/auth_cubit.dart';
 import 'package:parking_project/presentation/pages/requests_page/components/process_request_dialog.dart';
+import 'package:parking_project/presentation/pages/requests_page/request_page_bloc/requests_page_bloc.dart';
 
 class RequestItem extends StatelessWidget {
   final RequestDto request;
-  final bool? showSender;
-  final bool? showReceiver;
   final DateFormat formatter = DateFormat('dd.MM.yyyy');
 
-  RequestItem(
-      {super.key,
-      required this.request,
-      this.showSender = true,
-      this.showReceiver = true});
+  RequestItem({
+    super.key,
+    required this.request,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final currentUserInfo = context.read<AuthCubit>().state.userData!;
+    final bloc = context.read<RequestsPageBloc>();
     return Card(
       shadowColor: Colors.black,
       child: Padding(
@@ -29,14 +31,14 @@ class RequestItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (showSender != null && showSender == true) ...{
+                  if (currentUserInfo.id != request.sender.id) ...{
                     Text(
                         "Отправитель: ${request.sender.fullName} ${request.sender.email}"),
                     const SizedBox(
                       height: 8,
                     )
                   },
-                  if (showReceiver != null && showReceiver == true) ...{
+                  if (currentUserInfo.id != request.receiver.id) ...{
                     Text(
                         "Получатель: ${request.receiver.fullName} ${request.sender.email}"),
                     const SizedBox(
@@ -48,9 +50,20 @@ class RequestItem extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                      "Обмен: ${formatter.format(request.swapInfo.from)}(${request.sender.fullName})"
-                      " ⇔ "
-                      "${formatter.format(request.swapInfo.to)}(${request.receiver.fullName})", softWrap: true,),
+                    "Обмен: ${formatter.format(request.swapInfo.from)}(${request.sender.fullName})"
+                    " ⇔ "
+                    "${formatter.format(request.swapInfo.to)}(${request.receiver.fullName})",
+                    softWrap: true,
+                  ),
+                  if (request.isActive == true) ...{
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const Text(
+                      "Активно",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  },
                   if (request.isActive == false) ...{
                     const SizedBox(
                       height: 8,
@@ -66,7 +79,8 @@ class RequestItem extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )
                   },
-                  if (request.isActive) ...{
+                  if (request.isActive &&
+                      currentUserInfo.id == request.receiver.id) ...{
                     const SizedBox(
                       height: 16,
                     ),
@@ -77,7 +91,10 @@ class RequestItem extends StatelessWidget {
                             showDialog(
                               context: context,
                               builder: (context) => ProcessRequestDialog(
-                                  isAgree: true, requestInfo: request),
+                                isAgree: true,
+                                requestInfo: request,
+                                onProceed: () => bloc.add(PageRefreshed()),
+                              ),
                             );
                           },
                           padding: EdgeInsets.zero,
@@ -95,7 +112,10 @@ class RequestItem extends StatelessWidget {
                             showDialog(
                               context: context,
                               builder: (context) => ProcessRequestDialog(
-                                  isAgree: false, requestInfo: request),
+                                isAgree: false,
+                                requestInfo: request,
+                                onProceed: () => bloc.add(PageRefreshed()),
+                              ),
                             );
                           },
                           padding: EdgeInsets.zero,

@@ -34,6 +34,7 @@ class _SendRequestDialogState extends State<SendRequestDialog> {
         _isLoading = true;
       });
       final request = RequestDto(
+          id: -1,
           isActive: true,
           sender: SenderReceiverInfo(
               fullName:
@@ -95,14 +96,14 @@ class _SendRequestDialogState extends State<SendRequestDialog> {
         ),
       ),
       actions: [
-        ElevatedButton(onPressed: () => context.pop(), child: Text("Отмена")),
+        ElevatedButton(onPressed: () => context.pop(), child: const Text("Отмена")),
         LoaderButton(
             onPressed: () {
               _sendSwapRequest();
             },
             isLoading: _isLoading,
             minWidth: 120,
-            child: Text("Отправить запрос"))
+            child: const Text("Отправить запрос"))
       ],
     );
   }
