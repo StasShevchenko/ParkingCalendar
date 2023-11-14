@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:parking_project/assets/colors/app_colors.dart';
 import 'package:parking_project/data/models/user_info.dart';
 import 'package:parking_project/presentation/pages/home_page/components/send_request_dialog/send_request_dialog.dart';
+import 'package:parking_project/presentation/pages/home_page/components/swap_info_label.dart';
 import 'package:parking_project/presentation/pages/home_page/home_page_bloc/home_page_bloc.dart';
 import 'package:parking_project/presentation/ui_kit/utils/user_avatar.dart';
 
@@ -28,8 +29,10 @@ class QueueItem extends StatelessWidget {
                 bloc.state.userInfo != null &&
                 !bloc.state.userInfo!.isActive &&
                 userInfo.id != bloc.state.userInfo!.id &&
-                (userInfo.startDate!.month != bloc.state.userInfo!.startDate!.month
-                || userInfo.startDate!.year > bloc.state.userInfo!.startDate!.year))
+                (userInfo.startDate!.month !=
+                        bloc.state.userInfo!.startDate!.month ||
+                    userInfo.startDate!.year >
+                        bloc.state.userInfo!.startDate!.year))
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
@@ -68,13 +71,35 @@ class QueueItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                  userInfo.email,
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                      color: bloc.user.id == userInfo.id
-                          ? Colors.white
-                          : AppColors.primaryBlue),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  children: [
+                    if (userInfo.swapId != null)
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: SwapInfoLabel(
+                            swapId: userInfo.swapId!,
+                            isOnPrimary: bloc.user.id == userInfo.id,
+                          ),
+                        ),
+                      ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          userInfo.email,
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              color: bloc.user.id == userInfo.id
+                                  ? Colors.white
+                                  : AppColors.primaryBlue),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),

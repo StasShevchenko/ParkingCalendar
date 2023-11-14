@@ -15,6 +15,7 @@ class UserInfo {
   final String? avatar;
   final int? previousUserId;
   final int? nextUserId;
+  final int? swapId;
 
   UserInfo({
     required this.email,
@@ -27,6 +28,7 @@ class UserInfo {
     this.lastActiveDate,
     this.avatar,
     this.isSuperUser = false,
+    this.swapId,
     required this.isUser,
     required this.isActive,
     this.previousUserId,
@@ -56,7 +58,8 @@ class UserInfo {
       id: json['id'],
       isStaff: json['is_staff'] ?? false,
       previousUserId: json['previous_active'],
-      nextUserId: json['next_active']
+      nextUserId: json['next_active'],
+      swapId: json["swap"]
     );
   }
 
