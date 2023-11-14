@@ -26,7 +26,7 @@ class RequestsPageBloc extends Bloc<RequestsPageEvent, RequestsPageState> {
 
   void _init() async {
     try {
-      emit(state.copyWith(isConnectionError: false));
+      emit(state.copyWith(isConnectionError: false, isLoading: true));
       final requestsList = await requestsDataSource.getAllRequests(userId);
       requestsList.sort((a, b) => a.isActive ? -1 : 1);
       final incomingRequests =
