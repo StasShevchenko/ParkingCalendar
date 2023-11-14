@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:parking_project/data/models/period_dto.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
 import 'package:parking_project/data/models/user_info.dart';
 
@@ -14,7 +15,7 @@ class QueueDataSource {
             as List<dynamic>;
     List<QueueDataHolder> dataHoldersList = [];
     for (Map<String, dynamic> queueItem in responseData) {
-      var date = DateTime.parse(queueItem['start_time']);
+      final date = DateTime.parse(queueItem['start_time']);
       final dataHolder = QueueDataHolder(monthName: numberToMonth(date.month));
       final users = queueItem['nextUsers'] as List<dynamic>;
       for (Map<String, dynamic> user in users) {
@@ -30,7 +31,18 @@ class QueueDataSource {
   }
 
   Future<Response> addUserToQueue(int userId) async {
-    final result = await dio.post('/queue', data: {'userId': userId});
-    return result;
+    final responseData = await dio.post('/queue', data: {'userId': userId});
+    return responseData;
+  }
+
+  Future<List<PeriodDto>> getNextPeriods(int userId) async {
+    List<PeriodDto> periods = [];
+    final responseData =
+        (await dio.post('/queue/NextPeriodsById', data: {'userId': userId}))
+            .data as List<dynamic>;
+    for (Map<String, dynamic> periodItem in responseData) {
+      periods.add(PeriodDto.fromJson(periodItem));
+    }
+    return periods;
   }
 }

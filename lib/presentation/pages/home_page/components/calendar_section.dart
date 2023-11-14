@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parking_project/data/models/user_info.dart';
 import 'package:parking_project/presentation/pages/home_page/components/card_reminder_dialog/card_reminder_dialog.dart';
+import 'package:parking_project/presentation/pages/home_page/components/next_periods_button.dart';
 import 'package:parking_project/presentation/pages/home_page/components/welcome_title.dart';
 import 'package:parking_project/utils/device_info.dart';
 
@@ -40,27 +41,41 @@ class CalendarSection extends StatelessWidget {
                               context: context,
                               builder: (context) {
                                 return CardReminderDialog(
-                                    isForNext: true, userId: userInfo.nextUserId!);
+                                    isForNext: true,
+                                    userId: userInfo.nextUserId!);
                               });
                         }
                       },
                     ),
                     const SizedBox(
-                      height: 32,
+                      height: 16,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 25,
-                          width: 25,
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryAccentRed,
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                        const Text(' дни доступа к парковке')
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 25,
+                            width: 25,
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryAccentRed,
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
+                          const Text(' дни доступа к парковке'),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(4.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: NextPeriodsButton()
+                      ),
                     ),
                     const SizedBox(
                       height: 16,
@@ -115,35 +130,43 @@ class CalendarSection extends StatelessWidget {
                       const SizedBox(
                         height: 32,
                       ),
-                      Stack(
-                        alignment: Alignment.center,
+                      Column(
                         children: [
-                          Text(
-                            'До вашей очереди\n осталось ${userInfo.startDate!.difference(DateTime.now()).inDays} дней!',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          FractionallySizedBox(
-                            widthFactor: indicatorWidthFactor,
-                            child: AspectRatio(
-                              aspectRatio: 1.0,
-                              child: CircularProgressIndicator(
-                                strokeWidth: DeviceScreen.get(context) ==
-                                        FormFactorType.Desktop
-                                    ? 14
-                                    : 10,
-                                value: (userInfo.startDate!
-                                        .difference(DateTime.now())
-                                        .inDays /
-                                    userInfo.startDate!
-                                        .difference(userInfo.lastActiveDate!)
-                                        .inDays),
-                                color: AppColors.primaryAccentRed,
-                                backgroundColor: Colors.white,
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Text(
+                                'До вашей очереди\n осталось'
+                                ' ${userInfo.startDate!.difference(DateTime.now()).inDays}'
+                                ' дней!',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
-                            ),
-                          )
+                              FractionallySizedBox(
+                                widthFactor: indicatorWidthFactor,
+                                child: AspectRatio(
+                                  aspectRatio: 1.0,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: DeviceScreen.get(context) ==
+                                            FormFactorType.Desktop
+                                        ? 14
+                                        : 10,
+                                    value: (userInfo.startDate!
+                                            .difference(DateTime.now())
+                                            .inDays /
+                                        userInfo.startDate!
+                                            .difference(userInfo.lastActiveDate!)
+                                            .inDays),
+                                    color: AppColors.primaryAccentRed,
+                                    backgroundColor: Colors.white,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 32,),
+                          const NextPeriodsButton(),
                         ],
                       ),
                     ],

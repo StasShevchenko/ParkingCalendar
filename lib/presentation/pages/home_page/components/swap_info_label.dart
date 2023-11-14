@@ -26,7 +26,7 @@ class SwapInfoLabel extends StatelessWidget {
           children: [
             Text("Обмен", style: TextStyle(color: isOnPrimary ? AppColors.primaryBlue : Colors.white),),
             const SizedBox(width: 10,),
-            const Icon(Icons.check_circle, color: Colors.greenAccent,)
+            Icon(Icons.check_circle, color: isOnPrimary ? AppColors.primaryBlue : Colors.white,)
           ],
         ),
       ),
