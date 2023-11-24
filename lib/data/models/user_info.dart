@@ -16,6 +16,7 @@ class UserInfo {
   final int? previousUserId;
   final int? nextUserId;
   final int? swapId;
+  final bool isSwapAvailable;
 
   UserInfo({
     required this.email,
@@ -29,6 +30,7 @@ class UserInfo {
     this.avatar,
     this.isSuperUser = false,
     this.swapId,
+    required this.isSwapAvailable,
     required this.isUser,
     required this.isActive,
     this.previousUserId,
@@ -51,6 +53,7 @@ class UserInfo {
       avatar: json['avatar'] != null
           ? 'https://back.parking-project.ru/static/${json['avatar'].trim()}'
           : null,
+      isSwapAvailable: json['isSwapAvailable'] ?? false,
       isActive: json['active'] ?? false,
       isSuperUser: json['is_superuser'] ?? false,
       email: json['email'],

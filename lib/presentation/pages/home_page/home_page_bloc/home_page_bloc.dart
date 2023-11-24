@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:parking_project/data/models/queue_data_holder.dart';
 import 'package:parking_project/data/remote_data_source/queue_data_source.dart';
 import 'package:parking_project/data/remote_data_source/user_data_source.dart';
+import 'package:parking_project/utils/roles.dart';
 
 import '../../../../data/models/user.dart';
 import '../../../../data/models/user_info.dart';
@@ -30,8 +31,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         switch (event) {
           case QueueRefreshed _:
             emit(state.copyWith(isQueueLoading: true));
-            final queueItems =
-                await queueDataSource.getQueueItems(state.searchValue);
+            final queueItems = await queueDataSource.getQueueItems(
+                user.roles.contains(Role.Admin), state.searchValue);
             plainUsersList = mapToPlainUsers(queueItems);
             sortPlainUsers(state.sortColumn, !state.isAscendingSort);
             emit(
@@ -44,8 +45,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             _init();
           case SearchEntered searchEvent:
             emit(state.copyWith(isQueueLoading: true));
-            final queueItems =
-                await queueDataSource.getQueueItems(searchEvent.searchQuery);
+            final queueItems = await queueDataSource.getQueueItems(
+                user.roles.contains(Role.Admin), searchEvent.searchQuery);
             plainUsersList = mapToPlainUsers(queueItems);
             sortPlainUsers(state.sortColumn, !state.isAscendingSort);
             emit(
@@ -106,7 +107,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     try {
       emit(state.copyWith(isLoading: true, isConnectionError: false));
       final userInfo = await userDataSource.getUserById(user.id);
-      final queueItems = await queueDataSource.getQueueItems();
+      List<QueueDataHolder> queueItems =
+          await queueDataSource.getQueueItems(user.roles.contains(Role.Admin));
       plainUsersList = mapToPlainUsers(queueItems);
       emit(
         state.copyWith(

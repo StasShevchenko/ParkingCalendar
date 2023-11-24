@@ -28,6 +28,7 @@ class QueueItem extends StatelessWidget {
             if (!userInfo.isActive &&
                 bloc.state.userInfo != null &&
                 !bloc.state.userInfo!.isActive &&
+                userInfo.isSwapAvailable &&
                 userInfo.id != bloc.state.userInfo!.id &&
                 (userInfo.startDate!.month !=
                         bloc.state.userInfo!.startDate!.month ||

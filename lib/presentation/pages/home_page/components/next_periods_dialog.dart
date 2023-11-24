@@ -30,7 +30,7 @@ class _NextPeriodsDialogState extends State<NextPeriodsDialog> {
 
   Future<void> _loadPeriods(int userId) async {
     try {
-      final periods = await queueDataSource.getNextPeriods(userId);
+      final periods = await queueDataSource.getNextPeriodsById(userId);
       setState(() {
         _periodsList = periods;
         _isLoading = false;
@@ -38,7 +38,7 @@ class _NextPeriodsDialogState extends State<NextPeriodsDialog> {
     } on DioException{
       if(mounted) {
         context.pop();
-        showDialog(context: context, builder: (context) => FailureDialog());
+        showDialog(context: context, builder: (context) => const FailureDialog());
       }
     }
   }
@@ -75,7 +75,7 @@ class _NextPeriodsDialogState extends State<NextPeriodsDialog> {
             onPressed: () {
               context.pop();
             },
-            child: Text("Закрыть"))
+            child: const Text("Закрыть"))
       ],
     );
   }

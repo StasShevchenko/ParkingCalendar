@@ -141,14 +141,15 @@ class RequestItem extends StatelessWidget {
                   height: 10,
                   width: 10,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: _getRequestResultColor(request),
-                      boxShadow: [
-                        BoxShadow(
-                            color: _getRequestResultColor(request),
-                            blurRadius: 4,
-                            spreadRadius: 2)
-                      ]),
+                    borderRadius: BorderRadius.circular(100),
+                    color: _getRequestResultColor(request),
+                    boxShadow: [
+                      BoxShadow(
+                          color: _getRequestResultColor(request),
+                          blurRadius: 4,
+                          spreadRadius: 2)
+                    ],
+                  ),
                 ),
               ),
             )

@@ -20,7 +20,6 @@ class SwapInfoLabel extends StatelessWidget {
         borderRadius: BorderRadius.circular(20)
       ),
       child: InkWell(
-        onTap: () => print('Swap info tapped'),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
