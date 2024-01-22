@@ -51,22 +51,24 @@ class QueueDataSource {
     List<QueueDataHolder> queueItems = [];
     final responseData =
         (await dio.get('/queue/getOneNextPeriod')).data as List<dynamic>;
-    for (int i = 0; i < 3; i ++) {
-      for (int j = 0; j < responseData[i].length; j++) {
-        final queueItem = responseData[i][j];
-        final date = DateTime.parse(queueItem['start_time']);
-        final dataHolder = QueueDataHolder(monthName: "${numberToMonth(date.month)} ${date.year}");
-        final isSwapAvailable = i == 0 ? true : false;
-        final users = queueItem['nextUsers'] as List<dynamic>;
-        for (Map<String, dynamic> user in users) {
-          user['start_active_time'] = queueItem['start_time'];
-          user['end_active_time'] = queueItem['end_time'];
-          user['isSwapAvailable'] = isSwapAvailable;
-          final userInfo = UserInfo.fromJson(user);
-          dataHolder.users.add(userInfo);
+    if(responseData.length > 0) {
+      for (int i = 0; i < 3; i ++) {
+        for (int j = 0; j < responseData[i].length; j++) {
+          final queueItem = responseData[i][j];
+          final date = DateTime.parse(queueItem['start_time']);
+          final dataHolder = QueueDataHolder(monthName: "${numberToMonth(date.month)} ${date.year}");
+          final isSwapAvailable = i == 0 ? true : false;
+          final users = queueItem['nextUsers'] as List<dynamic>;
+          for (Map<String, dynamic> user in users) {
+            user['start_active_time'] = queueItem['start_time'];
+            user['end_active_time'] = queueItem['end_time'];
+            user['isSwapAvailable'] = isSwapAvailable;
+            final userInfo = UserInfo.fromJson(user);
+            dataHolder.users.add(userInfo);
+          }
+          dataHolder.users.sort((o1, o2) => o1.firstName.compareTo(o2.secondName));
+          queueItems.add(dataHolder);
         }
-        dataHolder.users.sort((o1, o2) => o1.firstName.compareTo(o2.secondName));
-        queueItems.add(dataHolder);
       }
     }
     return queueItems;

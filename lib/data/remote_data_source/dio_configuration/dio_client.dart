@@ -5,7 +5,7 @@ import '../../app_secure_storage.dart';
 class DioClient {
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'https://back.parking-project.ru',
+      baseUrl: 'http://localhost:3000',
       connectTimeout: const Duration(seconds: 5),
       receiveTimeout: const Duration(seconds: 5),
     ),
