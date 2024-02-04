@@ -19,7 +19,7 @@ class UserDataSource {
     final response = ((await dio.get(
       '/user',
       queryParameters: {
-        'roles': roles.map((role) => role.getName()).toList().toString(),
+        'roles': roles.map((role) => role.getName()).toList().join(','),
         'fullName': fullName
       },
     ))
