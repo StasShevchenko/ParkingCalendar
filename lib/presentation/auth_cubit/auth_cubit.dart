@@ -61,7 +61,7 @@ class AuthCubit extends Cubit<AuthState> {
     final refreshToken = await _storage.readRefreshToken();
     final response = await dio
         .post('/token/refresh', data: {'refresh': refreshToken});
-   final newRefreshToken = (response.data as Map<String, dynamic>)['refresh'];
+   final newRefreshToken = (response.data as Map<String, dynamic>)['refreshToken'];
    _storage.writeRefreshToken(newRefreshToken);
    final json = JwtDecoder.decode(newRefreshToken);
    final userData = User.fromJson(json['user']);

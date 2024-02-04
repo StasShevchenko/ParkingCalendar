@@ -33,7 +33,9 @@ class DioClient {
             String refreshToken = (await _storage.readRefreshToken())!;
             final response = await dio
                 .post('/token/refresh', data: {'refresh': refreshToken});
-            accessToken = (response.data as Map<String, dynamic>)['access'];
+            refreshToken = (response.data as Map<String, dynamic>)['refreshToken'];
+            await (_storage.writeRefreshToken(refreshToken));
+            accessToken = (response.data as Map<String, dynamic>)['accessToken'];
             exception.requestOptions.headers['Authorization'] =
                 'Bearer $accessToken';
             return handler.resolve(await dio.fetch(exception.requestOptions));
