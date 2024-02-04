@@ -18,6 +18,7 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
   final List<NavigationDestinationDataHolder> navigationDestinations;
 
   void _goBranch(int index, BuildContext context) {
+    print('selected index: ${index}');
     switch(index){
       case 0:
         context.go(AppRoutes.userHome);
@@ -33,16 +34,24 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
   int _calculateSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).uri.toString();
     if (location.startsWith(AppRoutes.userHome)) {
-      return 0;
+      return navigationDestinations.indexOf(
+        navigationDestinations.firstWhere((element) => element.label == "Очередь")
+      );
     }
     if (location.startsWith(AppRoutes.userRequests)) {
-      return 1;
+      return navigationDestinations.indexOf(
+          navigationDestinations.firstWhere((element) => element.label == "Обмен")
+      );
     }
     if (location.startsWith(AppRoutes.usersList)) {
-      return 1;
+      return navigationDestinations.indexOf(
+          navigationDestinations.firstWhere((element) => element.label == "Сотрудники")
+      );
     }
     if(location.startsWith(AppRoutes.userProfile)){
-      return 2;
+      return navigationDestinations.indexOf(
+          navigationDestinations.firstWhere((element) => element.label == "Профиль")
+      );
     }
     return 0;
   }

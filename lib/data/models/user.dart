@@ -22,16 +22,16 @@ class User {
     return User(
       email: json['email'],
       id: json['id'],
-      changePassword: json['changePassword'],
-      firstName: json['first_name'],
+      changePassword: json['changedPassword'],
+      firstName: json['firstName'],
       avatar: json['avatar'] != null
           ? 'https://back.parking-project.ru/static/${json['avatar'].trim()}'
           : null,
-      secondName: json['second_name'],
+      secondName: json['secondName'],
       roles: [
-        if (json['in_queue'] ?? false) Role.User,
-        if (json['is_staff'] ?? false) Role.Admin,
-        if (json['is_superuser'] ?? false) Role.SuperAdmin
+        if (json['queueUser'] ?? false) Role.User,
+        if (json['isAdmin'] ?? false) Role.Admin,
+        if (json['isSuperAdmin'] ?? false) Role.SuperAdmin
       ],
     );
   }

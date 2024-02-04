@@ -15,7 +15,7 @@ class QueueHeader extends StatelessWidget {
       child: Center(
         child: Container(
           decoration: BoxDecoration(
-            color: monthName == numberToMonth(DateTime.now().month)
+            color: monthName == "${numberToMonth(DateTime.now().month)} ${DateTime.now().year}"
                 ? AppColors.primaryBlue
                 : AppColors.background,
             borderRadius: BorderRadius.circular(20),
@@ -26,7 +26,7 @@ class QueueHeader extends StatelessWidget {
             child: Text(
               monthName,
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: monthName == numberToMonth(DateTime.now().month)
+                  color: monthName == "${numberToMonth(DateTime.now().month)} ${DateTime.now().year}"
                       ? AppColors.primaryWhite
                       : AppColors.secondaryBlue),
             ),

@@ -1,0 +1,53 @@
+[
+  {
+    "isActive": true,
+    "result": null,
+    "sender": {
+      "fullName": "Ivan Ivanov",
+      "email": "ivanov@mail.ru"
+    },
+    "receiver": {
+      "fullName": "Stas Mihailov",
+      "email": "stas@mail.ru"
+    },
+    "sent": "2024-02-19T09:03:19.656Z",
+    "swap": {
+      "from": "2024-02-01T09:03:19.656Z",
+      "to": "2024-05-01T09:03:19.656Z"
+    }
+  },
+  {
+    "isActive": false,
+    "result": true,
+    "sender": {
+      "fullName": "Ivan Ivanov",
+      "email": "ivanov@mail.ru"
+    },
+    "receiver": {
+      "fullName": "Stas Mihailov",
+      "email": "stas@mail.ru"
+    },
+    "sent": "2024-02-19T09:03:19.656Z",
+    "swap": {
+      "from": "2024-02-01T09:03:19.656Z",
+      "to": "2024-05-01T09:03:19.656Z"
+    }
+  },
+  {
+    "isActive": false,
+    "result": false,
+    "sender": {
+      "fullName": "Ivan Ivanov",
+      "email": "ivanov@mail.ru"
+    },
+    "receiver": {
+      "fullName": "Stas Mihailov",
+      "email": "stas@mail.ru"
+    },
+    "sent": "2024-02-19T09:03:19.656Z",
+    "swap": {
+      "from": "2024-02-01T09:03:19.656Z",
+      "to": "2024-05-01T09:03:19.656Z"
+    }
+  }
+]

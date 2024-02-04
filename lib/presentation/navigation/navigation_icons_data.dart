@@ -22,34 +22,23 @@ class NavigationDestinationDataHolder {
 
 final userIcons = [
   NavigationDestinationDataHolder(
-      icon: Icon(
-        Icons.home,
-        color: AppColors.primaryBlue,
-      ),
-      selectedIcon: Icon(Icons.home, color: AppColors.primaryWhite),
-      label: 'Очередь',
-      index: 0),
-  // NavigationDestinationDataHolder(
-  //     icon: Icon(Icons.message, color: AppColors.primaryBlue),
-  //     selectedIcon: Icon(Icons.message, color: AppColors.primaryWhite),
-  //     label: 'Запросы',
-  //     index: 1),
-];
-
-final adminIcons = [
-  NavigationDestinationDataHolder(
-      icon: Icon(
-        Icons.home,
-        color: AppColors.primaryBlue,
-      ),
-      selectedIcon: Icon(Icons.home, color: AppColors.primaryWhite),
-      label: 'Очередь',
-      index: 0),
+      icon: Icon(Icons.swap_horiz, color: AppColors.primaryBlue),
+      selectedIcon: Icon(Icons.swap_horiz, color: AppColors.primaryWhite),
+      label: 'Обмен',
+      index: 1),
 ];
 
 List<NavigationDestinationDataHolder> commonIcons(
         {required String profileBadgeCount}) =>
     [
+      NavigationDestinationDataHolder(
+          icon: Icon(
+            Icons.home,
+            color: AppColors.primaryBlue,
+          ),
+          selectedIcon: Icon(Icons.home, color: AppColors.primaryWhite),
+          label: 'Очередь',
+          index: 0),
       NavigationDestinationDataHolder(
           icon: Icon(
             Icons.supervisor_account_rounded,
